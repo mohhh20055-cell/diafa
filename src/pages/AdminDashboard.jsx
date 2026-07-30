@@ -1372,8 +1372,21 @@ const EstablishmentImagesModal = ({ establishment, onClose, onSelectFeatured }) 
 // ============================================================
 // نموذج إضافة مؤسسة (المدير يضيفها، مصادقة تلقائية)
 // ============================================================
+const PRESET_SERVICES = [
+  'واي فاي', 'موقف سيارات', 'تكييف', 'مطعم', 'مسبح',
+  'إفطار', 'مصعد', 'تلفاز', 'استقبال 24/24',
+  'إطلالة على البحر', 'خدمة الغرف', 'تدفئة', 'منطقة أطفال', 'خزنة'
+]
+
 const CreateEstablishmentForm = ({ owners, onSuccess }) => {
   const { t } = useTranslation()
+
+  // "new" = l'admin crée un compte propriétaire (le partenaire lui a donné ses coordonnées)
+  // "existing" = l'établissement est rattaché à un propriétaire déjà inscrit
+  const [ownerMode, setOwnerMode] = useState('new')
+  const [ownerId, setOwnerId] = useState('')
+  const [newOwner, setNewOwner] = useState({ nom: '', prenom: '', email: '', telephone: '', motDePasse: '' })
+
   const [formData, setFormData] = useState({
     nom: '',
     type: 'hotel',
@@ -1381,21 +1394,49 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
     ville: 'Alger',
     adresse: '',
     description: '',
-    imageVedette: '',
-    services: '',
-    ownerId: '',
+    services: [],
   })
-  const [photos, setPhotos] = useState([])
+  const [newServiceInput, setNewServiceInput] = useState('')
+
+  const [images, setImages] = useState([])
+  const [imageVedette, setImageVedette] = useState('')
   const [photoError, setPhotoError] = useState(null)
   const MAX_PHOTOS = 5
   const MAX_SIZE_MB = 5
   const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024
+
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleOwnerChange = (e) => {
+    setNewOwner({ ...newOwner, [e.target.name]: e.target.value })
+  }
+
+  const handleToggleService = (srv) => {
+    setFormData((prev) => ({
+      ...prev,
+      services: prev.services.includes(srv)
+        ? prev.services.filter((s) => s !== srv)
+        : [...prev.services, srv],
+    }))
+  }
+
+  const handleAddCustomService = () => {
+    const trimmed = newServiceInput.trim()
+    if (!trimmed) return
+    if (!formData.services.includes(trimmed)) {
+      setFormData((prev) => ({ ...prev, services: [...prev.services, trimmed] }))
+    }
+    setNewServiceInput('')
+  }
+
+  const handleRemoveService = (index) => {
+    setFormData((prev) => ({ ...prev, services: prev.services.filter((_, i) => i !== index) }))
   }
 
   const readFileAsDataURL = (file) =>
@@ -1411,7 +1452,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
     const files = Array.from(e.target.files || [])
     if (files.length === 0) return
 
-    const remainingSlots = MAX_PHOTOS - photos.length
+    const remainingSlots = MAX_PHOTOS - images.length
     if (remainingSlots <= 0) {
       setPhotoError(`الحد الأقصى ${MAX_PHOTOS} صور مسموح بها.`)
       e.target.value = ''
@@ -1428,20 +1469,32 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
       validFiles.push(file)
     }
 
-    const newPhotos = await Promise.all(
-      validFiles.map(async (file) => ({
-        file,
-        preview: await readFileAsDataURL(file),
-      }))
-    )
+    const newImgs = await Promise.all(validFiles.map((file) => readFileAsDataURL(file)))
 
-    setPhotos((prev) => [...prev, ...newPhotos])
+    setImages((prev) => {
+      const updated = [...prev, ...newImgs]
+      setImageVedette((cur) => cur || updated[0] || '')
+      return updated
+    })
     e.target.value = ''
   }
 
-  const handleRemovePhoto = (index) => {
-    setPhotos((prev) => prev.filter((_, i) => i !== index))
+  const handleRemoveImage = (index) => {
+    setImages((prev) => {
+      const removed = prev[index]
+      const updated = prev.filter((_, i) => i !== index)
+      setImageVedette((cur) => (cur === removed ? (updated[0] || '') : cur))
+      return updated
+    })
     setPhotoError(null)
+  }
+
+  const resetForm = () => {
+    setFormData({ nom: '', type: 'hotel', wilaya: 'Alger', ville: 'Alger', adresse: '', description: '', services: [] })
+    setImages([])
+    setImageVedette('')
+    setNewOwner({ nom: '', prenom: '', email: '', telephone: '', motDePasse: '' })
+    setOwnerId('')
   }
 
   const handleSubmit = async (e) => {
@@ -1450,34 +1503,31 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
     setError(null)
     setSuccess(null)
 
-    const images = photos.map((p) => p.preview)
-    const imageVedette = images[0] || null
-    const services = formData.services
-      ? formData.services.split(',').map((s) => s.trim()).filter(Boolean)
-      : []
-
-    const res = await establishmentsApi.adminCreateEstablishment({
+    const payload = {
       nom: formData.nom,
       type: formData.type,
       wilaya: formData.wilaya,
       ville: formData.ville,
       adresse: formData.adresse,
       description: formData.description,
-      imageVedette,
+      services: formData.services,
       images,
-      services,
-      ownerId: formData.ownerId || undefined,
-    })
+      imageVedette: imageVedette || images[0] || null,
+    }
+
+    if (ownerMode === 'existing') {
+      payload.ownerId = ownerId || undefined
+    } else {
+      payload.newOwner = newOwner
+    }
+
+    const res = await establishmentsApi.adminCreateEstablishment(payload)
 
     setSubmitting(false)
 
     if (res.success) {
-      setSuccess(t('estCreatedAndValidatedSuccessfully'))
-      setFormData({
-        nom: '', type: 'hotel', wilaya: 'Alger', ville: 'Alger',
-        adresse: '', description: '', imageVedette: '', services: '', ownerId: '',
-      })
-      setPhotos([])
+      setSuccess(ownerMode === 'new' ? t('ownerAccountAndEstCreatedSuccessfully') : t('estCreatedAndValidatedSuccessfully'))
+      resetForm()
       onSuccess?.()
     } else {
       setError(res.message || t('errorDuringCreation'))
@@ -1505,6 +1555,99 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-5">
+        {/* المالك: حساب جديد أو مالك موجود */}
+        <div>
+          <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('establishmentOwner')}</label>
+          <div className="flex gap-2 mb-3">
+            <button
+              type="button"
+              onClick={() => setOwnerMode('new')}
+              className={`flex-1 px-3.5 py-2.5 rounded-xl text-xs font-bold border transition ${
+                ownerMode === 'new'
+                  ? 'bg-[#0E1E3D] text-white border-[#0E1E3D]'
+                  : 'bg-white text-slate-600 border-neutral-200 hover:border-[#CB9A56]/50'
+              }`}
+            >
+              {t('createNewOwnerOption')}
+            </button>
+            <button
+              type="button"
+              onClick={() => setOwnerMode('existing')}
+              className={`flex-1 px-3.5 py-2.5 rounded-xl text-xs font-bold border transition ${
+                ownerMode === 'existing'
+                  ? 'bg-[#0E1E3D] text-white border-[#0E1E3D]'
+                  : 'bg-white text-slate-600 border-neutral-200 hover:border-[#CB9A56]/50'
+              }`}
+            >
+              {t('selectExistingOwnerOption')}
+            </button>
+          </div>
+
+          {ownerMode === 'new' ? (
+            <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-xl space-y-3">
+              <p className="text-[11px] text-slate-500">{t('newOwnerFormDesc')}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input
+                  name="prenom"
+                  value={newOwner.prenom}
+                  onChange={handleOwnerChange}
+                  required
+                  placeholder={t('firstName')}
+                  className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                />
+                <input
+                  name="nom"
+                  value={newOwner.nom}
+                  onChange={handleOwnerChange}
+                  required
+                  placeholder={t('lastName')}
+                  className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input
+                  type="email"
+                  name="email"
+                  value={newOwner.email}
+                  onChange={handleOwnerChange}
+                  required
+                  placeholder={t('email')}
+                  className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                />
+                <input
+                  name="telephone"
+                  value={newOwner.telephone}
+                  onChange={handleOwnerChange}
+                  required
+                  placeholder={t('phone')}
+                  className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                />
+              </div>
+              <input
+                type="password"
+                name="motDePasse"
+                value={newOwner.motDePasse}
+                onChange={handleOwnerChange}
+                required
+                minLength={8}
+                placeholder={t('password')}
+                className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+              />
+            </div>
+          ) : (
+            <select
+              value={ownerId}
+              onChange={(e) => setOwnerId(e.target.value)}
+              className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+            >
+              <option value="">{t('selectOwnerPlaceholder')}</option>
+              {(owners || []).map((o) => (
+                <option key={o.id} value={o.id}>{o.prenom} {o.nom} ({o.email || o.telephone})</option>
+              ))}
+            </select>
+          )}
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('estName')} *</label>
@@ -1570,7 +1713,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('description')}</label>
+          <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('establishmentDescription')}</label>
           <textarea
             name="description"
             value={formData.description}
@@ -1581,86 +1724,119 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
           />
         </div>
 
+        {/* الخدمات والتجهيزات - نفس منطق نموذج المالك */}
         <div>
-          <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('estImagesFromFile')}</label>
-          {photoError && (
-            <div className="mb-2 text-xs text-rose-600 font-medium">
-              {photoError}
+          <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('servicesAndFacilities')}</label>
+          <p className="text-[11px] text-slate-500 mb-2">{t('chooseServices')}</p>
+
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {PRESET_SERVICES.map((srv) => {
+              const selected = formData.services.includes(srv)
+              return (
+                <button
+                  key={srv}
+                  type="button"
+                  onClick={() => handleToggleService(srv)}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition ${
+                    selected
+                      ? 'bg-[#0E1E3D] text-white shadow-xs'
+                      : 'bg-neutral-100 text-slate-700 hover:bg-neutral-200 border border-neutral-200'
+                  }`}
+                >
+                  {selected ? '✓ ' : '+ '}{srv}
+                </button>
+              )
+            })}
+          </div>
+
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={newServiceInput}
+              onChange={(e) => setNewServiceInput(e.target.value)}
+              placeholder={t('addOtherServicePlaceholder')}
+              className="flex-1 px-3.5 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+              onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCustomService(); } }}
+            />
+            <button
+              type="button"
+              onClick={handleAddCustomService}
+              className="px-4 py-2 bg-[#CB9A56] text-[#0E1E3D] rounded-xl text-xs font-bold hover:bg-[#E4C48A] transition"
+            >
+              {t('add')}
+            </button>
+          </div>
+
+          {formData.services.length > 0 && (
+            <div className="mt-2.5 flex flex-wrap gap-1.5 p-3 bg-neutral-50 rounded-xl border border-neutral-200">
+              {formData.services.map((srv, idx) => (
+                <span key={idx} className="inline-flex items-center gap-1.5 bg-amber-100/80 border border-amber-300 text-amber-900 rounded-lg px-2.5 py-1 text-xs font-bold">
+                  {srv}
+                  <button type="button" onClick={() => handleRemoveService(idx)} className="text-amber-800 hover:text-red-700 font-black ml-1">
+                    ×
+                  </button>
+                </span>
+              ))}
             </div>
           )}
+        </div>
 
-          {photos.length < MAX_PHOTOS && (
+        {/* الصور والصورة الرئيسية - نفس منطق نموذج المالك */}
+        <div>
+          <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('establishmentImages')}</label>
+          {photoError && (
+            <div className="mb-2 text-xs text-rose-600 font-medium">{photoError}</div>
+          )}
+
+          {images.length < MAX_PHOTOS && (
             <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#CB9A56] bg-neutral-50/70 hover:bg-neutral-50 transition text-center mb-3">
               <svg className="w-6 h-6 text-[#CB9A56] mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <span className="text-xs font-bold text-[#0E1E3D]">
-                {t('clickToImportImagesWithMax', { max: MAX_PHOTOS })}
-              </span>
-              <span className="text-[10px] text-slate-500 mt-0.5">
-                {t('allowedImgFormatsWithMaxSize', { size: MAX_SIZE_MB })}
-              </span>
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handlePhotoChange}
-                className="hidden"
-              />
+              <span className="text-xs font-bold text-[#0E1E3D]">{t('clickToImportPhotos')}</span>
+              <span className="text-[10px] text-slate-400 mt-0.5">{t('supportedFormats')}</span>
+              <input type="file" accept="image/*" multiple onChange={handlePhotoChange} className="hidden" />
             </label>
           )}
 
-          {photos.length > 0 && (
+          {images.length > 0 && (
             <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
-              {photos.map((p, index) => (
-                <div key={index} className="relative rounded-xl overflow-hidden border border-neutral-200 bg-neutral-900 group">
-                  <img src={p.preview} alt={`${t('preview')} ${index + 1}`} className="w-full h-20 object-cover" />
-                  <button
-                    type="button"
-                    onClick={() => handleRemovePhoto(index)}
-                    className="absolute top-1 right-1 w-5 h-5 flex items-center justify-center bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-bold shadow transition opacity-0 group-hover:opacity-100"
-                    aria-label={t('delete')}
-                  >
-                    ×
-                  </button>
-                  {index === 0 && (
-                    <span className="absolute bottom-1 left-1 bg-[#CB9A56] text-white text-[9px] font-bold px-1 rounded">
-                      {t('featured')}
-                    </span>
-                  )}
-                </div>
-              ))}
+              {images.map((img, idx) => {
+                const isVedette = imageVedette === img
+                return (
+                  <div key={idx} className={`relative h-24 rounded-xl overflow-hidden border-2 group ${isVedette ? 'border-[#CB9A56] ring-2 ring-[#CB9A56]/30' : 'border-neutral-200'}`}>
+                    <img src={img} alt={`صورة ${idx + 1}`} className="w-full h-full object-cover" />
+
+                    {isVedette && (
+                      <span className="absolute top-1 left-1 bg-[#CB9A56] text-[#0E1E3D] text-[9px] font-black px-1.5 py-0.5 rounded shadow-xs">
+                        {t('main')}
+                      </span>
+                    )}
+
+                    {!isVedette && (
+                      <button
+                        type="button"
+                        onClick={() => setImageVedette(img)}
+                        className="absolute bottom-1 left-1 bg-black/70 hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-[9px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition"
+                      >
+                        {t('setAsMain')}
+                      </button>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveImage(idx)}
+                      className="absolute top-1 right-1 w-5 h-5 bg-rose-600 text-white rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition"
+                      title={t('deletePhoto')}
+                    >
+                      ×
+                    </button>
+                  </div>
+                )
+              })}
             </div>
           )}
         </div>
-
-        <div>
-          <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('servicesWithCommas')}</label>
-          <input
-            name="services"
-            value={formData.services}
-            onChange={handleChange}
-            className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
-            placeholder={t('servicesPlaceholder')}
-          />
-        </div>
-
-        {owners && owners.length > 0 && (
-          <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('ownerOptional')}</label>
-            <select
-              name="ownerId"
-              value={formData.ownerId}
-              onChange={handleChange}
-              className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
-            >
-              <option value="">— {t('adminMe')} —</option>
-              {owners.map((o) => (
-                <option key={o.id} value={o.id}>{o.prenom} {o.nom} ({o.email || o.telephone})</option>
-              ))}
-            </select>
-          </div>
-        )}
 
         <button
           type="submit"
