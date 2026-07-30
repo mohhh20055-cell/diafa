@@ -67,18 +67,18 @@ const OwnerDashboard = () => {
 
       let ests = estData.success ? (estData.data || []) : []
 
-      // If ests is still empty but user is an owner, build fallback establishment object
+      // إذا كانت المؤسسات فارغة ولكن المستخدم مالك، يتم إنشاء كائن مؤسسة افتراضي
       if (ests.length === 0 && prof && (prof.role === 'owner' || prof.role === 'admin')) {
-        const estNom = prof.nomEtablissement || prof.nometablissement || `Établissement ${prof.nom || ''} ${prof.prenom || ''}`.trim()
+        const estNom = prof.nomEtablissement || prof.nometablissement || `مؤسسة ${prof.nom || ''} ${prof.prenom || ''}`.trim()
         ests = [{
           id: prof.id,
           owner_id: prof.id,
           nom: estNom,
           type: prof.typeEtablissement || prof.type_etablissement || 'hotel',
-          wilaya: prof.wilaya || 'Alger',
-          ville: prof.ville || 'Alger',
-          adresse: prof.adresse || prof.ville || 'Alger',
-          description: prof.description || `Établissement ${estNom}`,
+          wilaya: prof.wilaya || 'الجزائر',
+          ville: prof.ville || 'الجزائر',
+          adresse: prof.adresse || prof.ville || 'الجزائر',
+          description: prof.description || `مؤسسة ${estNom}`,
           services: [],
           images: [],
           image_vedette: null,
@@ -102,7 +102,7 @@ const OwnerDashboard = () => {
         refusees: ress.filter((r) => r.statut === 'refusee').length,
       })
     } catch (err) {
-      console.error('Error loading dashboard data:', err)
+      console.error('خطأ في تحميل بيانات لوحة التحكم:', err)
     } finally {
       setLoading(false)
     }
@@ -113,7 +113,7 @@ const OwnerDashboard = () => {
     if (res.success) {
       loadData()
     } else {
-      alert(res.message || 'Erreur lors de l\'acceptation.')
+      alert(res.message || 'حدث خطأ أثناء القبول.')
     }
   }
 
@@ -122,7 +122,7 @@ const OwnerDashboard = () => {
     if (res.success) {
       loadData()
     } else {
-      alert(res.message || 'Erreur lors du refus.')
+      alert(res.message || 'حدث خطأ أثناء الرفض.')
     }
   }
 
@@ -135,17 +135,17 @@ const OwnerDashboard = () => {
   }
 
   const tabs = [
-    { id: 'overview', label: 'Aperçu', labelAr: 'نظرة عامة', icon: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' },
-    { id: 'reservations', label: 'Réservations', labelAr: 'الحجوزات', count: stats.enAttente > 0 ? stats.enAttente : null, icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
-    { id: 'establishments', label: 'Établissements', labelAr: 'المؤسسات', count: establishments.length, icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5' },
-    { id: 'chambres', label: 'Chambres & Offres', labelAr: 'الغرف والعروض', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
+    { id: 'overview', label: 'نظرة عامة', labelAr: 'نظرة عامة', icon: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' },
+    { id: 'reservations', label: 'الحجوزات', labelAr: 'الحجوزات', count: stats.enAttente > 0 ? stats.enAttente : null, icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
+    { id: 'establishments', label: 'المؤسسات', labelAr: 'المؤسسات', count: establishments.length, icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5' },
+    { id: 'chambres', label: 'الغرف والعروض', labelAr: 'الغرف والعروض', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
   ]
 
   const activeTabObj = tabs.find((t) => t.id === activeTab)
 
   return (
     <div className="min-h-screen bg-[#FAF7F1] flex flex-col md:flex-row">
-      {/* Mobile Top Navigation Bar */}
+      {/* شريط التنقل العلوي للجوال */}
       <div className="md:hidden bg-[#0E1E3D] text-white px-4 py-3 border-b border-[#CB9A56]/30 flex items-center justify-between sticky top-0 z-40">
         <div className="flex items-center gap-3">
           <button
@@ -157,8 +157,8 @@ const OwnerDashboard = () => {
             </svg>
           </button>
           <div>
-            <span className="text-[10px] uppercase tracking-wider text-[#CB9A56] font-bold">Espace Partenaire</span>
-            <h2 className="text-sm font-bold text-white leading-tight">{activeTabObj?.label} ({activeTabObj?.labelAr})</h2>
+            <span className="text-[10px] uppercase tracking-wider text-[#CB9A56] font-bold">مساحة الشريك</span>
+            <h2 className="text-sm font-bold text-white leading-tight">{activeTabObj?.label}</h2>
           </div>
         </div>
 
@@ -166,12 +166,12 @@ const OwnerDashboard = () => {
           to="/etablissements"
           className="px-3 py-1.5 rounded-lg bg-[#CB9A56] text-[#0E1E3D] text-xs font-bold"
         >
-          Voir site
+          عرض الموقع
         </Link>
         <LanguageSwitcher />
       </div>
 
-      {/* Mobile Overlay */}
+      {/* طبقة التعتيم للجوال */}
       {mobileSidebarOpen && (
         <div
           onClick={() => setMobileSidebarOpen(false)}
@@ -179,21 +179,21 @@ const OwnerDashboard = () => {
         />
       )}
 
-      {/* SIDEBAR CONTAINER */}
+      {/* حاوية الشريط الجانبي */}
       <aside
         className={`fixed md:sticky top-0 left-0 bottom-0 z-50 md:z-auto w-72 bg-[#0E1E3D] text-white flex flex-col justify-between border-r border-[#CB9A56]/20 transition-transform duration-300 ease-in-out shrink-0 h-screen ${
           mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >
-        {/* Sidebar Header & Brand */}
+        {/* رأس الشريط الجانبي والعلامة التجارية */}
         <div className="p-6 border-b border-white/10">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2.5">
               <div className="w-10 h-10 rounded-2xl bg-[#CB9A56] text-[#0E1E3D] font-black flex items-center justify-center text-lg shadow-md">
-                D
+                ض
               </div>
               <div>
-                <h2 className="text-lg font-bold font-display text-white leading-tight">Diyafa Partner</h2>
+                <h2 className="text-lg font-bold font-display text-white leading-tight">شريك ضيافة</h2>
                 <span className="text-[11px] text-[#E4C48A] font-medium">لوحة صاحب المؤسسة</span>
               </div>
             </div>
@@ -207,10 +207,10 @@ const OwnerDashboard = () => {
             </button>
           </div>
 
-          {/* Owner Profile Brief */}
+          {/* نبذة مختصرة عن المالك */}
           <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-[#CB9A56] text-[#0E1E3D] font-extrabold flex items-center justify-center text-xs shrink-0">
-              {(user?.prenom || user?.nom || 'P').charAt(0).toUpperCase()}
+              {(user?.prenom || user?.nom || 'م').charAt(0).toUpperCase()}
             </div>
             <div className="overflow-hidden">
               <p className="text-xs font-bold text-white truncate">{user?.prenom} {user?.nom}</p>
@@ -219,7 +219,7 @@ const OwnerDashboard = () => {
           </div>
         </div>
 
-        {/* Sidebar Tabs Menu */}
+        {/* قائمة التبويبات في الشريط الجانبي */}
         <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto thin-scrollbar">
           <p className="px-3 text-[10px] font-bold text-[#E4C48A] uppercase tracking-wider mb-2">
             القائمة / Tab Navigation
@@ -244,7 +244,7 @@ const OwnerDashboard = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
                   </svg>
                   <div className="text-left truncate">
-                    <span className="block leading-tight font-medium">{isAr ? tab.labelAr : tab.label}</span>
+                    <span className="block leading-tight font-medium">{tab.label}</span>
                   </div>
                 </div>
 
@@ -264,7 +264,7 @@ const OwnerDashboard = () => {
           })}
         </nav>
 
-        {/* Sidebar Footer */}
+        {/* تذييل الشريط الجانبي */}
         <div className="p-4 border-t border-white/10 space-y-2">
           <Link
             to="/etablissements"
@@ -273,7 +273,7 @@ const OwnerDashboard = () => {
             <svg className="w-4 h-4 text-[#E4C48A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
-            <span>Voir le site / زيارة الموقع</span>
+            <span>زيارة الموقع</span>
           </Link>
 
           <button
@@ -286,78 +286,78 @@ const OwnerDashboard = () => {
             <svg className="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
-            <span>Déconnexion / تسجيل الخروج</span>
+            <span>تسجيل الخروج</span>
           </button>
         </div>
       </aside>
 
-      {/* MAIN CONTENT AREA */}
+      {/* منطقة المحتوى الرئيسية */}
       <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full overflow-y-auto">
-        {/* Main Content Header Banner */}
+        {/* رأس المحتوى الرئيسي */}
         <div className="bg-[#0E1E3D] text-white rounded-2xl p-6 mb-8 border border-[#CB9A56]/30 shadow-md">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 text-[#E4C48A] text-xs font-semibold uppercase tracking-wider mb-1">
-                <span>{isAr ? 'لوحة التحكم' : 'Espace Propriétaire'}</span>
+                <span>مساحة صاحب المؤسسة</span>
               </div>
               <h1 className="text-xl sm:text-2xl font-bold font-display text-white">
-                {t('welcomePartner', { name: user?.prenom || (isAr ? 'شريك' : 'Partenaire') })}
+                {t('welcomePartner', { name: user?.prenom || 'شريك' })}
               </h1>
               <p className="text-slate-300 text-xs sm:text-sm mt-1">
                 {t('manageEstablishments')}
               </p>
             </div>
             <div className="bg-white/10 px-4 py-2 rounded-xl border border-white/10 text-right">
-              <span className="text-[10px] text-slate-300 block">{t('pendingDemands')}</span>
+              <span className="text-[10px] text-slate-300 block">طلبات في الانتظار</span>
               <span className="text-xs font-bold text-amber-400 flex items-center gap-1.5 justify-end">
-                {stats.enAttente} {isAr ? 'طلبات' : 'demandes'}
+                {stats.enAttente} طلبات
               </span>
             </div>
           </div>
         </div>
 
-        {/* Stats Row */}
+        {/* صف الإحصائيات */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">{t('totalReservations')}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">إجمالي الحجوزات</p>
             <div className="text-2xl font-extrabold text-[#0E1E3D] mt-1 font-display">
               {stats.total}
             </div>
-            <p className="text-[10px] text-slate-500 mt-1">Reçues à ce jour</p>
+            <p className="text-[10px] text-slate-500 mt-1">المستلمة حتى اليوم</p>
           </div>
 
           <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-amber-600">En Attente</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-amber-600">في الانتظار</p>
             <div className="text-2xl font-extrabold text-amber-600 mt-1 font-display">
               {stats.enAttente}
             </div>
-            <p className="text-[10px] text-slate-500 mt-1">Nécessitent réponse</p>
+            <p className="text-[10px] text-slate-500 mt-1">بحاجة إلى رد</p>
           </div>
 
           <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600">{t('accepted')}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600">مقبولة</p>
             <div className="text-2xl font-extrabold text-emerald-600 mt-1 font-display">
               {stats.acceptees}
             </div>
-            <p className="text-[10px] text-slate-500 mt-1">{isAr ? 'مؤكدة' : 'Confirmées'}</p>
+            <p className="text-[10px] text-slate-500 mt-1">مؤكدة</p>
           </div>
 
           <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-rose-600">{t('refused')}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-rose-600">مرفوضة</p>
             <div className="text-2xl font-extrabold text-rose-600 mt-1 font-display">
               {stats.refusees}
             </div>
-            <p className="text-[10px] text-slate-500 mt-1">{isAr ? 'غير متاحة' : 'Non disponibles'}</p>
+            <p className="text-[10px] text-slate-500 mt-1">غير متاحة</p>
           </div>
         </div>
 
-        {/* Tab Content Panels */}
+        {/* لوحات محتوى التبويبات */}
         <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6 sm:p-8">
           {activeTab === 'overview' && (
             <div>
-              <h3 className="text-lg font-bold text-[#0E1E3D] mb-2 font-display">{t('overview')}</h3>
+              <h3 className="text-lg font-bold text-[#0E1E3D] mb-2 font-display">نظرة عامة</h3>
               <p className="text-xs sm:text-sm text-slate-600 mb-6">
-                Bienvenue dans votre espace propriétaire. Retrouvez vos informations clés ci-dessous.
+                مرحباً بك في مساحة صاحب المؤسسة. يمكنك مراجعة معلوماتك الرئيسية أدناه.
               </p>
               
               {establishments.length > 0 ? (
@@ -377,10 +377,10 @@ const OwnerDashboard = () => {
                         <h4 className="font-bold text-base sm:text-lg">
                           حالة المؤسسة: {
                             (establishments[0].statut_validation === 'valide' || establishments[0].statut_validation === 'APPROVED')
-                              ? 'مقبولة وتعمل بنجاح (Validé)'
+                              ? 'مقبولة وتعمل بنجاح'
                               : (establishments[0].statut_validation === 'refuse' || establishments[0].statut_validation === 'refusee' || establishments[0].statut_validation === 'REJECTED')
-                              ? 'مرفوضة (Refusé)'
-                              : 'قيد الانتظار والمراجعة (En attente d\'approbation)'
+                              ? 'مرفوضة'
+                              : 'قيد الانتظار والمراجعة'
                           }
                         </h4>
                         <span className={`text-xs font-bold px-3 py-1 rounded-full border ${
@@ -408,7 +408,7 @@ const OwnerDashboard = () => {
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                           </svg>
-                          تعديل معلومات المؤسسة والصور والخدمات / Modifier
+                          تعديل معلومات المؤسسة والصور والخدمات
                         </button>
                       </div>
                     </div>
@@ -419,7 +419,7 @@ const OwnerDashboard = () => {
                   <div className="flex items-start gap-3">
                     <span className="text-2xl mt-0.5 shrink-0">⏳</span>
                     <div>
-                      <h4 className="font-bold text-base">جاري تحميل بيانات المؤسسة / En cours de chargement</h4>
+                      <h4 className="font-bold text-base">جاري تحميل بيانات المؤسسة</h4>
                       <p className="text-xs mt-1 text-amber-800">
                         إذا لم تظهر مؤسستك، يرجى تحديث الصفحة أو التأكد من إكمال التسجيل.
                       </p>
@@ -434,11 +434,11 @@ const OwnerDashboard = () => {
                     <svg className="w-5 h-5 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
                     </svg>
-                    Mes Établissements ({establishments.length})
+                    مؤسساتي ({establishments.length})
                   </h4>
                   {establishments.length === 0 ? (
                     <p className="text-xs text-slate-500">
-                      Vous n'avez pas encore enregistré d'établissement validé.
+                      لم تقم بتسجيل أي مؤسسة معتمدة بعد.
                     </p>
                   ) : (
                     <ul className="space-y-3">
@@ -456,10 +456,10 @@ const OwnerDashboard = () => {
                               : 'bg-amber-100 text-amber-800'
                           }`}>
                             {(e.statut_validation === 'APPROVED' || e.statut_validation === 'valide') && e.actif
-                              ? 'Validé'
+                              ? 'معتمد'
                               : e.statut_validation === 'refuse'
-                              ? 'Refusé'
-                              : 'En attente'}
+                              ? 'مرفوض'
+                              : 'في الانتظار'}
                           </span>
                         </li>
                       ))}
@@ -472,23 +472,23 @@ const OwnerDashboard = () => {
                     <svg className="w-5 h-5 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    Dernières demandes ({reservations.length})
+                    آخر الطلبات ({reservations.length})
                   </h4>
                   {reservations.length === 0 ? (
-                    <p className="text-xs text-slate-500">Aucune réservation récente.</p>
+                    <p className="text-xs text-slate-500">لا توجد حجوزات حديثة.</p>
                   ) : (
                     <ul className="space-y-3">
                       {reservations.slice(0, 3).map((r) => (
                         <li key={r.id} className="flex justify-between items-center text-xs bg-white p-3 rounded-xl border border-neutral-200">
                           <div>
                             <p className="font-bold text-[#0E1E3D]">{r.client?.prenom} {r.client?.nom}</p>
-                            <p className="text-slate-400">Du {r.dateArrivee} au {r.dateDepart}</p>
+                            <p className="text-slate-400">من {r.dateArrivee} إلى {r.dateDepart}</p>
                           </div>
                           <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
                             r.statut === 'acceptee' ? 'bg-emerald-100 text-emerald-800' :
                             r.statut === 'en_attente' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'
                           }`}>
-                            {r.statut === 'acceptee' ? 'Acceptée' : r.statut === 'en_attente' ? 'En attente' : 'Refusée'}
+                            {r.statut === 'acceptee' ? 'مقبولة' : r.statut === 'en_attente' ? 'في الانتظار' : 'مرفوضة'}
                           </span>
                         </li>
                       ))}
@@ -502,7 +502,7 @@ const OwnerDashboard = () => {
           {activeTab === 'reservations' && (
             <div>
               <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
-                Gestion des Réservations / إدارة الحجوزات
+                إدارة الحجوزات
               </h3>
               {reservations.length === 0 ? (
                 <div className="text-center py-12 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200">
@@ -524,10 +524,10 @@ const OwnerDashboard = () => {
                             </h4>
                           </div>
                           <p className="text-xs text-slate-500 mt-1">
-                            {t('client')}: <strong className="text-slate-800">{reservation.client?.prenom} {reservation.client?.nom}</strong> ({reservation.client?.telephone || reservation.client?.email})
+                            الزبون: <strong className="text-slate-800">{reservation.client?.prenom} {reservation.client?.nom}</strong> ({reservation.client?.telephone || reservation.client?.email})
                           </p>
                           <p className="text-xs text-slate-500 mt-0.5">
-                            {t('period')}: <strong>{new Date(reservation.dateArrivee).toLocaleDateString('fr-FR')}</strong> {t('to')} <strong>{new Date(reservation.dateDepart).toLocaleDateString('fr-FR')}</strong>
+                            الفترة: <strong>{new Date(reservation.dateArrivee).toLocaleDateString('ar-DZ')}</strong> إلى <strong>{new Date(reservation.dateDepart).toLocaleDateString('ar-DZ')}</strong>
                           </p>
                         </div>
                         <div className="flex flex-col items-end gap-3">
@@ -542,7 +542,10 @@ const OwnerDashboard = () => {
                                 : 'bg-slate-100 text-slate-700 border border-slate-300'
                             }`}
                           >
-                            {STATUT_ICON[reservation.statut] || ''} {t(STATUT_LABELS[reservation.statut]?.text || reservation.statut)}
+                            {STATUT_ICON[reservation.statut] || ''} {reservation.statut === 'en_attente' ? 'في الانتظار' : 
+                             reservation.statut === 'acceptee' ? 'مقبولة' : 
+                             reservation.statut === 'refusee' ? 'مرفوضة' : 
+                             reservation.statut === 'annulee' ? 'ملغية' : 'منتهية'}
                           </span>
                           {reservation.statut === 'en_attente' && (
                             <div className="flex items-center gap-2">
@@ -553,7 +556,7 @@ const OwnerDashboard = () => {
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
-                                {t('accept')}
+                                قبول
                               </button>
                               <button
                                 onClick={() => handleRejectReservation(reservation.id)}
@@ -562,7 +565,7 @@ const OwnerDashboard = () => {
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
-                                {t('reject')}
+                                رفض
                               </button>
                             </div>
                           )}
@@ -578,12 +581,12 @@ const OwnerDashboard = () => {
           {activeTab === 'establishments' && (
             <div>
               <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
-                Mes Établissements / مؤسساتي
+                مؤسساتي
               </h3>
               {establishments.length === 0 ? (
                 <div className="text-center py-12 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200">
-                  <p className="text-sm font-semibold text-slate-600">Vous n'avez aucun établissement répertorié.</p>
-                  <p className="text-xs text-slate-400 mt-1 mb-4">Inscrivez votre hôtel, dortoir ou résidence pour recevoir des réservations.</p>
+                  <p className="text-sm font-semibold text-slate-600">ليس لديك أي مؤسسة مسجلة.</p>
+                  <p className="text-xs text-slate-400 mt-1 mb-4">سجل فندقك، مرقدك أو بيت ضيافتك لاستقبال الحجوزات.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -598,11 +601,11 @@ const OwnerDashboard = () => {
                             <div className="h-36 w-full rounded-xl overflow-hidden mb-3.5 bg-neutral-100 relative">
                               <img src={estCover} alt={est.nom} className="w-full h-full object-cover" />
                               <span className="absolute top-2 left-2 bg-[#0E1E3D]/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
-                                {est.type || 'Établissement'}
+                                {est.type === 'hotel' ? 'فندق' : est.type === 'mraqed' ? 'مرقد' : 'مؤسسة'}
                               </span>
                               {Array.isArray(est.images) && est.images.length > 0 && (
                                 <span className="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                                  📷 {est.images.length} photo(s)
+                                  📷 {est.images.length} صورة
                                 </span>
                               )}
                             </div>
@@ -623,19 +626,19 @@ const OwnerDashboard = () => {
                               }`}
                             >
                               {(est.statut_validation === 'APPROVED' || est.statut_validation === 'valide') && est.actif
-                                ? 'Validé'
+                                ? 'معتمد'
                                 : (est.statut_validation === 'en_attente' || !est.statut_validation)
-                                ? 'En attente'
-                                : 'Refusé'}
+                                ? 'في الانتظار'
+                                : 'مرفوض'}
                             </span>
                           </div>
 
-                          <p className="text-xs text-slate-600 line-clamp-2 mb-3">{est.description || 'Établissement certifié Diyafa'}</p>
+                          <p className="text-xs text-slate-600 line-clamp-2 mb-3">{est.description || 'مؤسسة معتمدة من ضيافة'}</p>
 
-                          {/* Services badges */}
+                          {/* شارات الخدمات */}
                           {estServices.length > 0 && (
                             <div className="mb-4">
-                              <p className="text-[11px] font-bold text-slate-400 mb-1">Services & Équipements:</p>
+                              <p className="text-[11px] font-bold text-slate-400 mb-1">الخدمات والتجهيزات:</p>
                               <div className="flex flex-wrap gap-1">
                                 {estServices.map((srv, idx) => (
                                   <span key={idx} className="bg-amber-50 text-amber-900 border border-amber-200 px-2 py-0.5 rounded-md text-[10px] font-bold">
@@ -655,13 +658,13 @@ const OwnerDashboard = () => {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
-                            Modifier / تعديل
+                            تعديل
                           </button>
                           <Link
                             to={`/etablissements/${est.id}`}
                             className="px-3.5 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-[#0E1E3D] text-xs font-bold transition"
                           >
-                            Voir →
+                            عرض ←
                           </Link>
                         </div>
                       </div>
@@ -695,7 +698,7 @@ const OwnerDashboard = () => {
 export default OwnerDashboard
 
 // ============================================================
-// Room Management Component
+// مكون إدارة الغرف
 // ============================================================
 const RoomManagement = ({ establishments }) => {
   const [selectedEstId, setSelectedEstId] = useState('')
@@ -824,22 +827,22 @@ const RoomManagement = ({ establishments }) => {
     }
 
     if (res.success) {
-      setSuccess(editingRoomId ? 'Chambre mise à jour avec succès!' : 'Chambre ajoutée avec succès!')
+      setSuccess(editingRoomId ? 'تم تحديث الغرفة بنجاح!' : 'تم إضافة الغرفة بنجاح!')
       resetForm()
       setShowForm(false)
       loadRooms()
     } else {
-      setError(res.message || 'Erreur lors de l\'enregistrement de la chambre.')
+      setError(res.message || 'حدث خطأ أثناء حفظ الغرفة.')
     }
   }
 
   const handleDeleteRoom = async (roomId) => {
-    if (!confirm('Voulez-vous vraiment supprimer cette chambre?')) return
+    if (!confirm('هل أنت متأكد من حذف هذه الغرفة؟')) return
     const res = await establishmentsApi.deleteRoom(roomId)
     if (res.success) {
       loadRooms()
     } else {
-      alert(res.message || 'Erreur lors de la suppression.')
+      alert(res.message || 'حدث خطأ أثناء الحذف.')
     }
   }
 
@@ -847,17 +850,17 @@ const RoomManagement = ({ establishments }) => {
     return (
       <div>
         <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
-          Chambres & Offres / الغرف والعروض
+          الغرف والعروض
         </h3>
         <div className="text-center py-12 bg-amber-50 rounded-2xl border border-amber-200">
           <svg className="w-12 h-12 mx-auto text-amber-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <p className="text-sm font-semibold text-amber-800">
-            Votre établissement est en cours d'examen / مؤسستك قيد المراجعة
+            مؤسستك قيد المراجعة
           </p>
           <p className="text-xs text-amber-600 mt-1">
-            Vous pourrez ajouter des chambres une fois que l'administrateur aura approuvé votre établissement.
+            ستتمكن من إضافة الغرف بعد مصادقة المدير على مؤسستك.
           </p>
         </div>
       </div>
@@ -869,9 +872,9 @@ const RoomManagement = ({ establishments }) => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
-            Chambres & Offres / الغرف والعروض
+            الغرف والعروض
           </h3>
-          <p className="text-xs text-slate-500 mt-0.5">Gérez les chambres de votre établissement, ajoutez ou modifiez des photos, des descriptions et des services.</p>
+          <p className="text-xs text-slate-500 mt-0.5">قم بإدارة غرف مؤسستك، أضف أو عدل الصور، الوصف والخدمات.</p>
         </div>
         <button
           onClick={() => {
@@ -888,13 +891,13 @@ const RoomManagement = ({ establishments }) => {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
-          {showForm ? 'Annuler' : 'Ajouter une chambre'}
+          {showForm ? 'إلغاء' : 'إضافة غرفة'}
         </button>
       </div>
 
       {validatedEsts.length > 1 && (
         <div className="mb-4">
-          <label className="block text-xs font-semibold text-slate-600 mb-1.5">Établissement</label>
+          <label className="block text-xs font-semibold text-slate-600 mb-1.5">المؤسسة</label>
           <select
             value={selectedEstId}
             onChange={(e) => setSelectedEstId(e.target.value)}
@@ -911,11 +914,11 @@ const RoomManagement = ({ establishments }) => {
         <form onSubmit={handleSaveRoom} className="mb-6 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 space-y-4">
           <div className="flex items-center justify-between pb-2 border-b border-neutral-200">
             <h4 className="font-bold text-[#0E1E3D] text-sm">
-              {editingRoomId ? 'Modifier la chambre / تعديل الغرفة' : 'Ajouter une chambre / إضافة غرفة'}
+              {editingRoomId ? 'تعديل الغرفة' : 'إضافة غرفة'}
             </h4>
             {editingRoomId && (
               <span className="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
-                Mode modification
+                وضع التعديل
               </span>
             )}
           </div>
@@ -927,31 +930,31 @@ const RoomManagement = ({ establishments }) => {
           )}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">Type de chambre *</label>
+              <label className="block text-xs font-semibold text-slate-600 mb-1.5">نوع الغرفة *</label>
               <input
                 value={formData.nomType}
                 onChange={(e) => setFormData({ ...formData, nomType: e.target.value })}
                 required
-                placeholder="Ex: Suite Deluxe, Chambre Double..."
+                placeholder="مثال: جناح ديلوكس، غرفة مزدوجة..."
                 className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">Prix par nuit (DA) *</label>
+              <label className="block text-xs font-semibold text-slate-600 mb-1.5">السعر لكل ليلة (دج) *</label>
               <input
                 type="number"
                 value={formData.prixNuit}
                 onChange={(e) => setFormData({ ...formData, prixNuit: e.target.value })}
                 required
                 min="0"
-                placeholder="Ex: 12000"
+                placeholder="مثال: 12000"
                 className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
               />
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">Capacité (personnes)</label>
+              <label className="block text-xs font-semibold text-slate-600 mb-1.5">السعة (أشخاص)</label>
               <input
                 type="number"
                 value={formData.capacite}
@@ -961,7 +964,7 @@ const RoomManagement = ({ establishments }) => {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">Nombre disponible</label>
+              <label className="block text-xs font-semibold text-slate-600 mb-1.5">العدد المتاح</label>
               <input
                 type="number"
                 value={formData.nbDisponible}
@@ -973,24 +976,24 @@ const RoomManagement = ({ establishments }) => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">Description de la chambre / وصف الغرفة</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">وصف الغرفة</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               rows={3}
-              placeholder="Décrivez les équipements, le confort, la vue, le balcon..."
+              placeholder="صف التجهيزات، الراحة، الإطلالة، الشرفة..."
               className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">Services & équipements de la chambre / خدمات الغرفة</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">خدمات الغرفة</label>
             <div className="flex gap-2 mb-2">
               <input
                 type="text"
                 value={newServiceInput}
                 onChange={(e) => setNewServiceInput(e.target.value)}
-                placeholder="Ex: Climatisation, Wi-Fi, TV 4K, Mini-bar, Vue sur mer..."
+                placeholder="مثال: تكييف، واي فاي، تلفاز 4K، ميني بار، إطلالة على البحر..."
                 className="block flex-1 px-3.5 py-2 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
                 onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddService(); } }}
               />
@@ -999,7 +1002,7 @@ const RoomManagement = ({ establishments }) => {
                 onClick={handleAddService}
                 className="px-4 py-2 bg-[#0E1E3D] text-white rounded-xl text-xs font-bold hover:bg-[#CB9A56] hover:text-[#0E1E3D] transition cursor-pointer"
               >
-                Ajouter
+                إضافة
               </button>
             </div>
             {formData.services.length > 0 && (
@@ -1021,24 +1024,24 @@ const RoomManagement = ({ establishments }) => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">Photos de la chambre / صور الغرفة</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">صور الغرفة</label>
             <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#CB9A56] bg-white transition text-center mb-2">
               <svg className="w-6 h-6 text-[#CB9A56] mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <span className="text-xs font-bold text-[#0E1E3D]">Cliquez pour ajouter des photos</span>
+              <span className="text-xs font-bold text-[#0E1E3D]">انقر لإضافة صور</span>
               <input type="file" accept="image/*" multiple onChange={handleRoomImageChange} className="hidden" />
             </label>
             {formData.images.length > 0 && (
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                 {formData.images.map((img, idx) => (
                   <div key={idx} className="relative rounded-xl overflow-hidden border border-neutral-200 h-20 group bg-black">
-                    <img src={img} alt={`Chambre ${idx}`} className="w-full h-full object-cover" />
+                    <img src={img} alt={`غرفة ${idx}`} className="w-full h-full object-cover" />
                     <button
                       type="button"
                       onClick={() => handleRemoveRoomImage(idx)}
                       className="absolute top-1 right-1 w-5 h-5 bg-rose-600 text-white rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition cursor-pointer"
-                      title="Supprimer la photo"
+                      title="حذف الصورة"
                     >
                       ×
                     </button>
@@ -1053,7 +1056,7 @@ const RoomManagement = ({ establishments }) => {
               type="submit"
               className="flex-1 bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white px-5 py-3 rounded-xl text-xs font-bold transition shadow-xs cursor-pointer"
             >
-              {editingRoomId ? 'Mettre à jour la chambre / تحديث الغرفة' : 'Enregistrer et ajouter la chambre / حفظ الغرفة'}
+              {editingRoomId ? 'تحديث الغرفة' : 'حفظ وإضافة الغرفة'}
             </button>
             {editingRoomId && (
               <button
@@ -1064,7 +1067,7 @@ const RoomManagement = ({ establishments }) => {
                 }}
                 className="px-4 py-3 bg-neutral-200 hover:bg-neutral-300 text-neutral-800 rounded-xl text-xs font-bold transition cursor-pointer"
               >
-                Annuler
+                إلغاء
               </button>
             )}
           </div>
@@ -1080,8 +1083,8 @@ const RoomManagement = ({ establishments }) => {
           <svg className="w-12 h-12 mx-auto text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
           </svg>
-          <p className="text-sm font-semibold text-slate-700">Aucune chambre pour le moment</p>
-          <p className="text-xs text-slate-400 mt-1">Cliquez sur "Ajouter une chambre" pour commencer.</p>
+          <p className="text-sm font-semibold text-slate-700">لا توجد غرف حالياً</p>
+          <p className="text-xs text-slate-400 mt-1">انقر على "إضافة غرفة" للبدء.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -1095,7 +1098,7 @@ const RoomManagement = ({ establishments }) => {
                     <button
                       onClick={() => openEditRoom(room)}
                       className="w-7 h-7 flex items-center justify-center bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white rounded-full text-xs font-bold shadow-md transition cursor-pointer"
-                      title="Modifier la chambre"
+                      title="تعديل الغرفة"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -1104,14 +1107,14 @@ const RoomManagement = ({ establishments }) => {
                     <button
                       onClick={() => handleDeleteRoom(room.id)}
                       className="w-7 h-7 flex items-center justify-center bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-bold shadow-md transition cursor-pointer"
-                      title="Supprimer la chambre"
+                      title="حذف الغرفة"
                     >
                       ×
                     </button>
                   </div>
                   {room.images && room.images.length > 1 && (
                     <span className="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] font-bold px-2 py-0.5 rounded-full backdrop-blur-xs">
-                      📷 {room.images.length} photos
+                      📷 {room.images.length} صور
                     </span>
                   )}
                 </div>
@@ -1123,7 +1126,7 @@ const RoomManagement = ({ establishments }) => {
                         onClick={() => openEditRoom(room)}
                         className="text-[11px] font-bold text-[#CB9A56] hover:underline shrink-0 cursor-pointer"
                       >
-                        Modifier
+                        تعديل
                       </button>
                     </div>
                     {room.description && (
@@ -1141,15 +1144,15 @@ const RoomManagement = ({ establishments }) => {
                   </div>
                   <div className="space-y-1.5 text-xs pt-2 border-t border-neutral-100">
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Prix/nuit:</span>
-                      <span className="font-bold text-[#0E1E3D]">{(room.prixNuit || 0).toLocaleString('fr-FR')} DA</span>
+                      <span className="text-slate-500">السعر/ليلة:</span>
+                      <span className="font-bold text-[#0E1E3D]">{(room.prixNuit || 0).toLocaleString('ar-DZ')} دج</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Capacité:</span>
-                      <span className="font-bold text-[#0E1E3D]">{room.capacite} pers.</span>
+                      <span className="text-slate-500">السعة:</span>
+                      <span className="font-bold text-[#0E1E3D]">{room.capacite} شخص</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Disponibles:</span>
+                      <span className="text-slate-500">المتاحة:</span>
                       <span className={`font-bold ${room.nbDisponible > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
                         {room.nbDisponible}
                       </span>
@@ -1166,13 +1169,13 @@ const RoomManagement = ({ establishments }) => {
 }
 
 // ============================================================
-// Edit Establishment Modal Component
+// مكون نافذة تعديل المؤسسة
 // ============================================================
 const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
     nom: establishment.nom || '',
     type: establishment.type || 'hotel',
-    wilaya: establishment.wilaya || 'Alger',
+    wilaya: establishment.wilaya || 'الجزائر',
     ville: establishment.ville || '',
     adresse: establishment.adresse || '',
     description: establishment.description || '',
@@ -1187,9 +1190,9 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
   const [success, setSuccess] = useState(null)
 
   const PRESET_SERVICES = [
-    'Wi-Fi', 'Parking', 'Climatisation', 'Restaurant', 'Piscine',
-    'Petit-déjeuner', 'Ascenseur', 'TV', 'Réception 24h/24',
-    'Vue sur mer', 'Room Service', 'Chauffage', 'Espace enfants', 'Coffre-fort'
+    'واي فاي', 'موقف سيارات', 'تكييف', 'مطعم', 'مسبح',
+    'إفطار', 'مصعد', 'تلفاز', 'استقبال 24/24',
+    'إطلالة على البحر', 'خدمة الغرف', 'تدفئة', 'منطقة أطفال', 'خزنة'
   ]
 
   const handleToggleService = (srv) => {
@@ -1268,13 +1271,13 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
     setLoading(false)
 
     if (res.success) {
-      setSuccess('Informations de l\'établissement mises à jour avec succès! / تم تحديث بيانات المؤسسة بنجاح')
+      setSuccess('تم تحديث بيانات المؤسسة بنجاح')
       setTimeout(() => {
         onSuccess()
         onClose()
       }, 1000)
     } else {
-      setError(res.message || 'Erreur lors de la mise à jour de l\'établissement.')
+      setError(res.message || 'حدث خطأ أثناء تحديث المؤسسة.')
     }
   }
 
@@ -1289,12 +1292,12 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
         </button>
 
         <div className="mb-6">
-          <span className="text-[11px] font-bold text-[#CB9A56] uppercase tracking-wider">Éditer l'établissement</span>
+          <span className="text-[11px] font-bold text-[#CB9A56] uppercase tracking-wider">تعديل المؤسسة</span>
           <h3 className="text-xl font-extrabold text-[#0E1E3D] font-display">
             تعديل معلومات المؤسسة والصور والخدمات
           </h3>
           <p className="text-xs text-slate-500 mt-1">
-            Modifiez le nom, la description, les services disponibles et gérez la galerie photos.
+            عدل الاسم، الوصف، الخدمات المتاحة وأدر معرض الصور.
           </p>
         </div>
 
@@ -1311,11 +1314,11 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Nom & Type */}
+          {/* الاسم والنوع */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-                Nom de l'établissement / اسم المؤسسة *
+                اسم المؤسسة *
               </label>
               <input
                 type="text"
@@ -1323,33 +1326,33 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                 value={formData.nom}
                 onChange={(e) => setFormData({ ...formData, nom: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
-                placeholder="Ex: Hôtel El Aurassi"
+                placeholder="مثال: فندق الأوراسي"
               />
             </div>
 
             <div>
               <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-                Type / نوع المؤسسة *
+                نوع المؤسسة *
               </label>
               <select
                 value={formData.type}
                 onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
               >
-                <option value="hotel">Hôtel / فندق</option>
-                <option value="dortoir">Dortoir / مرقد</option>
-                <option value="residence">Résidence / إقامة</option>
-                <option value="villa">Villa / فيلا</option>
-                <option value="auberge">Auberge / مأوى</option>
+                <option value="hotel">فندق</option>
+                <option value="dortoir">مرقد</option>
+                <option value="residence">إقامة</option>
+                <option value="villa">فيلا</option>
+                <option value="auberge">مأوى</option>
               </select>
             </div>
           </div>
 
-          {/* Wilaya, Ville & Adresse */}
+          {/* الولاية، المدينة والعنوان */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
               <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-                Wilaya / الولاية *
+                الولاية *
               </label>
               <select
                 value={formData.wilaya}
@@ -1364,7 +1367,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
 
             <div>
               <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-                Ville / المدينة *
+                المدينة *
               </label>
               <input
                 type="text"
@@ -1372,48 +1375,48 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                 value={formData.ville}
                 onChange={(e) => setFormData({ ...formData, ville: e.target.value })}
                 className="w-full px-3 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
-                placeholder="Ex: Bab El Oued"
+                placeholder="مثال: باب الواد"
               />
             </div>
 
             <div>
               <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-                Adresse / العنوان
+                العنوان
               </label>
               <input
                 type="text"
                 value={formData.adresse}
                 onChange={(e) => setFormData({ ...formData, adresse: e.target.value })}
                 className="w-full px-3 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
-                placeholder="Rue, quartier..."
+                placeholder="الشارع، الحي..."
               />
             </div>
           </div>
 
-          {/* Description */}
+          {/* الوصف */}
           <div>
             <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-              Description de l'établissement / وصف المؤسسة
+              وصف المؤسسة
             </label>
             <textarea
               rows={3}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-medium focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
-              placeholder="Décrivez les atouts, le cadre, la proximité avec la ville ou la plage..."
+              placeholder="صف مميزات المكان، الإطلالة، القرب من المدينة أو الشاطئ..."
             />
           </div>
 
-          {/* Services & Équipements */}
+          {/* الخدمات والتجهيزات */}
           <div>
             <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-              Services & Équipements / خدمات ومرافق المؤسسة
+              خدمات ومرافق المؤسسة
             </label>
             <p className="text-[11px] text-slate-500 mb-2">
-              Sélectionnez les services proposés par votre établissement pour les afficher sur la carte d'accueil:
+              اختر الخدمات التي يقدمها مؤسستك لتظهر على بطاقة المؤسسة:
             </p>
             
-            {/* Presets */}
+            {/* الخدمات الافتراضية */}
             <div className="flex flex-wrap gap-1.5 mb-3">
               {PRESET_SERVICES.map((srv) => {
                 const selected = formData.services.includes(srv)
@@ -1434,13 +1437,13 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
               })}
             </div>
 
-            {/* Custom service input */}
+            {/* حقل إضافة خدمة مخصصة */}
             <div className="flex gap-2">
               <input
                 type="text"
                 value={newServiceInput}
                 onChange={(e) => setNewServiceInput(e.target.value)}
-                placeholder="Ajouter un autre service (ex: Hammam, Navette aéroport...)"
+                placeholder="أضف خدمة أخرى (مثال: حمام مغربي، نقل من وإلى المطار...)"
                 className="flex-1 px-3.5 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
                 onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCustomService(); } }}
               />
@@ -1449,11 +1452,11 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                 onClick={handleAddCustomService}
                 className="px-4 py-2 bg-[#CB9A56] text-[#0E1E3D] rounded-xl text-xs font-bold hover:bg-[#E4C48A] transition cursor-pointer"
               >
-                Ajouter
+                إضافة
               </button>
             </div>
 
-            {/* Active services list */}
+            {/* قائمة الخدمات النشطة */}
             {formData.services.length > 0 && (
               <div className="mt-2.5 flex flex-wrap gap-1.5 p-3 bg-neutral-50 rounded-xl border border-neutral-200">
                 {formData.services.map((srv, idx) => (
@@ -1475,18 +1478,18 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
             )}
           </div>
 
-          {/* Photos & Main Photo */}
+          {/* الصور والصورة الرئيسية */}
           <div>
             <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-              Photos & Galerie de l'établissement / صور المؤسسة
+              صور المؤسسة
             </label>
 
             <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#CB9A56] bg-neutral-50 hover:bg-white transition text-center mb-3">
               <svg className="w-7 h-7 text-[#CB9A56] mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <span className="text-xs font-bold text-[#0E1E3D]">Cliquez pour importer des photos</span>
-              <span className="text-[10px] text-slate-400 mt-0.5">Formats acceptés: JPG, PNG, WEBP</span>
+              <span className="text-xs font-bold text-[#0E1E3D]">انقر لاستيراد الصور</span>
+              <span className="text-[10px] text-slate-400 mt-0.5">الصيغ المدعومة: JPG, PNG, WEBP</span>
               <input type="file" accept="image/*" multiple onChange={handleImageUpload} className="hidden" />
             </label>
 
@@ -1496,11 +1499,11 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                   const isVedette = formData.image_vedette === img
                   return (
                     <div key={idx} className={`relative h-24 rounded-xl overflow-hidden border-2 group ${isVedette ? 'border-[#CB9A56] ring-2 ring-[#CB9A56]/30' : 'border-neutral-200'}`}>
-                      <img src={img} alt={`Photo ${idx + 1}`} className="w-full h-full object-cover" />
+                      <img src={img} alt={`صورة ${idx + 1}`} className="w-full h-full object-cover" />
                       
                       {isVedette && (
                         <span className="absolute top-1 left-1 bg-[#CB9A56] text-[#0E1E3D] text-[9px] font-black px-1.5 py-0.5 rounded shadow-xs">
-                          Principale
+                          رئيسية
                         </span>
                       )}
 
@@ -1510,7 +1513,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                           onClick={() => setFormData({ ...formData, image_vedette: img })}
                           className="absolute bottom-1 left-1 bg-black/70 hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-[9px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition cursor-pointer"
                         >
-                          Définir comme photo principale
+                          تعيين كصورة رئيسية
                         </button>
                       )}
 
@@ -1518,7 +1521,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                         type="button"
                         onClick={() => handleRemoveImage(idx)}
                         className="absolute top-1 right-1 w-5 h-5 bg-rose-600 text-white rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition cursor-pointer"
-                        title="Supprimer la photo"
+                        title="حذف الصورة"
                       >
                         ×
                       </button>
@@ -1529,7 +1532,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
             )}
           </div>
 
-          {/* Action Buttons */}
+          {/* أزرار الإجراء */}
           <div className="flex gap-3 pt-3 border-t border-neutral-100">
             <button
               type="submit"
@@ -1539,7 +1542,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
               {loading ? (
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
               ) : (
-                'Enregistrer les modifications / حفظ التعديلات'
+                'حفظ التعديلات'
               )}
             </button>
 
@@ -1548,7 +1551,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
               onClick={onClose}
               className="px-4 py-3 bg-neutral-200 hover:bg-neutral-300 text-neutral-800 rounded-xl text-xs font-bold transition cursor-pointer"
             >
-              Annuler
+              إلغاء
             </button>
           </div>
         </form>
