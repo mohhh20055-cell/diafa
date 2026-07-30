@@ -440,66 +440,7 @@ const AdminDashboard = () => {
         <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-6 sm:p-8">
           {activeTab === 'overview' && (
             <div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-3 flex items-center gap-2">
-                    <svg className="w-5 h-5 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    {t('pendingEstCount', { count: pendingEstablishments.length })}
-                  </h4>
-                  {pendingEstablishments.length === 0 ? (
-                    <p className="text-xs text-slate-500">{t('noPendingEsts')}</p>
-                  ) : (
-                    <ul className="space-y-3">
-                      {pendingEstablishments.map((est) => (
-                        <li key={est.id} className="flex justify-between items-center text-xs bg-white p-3 rounded-xl border border-neutral-200">
-                          <div>
-                            <p className="font-bold text-[#0E1E3D]">{est.nom}</p>
-                            <p className="text-slate-400">{est.ville}, {est.wilaya} ({t(est.type)})</p>
-                          </div>
-                          <button
-                            onClick={() => { setSelectedEst(est.id); goToTab('pending') }}
-                            className="px-3 py-1 rounded-full text-[10px] font-bold bg-[#CB9A56] text-[#0E1E3D]"
-                          >
-                            {t('review')} ←
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-3 flex items-center gap-2">
-                    <svg className="w-5 h-5 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    {t('lastUsersCount', { count: users.length })}
-                  </h4>
-                  {users.length === 0 ? (
-                    <p className="text-xs text-slate-500">{t('noUsersRegistered')}</p>
-                  ) : (
-                    <ul className="space-y-3">
-                      {users.slice(0, 4).map((u) => (
-                        <li key={u.id} className="flex justify-between items-center text-xs bg-white p-3 rounded-xl border border-neutral-200">
-                          <div>
-                            <p className="font-bold text-[#0E1E3D]">{u.prenom} {u.nom}</p>
-                            <p className="text-slate-400">{u.email || u.telephone}</p>
-                          </div>
-                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                            u.role === 'owner' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700'
-                          }`}>
-                            {u.role === 'owner' ? t('estOwnerAccount') : t('customerAccount')}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-white">
                   <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">{t('top5WilayasEst')}</h4>
                   <ResponsiveContainer width="100%" height={240}>
@@ -1201,7 +1142,7 @@ const isToday = (dateStr) => {
 }
 
 const AdminReservationsTab = ({ reservations, filter, setFilter }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const filters = [
     { id: 'tous', label: t('allFilters') },
     { id: 'aujourdhui', label: t('today') },
