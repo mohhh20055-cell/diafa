@@ -11,17 +11,15 @@ const Establishments = () => {
   const [establishments, setEstablishments] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [search, setSearch] = useState('')
   const [wilaya, setWilaya] = useState(searchParams.get('wilaya') || '')
   const [ville, setVille] = useState(searchParams.get('ville') || '')
-  const [typeFilter, setTypeFilter] = useState(searchParams.get('type') || '')
+  const typeFilter = searchParams.get('type') || ''
   const villesDisponibles = wilaya ? getVillesByWilaya(wilaya) : []
 
   useEffect(() => {
     const vil = searchParams.get('ville')
     const wil = searchParams.get('wilaya')
     const type = searchParams.get('type')
-    if (type) setTypeFilter(type)
     if (vil) setVille(vil)
     if (wil) setWilaya(wil)
     loadEstablishments({ ville: vil, wilaya: wil, type })
@@ -70,15 +68,6 @@ const Establishments = () => {
     loadEstablishments({ ville: newVille, wilaya, type: typeFilter })
   }
 
-  const handleTypeChange = (newType) => {
-    setTypeFilter(newType)
-    loadEstablishments({ ville, wilaya, type: newType })
-  }
-
-  const filteredEstablishments = establishments.filter((est) =>
-    est.nom?.toLowerCase().includes(search.toLowerCase())
-  )
-
   return (
     <div className="min-h-screen bg-[#FAF7F1]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -91,20 +80,10 @@ const Establishments = () => {
           </p>
         </div>
 
-        {/* Filters - tout est appliqué automatiquement, sans bouton "Rechercher" */}
+        {/* Filters - uniquement Wilaya et Ville, appliqués automatiquement, sans bouton */}
         <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#152A54] mb-2">Rechercher</label>
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Nom de l'établissement..."
-                className="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56]"
-              />
-            </div>
-            <div>
+          <div className="flex flex-col sm:flex-row sm:justify-end gap-4">
+            <div className="w-full sm:w-64">
               <label className="block text-sm font-medium text-[#152A54] mb-2">Wilaya</label>
               <select
                 value={wilaya}
@@ -117,7 +96,7 @@ const Establishments = () => {
                 ))}
               </select>
             </div>
-            <div>
+            <div className="w-full sm:w-64">
               <label className="block text-sm font-medium text-[#152A54] mb-2">Ville</label>
               <select
                 value={ville}
@@ -131,19 +110,6 @@ const Establishments = () => {
                 {villesDisponibles.map((v) => (
                   <option key={v} value={v}>{v}</option>
                 ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#152A54] mb-2">Type</label>
-              <select
-                value={typeFilter}
-                onChange={(e) => handleTypeChange(e.target.value)}
-                className="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56]"
-              >
-                <option value="">Tous les types</option>
-                <option value="hotel">Hôtel</option>
-                <option value="mraqed">Dortoir</option>
-                <option value="maison">Maison</option>
               </select>
             </div>
           </div>
@@ -160,7 +126,7 @@ const Establishments = () => {
               Réessayer
             </button>
           </div>
-        ) : filteredEstablishments.length === 0 ? (
+        ) : establishments.length === 0 ? (
           <div className="text-center py-20">
             <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
@@ -171,10 +137,10 @@ const Establishments = () => {
         ) : (
           <>
             <p className="text-sm text-slate-500 mb-6">
-              {filteredEstablishments.length} établissement(s) trouvé(s)
+              {establishments.length} établissement(s) trouvé(s)
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredEstablishments.map((establishment) => {
+              {establishments.map((establishment) => {
                 const validPrices = (establishment.rooms || [])
                   .map((r) => parseFloat(r.prixNuit ?? r.prix_nuit))
                   .filter((p) => !isNaN(p) && isFinite(p) && p > 0)
