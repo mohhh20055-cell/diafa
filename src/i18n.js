@@ -455,6 +455,12 @@ export const resources = {
       adminMe: 'المدير (أنا)',
       adding: 'جاري الإضافة...',
       createAndValidateEstNow: 'إنشاء واعتماد المؤسسة الآن',
+      establishmentOwner: 'مالك المؤسسة',
+      createNewOwnerOption: 'إنشاء حساب مالك جديد',
+      selectExistingOwnerOption: 'اختيار مالك موجود',
+      newOwnerFormDesc: 'أدخل معلومات المالك، سيتمكن من تسجيل الدخول مباشرة بهذا البريد الإلكتروني وكلمة المرور.',
+      selectOwnerPlaceholder: '— اختر مالكاً —',
+      ownerAccountAndEstCreatedSuccessfully: 'تم إنشاء حساب المالك والمؤسسة واعتمادهما بنجاح',
       noEstablishmentsRegisteredDesc: 'سجل مؤسستك السياحية لتظهر للزوار وتبدأ في تلقي الحجوزات.',
       approvedEstablishment: 'مؤسسة معتمدة ومقبولة',
       view: 'عرض',
@@ -976,6 +982,12 @@ export const resources = {
       adminMe: 'Admin (Me)',
       adding: 'Adding...',
       createAndValidateEstNow: 'Create and Validate Establishment Now',
+      establishmentOwner: 'Establishment Owner',
+      createNewOwnerOption: 'Create a new owner account',
+      selectExistingOwnerOption: 'Select an existing owner',
+      newOwnerFormDesc: 'Enter the owner\'s information — they will be able to log in right away with this email and password.',
+      selectOwnerPlaceholder: '— Select an owner —',
+      ownerAccountAndEstCreatedSuccessfully: 'Owner account and establishment created and validated successfully',
       noEstablishmentsRegisteredDesc: 'Register your tourism establishment to appear to visitors and start receiving bookings.',
       approvedEstablishment: 'Approved Establishment',
       view: 'View',
@@ -1043,4 +1055,3 @@ i18n
   });
 
 export default i18n;
-
