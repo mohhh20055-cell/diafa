@@ -731,10 +731,10 @@ const AdminDashboard = () => {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
                 <div>
                   <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
-                    Messages de Contact / رسائل زوار الموقع
+                    {t('contactMessages')}
                   </h3>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    Consultez et répondez aux messages envoyés depuis l'interface de contact de la plateforme.
+                    {t('adminResponse')}
                   </p>
                 </div>
                 <span className="self-start sm:self-auto px-3 py-1 bg-sky-100 text-sky-800 text-xs font-bold rounded-full">
@@ -747,7 +747,7 @@ const AdminDashboard = () => {
                   <svg className="w-12 h-12 mx-auto text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  <p className="text-sm font-semibold text-slate-700">Aucun message de contact reçu</p>
+                  <p className="text-sm font-semibold text-slate-700">{t('noContactMessages')}</p>
                   <p className="text-xs text-slate-400 mt-1">Les nouveaux messages soumis apparaîtront automatiquement ici.</p>
                 </div>
               ) : (
