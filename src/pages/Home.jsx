@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
 import {
   IconPin,
   IconCalendar,
@@ -19,7 +20,6 @@ import {
 } from "../api/establishments";
 import { getRatingsBatch } from "../api/reviews";
 
-// Photos de fond du hero (juste les images, pas de label affiché)
 const HERO_IMAGES = [
   "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?auto=format&fit=crop&w=1600&q=80",
   "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80",
@@ -28,8 +28,6 @@ const HERO_IMAGES = [
   "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1600&q=80",
 ];
 
-// Destinations phares -> vraies wilayas d'Algérie avec un lieu emblématique précis
-// "wilaya" sert au filtre de recherche (doit matcher WILAYAS), "nom" est le lieu affiché
 const DESTINATIONS_PHARES = [
   {
     nom: "Maqam Echahid",
@@ -58,24 +56,6 @@ const DESTINATIONS_PHARES = [
   },
 ];
 
-const POURQUOI_ITEMS = [
-  {
-    Icon: IconOffer,
-    title: "Des offres promotionnelles exclusives",
-    desc: "Trouvez les meilleures offres pour faire des économies sur vos réservations.",
-  },
-  {
-    Icon: IconSupport,
-    title: "Une assistance toujours à votre écoute",
-    desc: "Un service client dédié disponible pour répondre à toutes vos questions.",
-  },
-  {
-    Icon: IconBolt,
-    title: "Confirmation rapide",
-    desc: "Recevez une réponse de l'établissement dans les plus brefs délais après votre demande.",
-  },
-];
-
 function cheapestPrice(establishment) {
   if (!establishment || !Array.isArray(establishment.rooms)) return null;
   const pricedRooms = establishment.rooms.filter(
@@ -94,8 +74,6 @@ function cheapestPrice(establishment) {
   );
   return isFinite(min) && min > 0 ? min : null;
 }
-
-const TYPE_LABELS = { hotel: "Hôtel", mraqed: "Dortoir", maison: "Maison" };
 
 function StarRating({ rating, count, size = "sm" }) {
   const starSize = size === "sm" ? "w-3.5 h-3.5" : "w-4 h-4";
@@ -125,12 +103,14 @@ function StarRating({ rating, count, size = "sm" }) {
 }
 
 function FeaturedCard({ establishment }) {
+  const { t } = useLanguage();
   const cover =
     establishment.imageVedette ||
     (establishment.images || [])[0] ||
     "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80";
   const price = cheapestPrice(establishment);
-  const typeLabel = TYPE_LABELS[establishment.type] || establishment.type || "Hébergement";
+  const typeKey = establishment.type === 'hotel' ? 'hotel' : establishment.type === 'mraqed' ? 'mraqed' : 'maison';
+  const typeLabel = t(typeKey) || establishment.type;
   const rating = establishment.rating || { avgRating: 0, reviewCount: 0 };
 
   const estServices = Array.isArray(establishment.services)
@@ -169,7 +149,7 @@ function FeaturedCard({ establishment }) {
           )}
           {price != null && !isNaN(price) && isFinite(price) && price > 0 && (
             <div className="absolute inset-x-0 bottom-0 bg-[#0E1E3D]/80 px-3 py-1.5 text-white">
-              <span className="text-[11px] font-medium text-white/80">À partir de</span>{" "}
+              <span className="text-[11px] font-medium text-white/80">{t('price')}</span>{" "}
               <span className="text-sm font-bold">{Math.round(price).toLocaleString("fr-FR")} DA</span>
             </div>
           )}
@@ -198,7 +178,7 @@ function FeaturedCard({ establishment }) {
         </div>
       </div>
       <div className="border-t border-neutral-100 px-3 py-2 flex items-center justify-between">
-        <span className="text-[11px] font-semibold text-[#CB9A56]">Voir l'établissement</span>
+        <span className="text-[11px] font-semibold text-[#CB9A56]">{t('details')}</span>
         <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#CB9A56]/15 text-[#CB9A56]">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
             <path
@@ -216,6 +196,7 @@ function FeaturedCard({ establishment }) {
 }
 
 function FeaturedEstablishments() {
+  const { t } = useLanguage();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const scrollerRef = useRef(null);
@@ -263,7 +244,6 @@ function FeaturedEstablishments() {
     el.scrollBy({ left: dir * (el.clientWidth * 0.8), behavior: "smooth" });
   }
 
-  // Pendant le chargement -> skeleton. Si rien n'est trouvé -> ne rien afficher du tout.
   if (!loading && items.length === 0) {
     return null;
   }
@@ -272,10 +252,10 @@ function FeaturedEstablishments() {
     <section className="mx-auto max-w-6xl px-6 py-16">
       <div className="mb-8 text-center">
         <h2 className="font-display text-2xl font-bold text-[#0E1E3D] sm:text-3xl">
-          Établissements en vedette
+          {t('ourEstablishments')}
         </h2>
         <p className="mt-2 text-sm text-slate-500">
-          Découvrez notre sélection recommandée pour votre prochain séjour
+          {t('homeHeroSubtitle')}
         </p>
       </div>
 
@@ -339,7 +319,7 @@ function FeaturedEstablishments() {
           to="/etablissements"
           className="inline-block rounded-xl bg-[#CB9A56] px-7 py-3 text-sm font-semibold text-[#0E1E3D] transition hover:bg-[#E4C48A]"
         >
-          Trouver plus d'établissements
+          {t('exploreEstablishments')}
         </Link>
       </div>
     </section>
@@ -347,18 +327,36 @@ function FeaturedEstablishments() {
 }
 
 function PourquoiSection() {
+  const { t } = useLanguage();
+  const POURQUOI_ITEMS = [
+    {
+      Icon: IconOffer,
+      title: t('bestPriceGuarantee'),
+      desc: t('freeCancellation'),
+    },
+    {
+      Icon: IconSupport,
+      title: t('support247'),
+      desc: t('support247'),
+    },
+    {
+      Icon: IconBolt,
+      title: t('securePayment'),
+      desc: t('securePayment'),
+    },
+  ];
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#0E1E3D] via-[#152A54] to-[#0E1E3D] px-6 py-16">
-      {/* motif décoratif discret */}
       <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[#CB9A56]/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-[#CB9A56]/10 blur-3xl" />
 
       <div className="relative mx-auto max-w-5xl text-center">
         <h2 className="font-display text-2xl font-bold text-white sm:text-3xl">
-          Pourquoi réserver avec Diyafa ?
+          {t('discoverTitle')}
         </h2>
         <p className="mx-auto mt-2 max-w-xl text-sm text-[#E4C48A] font-medium">
-          Trouver facilement et rapidement un hébergement de qualité et au meilleur prix en Algérie
+          {t('discoverSub')}
         </p>
         <div className="mt-12 grid gap-x-10 gap-y-12 sm:grid-cols-3">
           {POURQUOI_ITEMS.map(({ Icon, title, desc }) => (
@@ -378,6 +376,7 @@ function PourquoiSection() {
 
 export function Home() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [destination, setDestination] = useState("");
   const [dateDebut, setDateDebut] = useState("");
   const [dateFin, setDateFin] = useState("");
@@ -403,7 +402,6 @@ export function Home() {
 
   return (
     <div>
-      {/* ---------- Hero Section ---------- */}
       <section className="relative flex min-h-[560px] items-center justify-center overflow-hidden px-6 py-24">
         {HERO_IMAGES.map((url, i) => (
           <div
@@ -417,13 +415,13 @@ export function Home() {
         ))}
         <div className="relative w-full max-w-4xl text-center">
           <span className="mb-4 inline-block text-xs font-bold uppercase tracking-widest text-[#E4C48A]">
-            Hôtels &amp; Dortoirs &amp; Maisons en Algérie
+            {t('hotels')} &amp; {t('dortoirs')} &amp; {t('maisons')}
           </span>
           <h1 className="font-display text-4xl font-bold leading-tight text-white md:text-5xl">
-            Trouvez votre hébergement idéal en Algérie
+            {t('homeHeroTitle')}
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-white/80 text-lg">
-            Hôtels et dortoirs sélectionnés pour vous, réservés en toute confiance.
+            {t('homeHeroSubtitle')}
           </p>
 
           <form
@@ -432,12 +430,12 @@ export function Home() {
           >
             <div className="flex-1">
               <label className="mb-1.5 flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold uppercase tracking-wider text-slate-500">
-                <IconPin className="h-4 w-4 text-[#0E1E3D]" /> Où allez-vous ?
+                <IconPin className="h-4 w-4 text-[#0E1E3D]" /> {t('wilaya')}
               </label>
               <CustomSelect
                 value={destination}
                 onChange={setDestination}
-                placeholder="Toutes les wilayas"
+                placeholder={t('allWilayas')}
                 options={WILAYAS.map((w) => ({ value: w, label: w }))}
               />
             </div>
@@ -466,16 +464,16 @@ export function Home() {
             <div className="h-px w-full bg-neutral-100 md:h-10 md:w-px" />
             <div className="flex-1">
               <label className="mb-1.5 flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold uppercase tracking-wider text-slate-500">
-                <IconHome className="h-4 w-4 text-[#0E1E3D]" /> Type
+                <IconHome className="h-4 w-4 text-[#0E1E3D]" /> {t('type')}
               </label>
               <CustomSelect
                 value={type}
                 onChange={setType}
-                placeholder="Tous les types"
+                placeholder={t('allTypes')}
                 options={[
-                  { value: "hotel", label: "Hôtel" },
-                  { value: "mraqed", label: "Dortoir" },
-                  { value: "maison", label: "Maison" },
+                  { value: "hotel", label: t('hotel') },
+                  { value: "mraqed", label: t('mraqed') },
+                  { value: "maison", label: t('maison') },
                 ]}
               />
             </div>
@@ -483,7 +481,7 @@ export function Home() {
               type="submit"
               className="flex items-center justify-center gap-2 rounded-xl bg-[#CB9A56] px-8 py-4 text-base font-semibold text-[#0E1E3D] transition hover:bg-[#E4C48A]"
             >
-              <IconSearch className="h-4 w-4" /> Rechercher
+              <IconSearch className="h-4 w-4" /> {t('search')}
             </button>
           </form>
 
@@ -492,7 +490,7 @@ export function Home() {
               <button
                 key={url}
                 onClick={() => setHeroIndex(i)}
-                aria-label={`Voir slide ${i + 1}`}
+                aria-label={`Slide ${i + 1}`}
                 className={`h-1.5 rounded-full transition-all ${
                   i === heroIndex ? "w-6 bg-[#CB9A56]" : "w-1.5 bg-white/40"
                 }`}
@@ -502,20 +500,16 @@ export function Home() {
         </div>
       </section>
 
-      {/* ---------- Établissements en vedette ---------- */}
       <FeaturedEstablishments />
-
-      {/* ---------- Pourquoi réserver ---------- */}
       <PourquoiSection />
 
-      {/* ---------- Destinations phares (lieux précis) ---------- */}
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="mb-8 text-center">
           <h2 className="font-display text-2xl font-bold text-[#0E1E3D] sm:text-3xl">
-            Destinations phares
+            {t('wilaya')}
           </h2>
           <p className="mt-2 text-sm text-slate-500">
-            Des lieux emblématiques à découvrir en Algérie
+            {t('homeHeroSubtitle')}
           </p>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:grid-rows-2">

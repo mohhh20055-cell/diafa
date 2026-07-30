@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
+import { useLanguage } from "../context/LanguageContext";
 import {
   IconPhone,
   IconMail,
@@ -13,14 +14,15 @@ import {
   IconYoutube,
 } from "./Icons";
 
-const DESTINATIONS_POPULAIRES = ["Alger", "Oran", "Annaba", "Constantine"];
-
-const A_PROPOS_LINKS = [
-  { label: "Qui sommes-nous ?", to: "/contact", icon: IconUsers },
-  { label: "Contactez-nous", to: "/contact", icon: IconHeadset },
-];
-
 export function Footer() {
+  const { t } = useLanguage();
+  const DESTINATIONS_POPULAIRES = ["Alger", "Oran", "Annaba", "Constantine"];
+
+  const A_PROPOS_LINKS = [
+    { label: t("contact"), to: "/contact", icon: IconUsers },
+    { label: t("contact"), to: "/contact", icon: IconHeadset },
+  ];
+
   return (
     <footer className="relative overflow-hidden bg-[#0E1E3D] pb-8 pt-14 text-sm text-white/60">
       <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-[#CB9A56]/10 blur-3xl" />
@@ -77,13 +79,13 @@ export function Footer() {
             <Logo className="h-9" withText dark />
           </div>
           <p className="max-w-sm text-xs text-white/40">
-            Plateforme de réservation d'hôtels et de dortoirs en Algérie.
+            {t('footerDesc')}
           </p>
         </div>
 
         <div className="mb-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h3 className="mb-4 font-display text-base font-semibold text-white">Besoin d'aide ?</h3>
+            <h3 className="mb-4 font-display text-base font-semibold text-white">{t('support247')}</h3>
             <ul className="space-y-3">
               <li>
                 <a href="tel:+213798355735" className="group flex items-center gap-2.5 transition">
@@ -109,10 +111,10 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 font-display text-base font-semibold text-white">À propos</h3>
+            <h3 className="mb-4 font-display text-base font-semibold text-white">{t('quickLinks')}</h3>
             <ul className="space-y-2.5">
-              {A_PROPOS_LINKS.map(({ label, to, icon: Icon }) => (
-                <li key={label} className="flex items-center gap-2">
+              {A_PROPOS_LINKS.map(({ label, to, icon: Icon }, idx) => (
+                <li key={idx} className="flex items-center gap-2">
                   <Icon className="h-4 w-4 text-[#CB9A56]" />
                   <Link to={to} className="footer-link hover:text-white">
                     {label}
@@ -124,14 +126,14 @@ export function Footer() {
 
           <div>
             <h3 className="mb-4 font-display text-base font-semibold text-white">
-              Destinations populaires
+              {t('wilaya')}
             </h3>
             <ul className="space-y-2.5">
               {DESTINATIONS_POPULAIRES.map((ville) => (
                 <li key={ville} className="flex items-center gap-2">
                   <IconPinFooter className="h-4 w-4 text-[#CB9A56]" />
                   <Link to={`/etablissements?ville=${encodeURIComponent(ville)}`} className="footer-link hover:text-white">
-                    Hébergements à {ville}
+                    {ville}
                   </Link>
                 </li>
               ))}
@@ -140,17 +142,17 @@ export function Footer() {
 
           <div>
             <h3 className="mb-4 font-display text-base font-semibold text-white">
-              Devenir partenaire ?
+              {t('addEstablishment')}
             </h3>
             <Link
-              to="/register"
+              to="/register?type=etablissement"
               className="mb-3 flex items-center justify-center gap-2 rounded-lg bg-[#CB9A56] px-4 py-2.5 text-sm font-bold text-[#0E1E3D] transition hover:opacity-90"
             >
               <IconBuilding className="h-4 w-4" />
-              Ajoutez votre établissement
+              {t('addEstablishment')}
             </Link>
             <Link to="/login" className="footer-link block hover:text-white">
-              Connectez-vous à votre établissement
+              {t('login')}
             </Link>
             <div className="mt-5 flex gap-2">
               <a href="#" aria-label="Facebook" className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 hover:border-[#CB9A56] hover:text-[#CB9A56]">
@@ -188,7 +190,7 @@ export function Footer() {
         </div>
 
         <p className="border-t border-white/10 pt-6 text-center text-xs text-white/40">
-          © {new Date().getFullYear()} Diyafa — Plateforme de réservation d'hôtels et de dortoirs en Algérie.
+          {t('allRightsReserved')}
         </p>
       </div>
     </footer>
