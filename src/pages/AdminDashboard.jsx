@@ -47,7 +47,7 @@ import {
 const CHART_COLORS = ['#CB9A56', '#0E1E3D', '#E4C48A', '#60a5fa', '#34d399', '#f87171']
 const OVERVIEW_PIE_COLORS = ['#34d399', '#f97316', '#8b5cf6']
 
-const VALID_TABS = ['overview', 'pending', 'create', 'reservations', 'messages', 'users', 'stats']
+const VALID_TABS = ['overview', 'pending', 'establishments', 'create', 'reservations', 'messages', 'users', 'stats']
 
 const RESERVATION_STATUS_LABELS = {
   en_attente: 'pending',
@@ -232,6 +232,22 @@ const AdminDashboard = () => {
     }
   }
 
+  const handleDeleteEstablishment = async (id, name) => {
+    if (!confirm(t('confirmDeleteEstablishment', { defaultValue: isAr ? `هل أنت متأكد من حذف "${name}"؟ لا يمكن التراجع عن هذا الإجراء.` : `Confirmer la suppression de "${name}" ? Cette action est irréversible.`, name }))) return
+
+    try {
+      const res = await establishmentsApi.deleteEstablishment(id)
+      if (res.success) {
+        setValidatedEstablishments((prev) => prev.filter((e) => e.id !== id))
+        loadData()
+      } else {
+        alert(res.message || t('errorDeletingEstablishment', { defaultValue: isAr ? 'حدث خطأ أثناء حذف المؤسسة.' : "Erreur lors de la suppression de l'établissement." }))
+      }
+    } catch (err) {
+      alert(t('errorDeletingEstablishment', { defaultValue: isAr ? 'حدث خطأ أثناء حذف المؤسسة.' : "Erreur lors de la suppression de l'établissement." }))
+    }
+  }
+
   const handleSetFeaturedImage = async (id, imageUrl) => {
     try {
       const res = await establishmentsApi.setFeaturedImage(id, imageUrl)
@@ -282,6 +298,7 @@ const AdminDashboard = () => {
   const tabs = [
     { id: 'overview', label: t('overview'), icon: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' },
     { id: 'pending', label: t('pendingValidation'), count: pendingEstablishments.length, icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
+    { id: 'establishments', label: t('establishmentsListTab', { defaultValue: isAr ? 'المؤسسات' : 'Établissements' }), count: validatedEstablishments.length, icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5' },
     { id: 'create', label: t('addEstablishment'), icon: 'M12 4v16m8-8H4' },
     { id: 'reservations', label: t('reservations'), count: allReservations.length, icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
     { id: 'messages', label: t('contactMessages'), count: contactMessages.length, icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
@@ -610,6 +627,90 @@ const AdminDashboard = () => {
                       </div>
                     </div>
                   ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === 'establishments' && (
+            <div>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+                <div>
+                  <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
+                    {t('establishmentsListTab', { defaultValue: isAr ? 'المؤسسات' : 'Établissements' })}
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    {t('establishmentsListDesc', { defaultValue: isAr ? 'كل المؤسسات المسجلة في المنصة' : 'Tous les établissements enregistrés sur la plateforme' })}
+                  </p>
+                </div>
+                <span className="self-start sm:self-auto px-3 py-1 bg-[#CB9A56]/15 text-[#0E1E3D] text-xs font-bold rounded-full">
+                  {validatedEstablishments.length} {isAr ? 'مؤسسة' : 'établissement(s)'}
+                </span>
+              </div>
+
+              {validatedEstablishments.length === 0 ? (
+                <div className="text-center py-12 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200">
+                  <svg className="w-12 h-12 mx-auto text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
+                  </svg>
+                  <p className="text-sm font-semibold text-slate-700">
+                    {isAr ? 'لا توجد أي مؤسسة حالياً' : 'Aucun établissement pour le moment'}
+                  </p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto rounded-xl border border-neutral-200">
+                  <table className="min-w-full divide-y divide-neutral-200 text-left">
+                    <thead className="bg-neutral-50 text-xs font-bold text-slate-500 uppercase">
+                      <tr>
+                        <th className="px-4 py-3">{t('nameCol', { defaultValue: isAr ? 'الاسم' : 'Nom' })}</th>
+                        <th className="px-4 py-3">{isAr ? 'النوع' : 'Type'}</th>
+                        <th className="px-4 py-3">{isAr ? 'الموقع' : 'Localisation'}</th>
+                        <th className="px-4 py-3">{t('ownerCol', { defaultValue: isAr ? 'المالك' : 'Propriétaire' })}</th>
+                        <th className="px-4 py-3">{t('statusCol', { defaultValue: isAr ? 'الحالة' : 'Statut' })}</th>
+                        <th className="px-4 py-3 text-right">{t('actionsCol', { defaultValue: isAr ? 'إجراءات' : 'Actions' })}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-neutral-100 text-xs">
+                      {validatedEstablishments.map((est) => {
+                        const isValid = est.statut_validation === 'valide' || est.statut_validation === 'APPROVED'
+                        return (
+                          <tr key={est.id} className="hover:bg-neutral-50/80">
+                            <td className="px-4 py-3.5">
+                              <div className="flex items-center gap-2.5">
+                                <div className="w-9 h-9 rounded-lg bg-neutral-100 overflow-hidden shrink-0">
+                                  {(est.imageVedette || (est.images && est.images[0])) && (
+                                    <img src={est.imageVedette || est.images[0]} alt={est.nom} className="w-full h-full object-cover" />
+                                  )}
+                                </div>
+                                <span className="font-bold text-[#0E1E3D]">{est.nom}</span>
+                              </div>
+                            </td>
+                            <td className="px-4 py-3.5 text-slate-500 uppercase">{t(est.type)}</td>
+                            <td className="px-4 py-3.5 text-slate-500">{est.ville}, {est.wilaya}</td>
+                            <td className="px-4 py-3.5 text-slate-500">
+                              {est.owner ? `${est.owner.prenom || ''} ${est.owner.nom || ''}`.trim() || est.owner.email : '—'}
+                            </td>
+                            <td className="px-4 py-3.5">
+                              <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${isValid ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                                {isValid ? t('validated', { defaultValue: isAr ? 'مصادق عليه' : 'Validé' }) : t('pending', { defaultValue: isAr ? 'في الانتظار' : 'En attente' })}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3.5 text-right whitespace-nowrap">
+                              <button
+                                onClick={() => handleDeleteEstablishment(est.id, est.nom)}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-rose-600 hover:bg-rose-700 text-white transition"
+                              >
+                                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                                {t('delete', { defaultValue: isAr ? 'حذف' : 'Supprimer' })}
+                              </button>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
                 </div>
               )}
             </div>
