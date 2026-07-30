@@ -104,7 +104,7 @@ export const login = async (identifiant, motDePasse) => {
     if (authError || (!authData?.user && !profile)) {
       const msg = (authError?.message || '').toLowerCase()
       if (msg.includes('failed to fetch') || msg.includes('fetch')) {
-        return fail('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت. / Impossible de contacter le serveur. Vérifiez votre connexion internet.')
+        return fail('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت.')
       }
       if (msg.includes('invalid login credentials')) {
         return fail('بيانات الدخول غير صحيحة.')
@@ -199,7 +199,7 @@ export const login = async (identifiant, motDePasse) => {
     return ok({ token: authData?.session?.access_token || 'token-' + profile.id, user: profile }, 'Connexion réussie.')
   } catch (err) {
     if (err?.message?.includes('Failed to fetch') || err?.message?.includes('fetch')) {
-      return fail('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت. / Impossible de contacter le serveur. Vérifiez votre connexion internet.')
+      return fail('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت.')
     }
     return fail(err.message || 'Erreur de connexion.')
   }
@@ -608,13 +608,13 @@ export const resetPasswordRequest = async (identifiant) => {
 
       if (pErr) {
         if (pErr.message?.includes('Failed to fetch') || pErr.message?.includes('fetch')) {
-          return fail('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت. / Impossible de contacter le serveur. Vérifiez votre connexion internet.')
+          return fail('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت.')
         }
         return fail(`[DB ${pErr.code || ''}] ${pErr.message}`)
       }
 
       if (!data?.email) {
-        return fail('لم يتم العثور على أي حساب مرتبط برقم الهاتف هذا في قاعدة البيانات. / Aucun compte trouvé pour ce numéro de téléphone dans la base de données.')
+        return fail('لم يتم العثور على أي حساب مرتبط برقم الهاتف هذا في قاعدة البيانات.')
       }
       profile = data
       email = data.email
@@ -627,7 +627,7 @@ export const resetPasswordRequest = async (identifiant) => {
 
       if (pErr) {
         if (pErr.message?.includes('Failed to fetch') || pErr.message?.includes('fetch')) {
-          return fail('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت. / Impossible de contacter le serveur. Vérifiez votre connexion internet.')
+          return fail('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت.')
         }
         return fail(`[DB ${pErr.code || ''}] ${pErr.message}`)
       }

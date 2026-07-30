@@ -10,6 +10,7 @@ import * as reservationsApi from '../api/reservations'
 import * as contactApi from '../api/contact'
 import * as reviewsApi from '../api/reviews'
 import { WILAYAS } from '../constants/wilayas'
+import { useTranslation } from 'react-i18next'
 import {
   ResponsiveContainer,
   BarChart,
@@ -46,6 +47,7 @@ const RESERVATION_STATUS_STYLES = {
 }
 
 const AdminDashboard = () => {
+  const { t } = useTranslation()
   const { user, logout, updateProfile } = useAuth()
   const navigate = useNavigate()
   const { tab: tabParam } = useParams()
