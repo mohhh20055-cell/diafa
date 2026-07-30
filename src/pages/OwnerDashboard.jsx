@@ -702,6 +702,7 @@ export default OwnerDashboard
 // مكون إدارة الغرف
 // ============================================================
 const RoomManagement = ({ establishments = [] }) => {
+  const { t, i18n } = useTranslation()
   const [selectedEstId, setSelectedEstId] = useState('')
   const [rooms, setRooms] = useState([])
   const [loading, setLoading] = useState(false)
@@ -1175,6 +1176,7 @@ const RoomManagement = ({ establishments = [] }) => {
 // مكون نافذة تعديل المؤسسة
 // ============================================================
 const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
+  const { t, i18n } = useTranslation()
   if (!establishment) return null
   const [formData, setFormData] = useState({
     nom: establishment.nom || '',
