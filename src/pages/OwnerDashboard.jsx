@@ -135,10 +135,10 @@ const OwnerDashboard = () => {
   }
 
   const tabs = [
-    { id: 'overview', label: 'نظرة عامة', labelAr: 'نظرة عامة', icon: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' },
-    { id: 'reservations', label: 'الحجوزات', labelAr: 'الحجوزات', count: stats.enAttente > 0 ? stats.enAttente : null, icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
-    { id: 'establishments', label: 'المؤسسات', labelAr: 'المؤسسات', count: establishments.length, icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5' },
-    { id: 'chambres', label: 'الغرف والعروض', labelAr: 'الغرف والعروض', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
+    { id: 'overview', label: t('overview'), icon: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' },
+    { id: 'reservations', label: t('reservations'), count: stats.enAttente > 0 ? stats.enAttente : null, icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
+    { id: 'establishments', label: t('establishments'), count: establishments.length, icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5' },
+    { id: 'chambres', label: t('roomsAndOffers'), icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
   ]
 
   const activeTabObj = tabs.find((t) => t.id === activeTab)
@@ -157,7 +157,7 @@ const OwnerDashboard = () => {
             </svg>
           </button>
           <div>
-            <span className="text-[10px] uppercase tracking-wider text-[#CB9A56] font-bold">مساحة الشريك</span>
+            <span className="text-[10px] uppercase tracking-wider text-[#CB9A56] font-bold">{t('partnerSpaceShort')}</span>
             <h2 className="text-sm font-bold text-white leading-tight">{activeTabObj?.label}</h2>
           </div>
         </div>
@@ -166,7 +166,7 @@ const OwnerDashboard = () => {
           to="/etablissements"
           className="px-3 py-1.5 rounded-lg bg-[#CB9A56] text-[#0E1E3D] text-xs font-bold"
         >
-          عرض الموقع
+          {t('viewSite')}
         </Link>
         <LanguageSwitcher />
       </div>
@@ -193,8 +193,8 @@ const OwnerDashboard = () => {
                 ض
               </div>
               <div>
-                <h2 className="text-lg font-bold font-display text-white leading-tight">شريك ضيافة</h2>
-                <span className="text-[11px] text-[#E4C48A] font-medium">لوحة صاحب المؤسسة</span>
+                <h2 className="text-lg font-bold font-display text-white leading-tight">{t('partnerSpace')}</h2>
+                <span className="text-[11px] text-[#E4C48A] font-medium">{t('ownerDashboard')}</span>
               </div>
             </div>
             <button
@@ -222,7 +222,7 @@ const OwnerDashboard = () => {
         {/* قائمة التبويبات في الشريط الجانبي */}
         <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto thin-scrollbar">
           <p className="px-3 text-[10px] font-bold text-[#E4C48A] uppercase tracking-wider mb-2">
-            القائمة / Tab Navigation
+            {t('quickLinks')}
           </p>
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id
@@ -273,7 +273,7 @@ const OwnerDashboard = () => {
             <svg className="w-4 h-4 text-[#E4C48A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
-            <span>زيارة الموقع</span>
+            <span>{t('viewSite')}</span>
           </Link>
 
           <button
@@ -286,7 +286,7 @@ const OwnerDashboard = () => {
             <svg className="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
-            <span>تسجيل الخروج</span>
+            <span>{t('logout')}</span>
           </button>
         </div>
       </aside>
@@ -298,19 +298,19 @@ const OwnerDashboard = () => {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 text-[#E4C48A] text-xs font-semibold uppercase tracking-wider mb-1">
-                <span>مساحة صاحب المؤسسة</span>
+                <span>{t('partnerSpaceShort')}</span>
               </div>
               <h1 className="text-xl sm:text-2xl font-bold font-display text-white">
-                {t('welcomePartner', { name: user?.prenom || 'شريك' })}
+                {t('welcomePartnerName', { name: user?.prenom || t('owner') })}
               </h1>
               <p className="text-slate-300 text-xs sm:text-sm mt-1">
-                {t('manageEstablishments')}
+                {t('manageYourEstablishments')}
               </p>
             </div>
             <div className="bg-white/10 px-4 py-2 rounded-xl border border-white/10 text-right">
-              <span className="text-[10px] text-slate-300 block">طلبات في الانتظار</span>
+              <span className="text-[10px] text-slate-300 block">{t('pendingDemandsCount')}</span>
               <span className="text-xs font-bold text-amber-400 flex items-center gap-1.5 justify-end">
-                {stats.enAttente} طلبات
+                {stats.enAttente} {t('demands')}
               </span>
             </div>
           </div>
@@ -319,35 +319,35 @@ const OwnerDashboard = () => {
         {/* صف الإحصائيات */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">إجمالي الحجوزات</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">{t('totalReservations')}</p>
             <div className="text-2xl font-extrabold text-[#0E1E3D] mt-1 font-display">
               {stats.total}
             </div>
-            <p className="text-[10px] text-slate-500 mt-1">المستلمة حتى اليوم</p>
+            <p className="text-[10px] text-slate-500 mt-1">{t('receivedUntilToday')}</p>
           </div>
 
           <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-amber-600">في الانتظار</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-amber-600">{t('pending')}</p>
             <div className="text-2xl font-extrabold text-amber-600 mt-1 font-display">
               {stats.enAttente}
             </div>
-            <p className="text-[10px] text-slate-500 mt-1">بحاجة إلى رد</p>
+            <p className="text-[10px] text-slate-500 mt-1">{t('needResponse')}</p>
           </div>
 
           <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600">مقبولة</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600">{t('confirmed')}</p>
             <div className="text-2xl font-extrabold text-emerald-600 mt-1 font-display">
               {stats.acceptees}
             </div>
-            <p className="text-[10px] text-slate-500 mt-1">مؤكدة</p>
+            <p className="text-[10px] text-slate-500 mt-1">{t('accepted')}</p>
           </div>
 
           <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-rose-600">مرفوضة</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-rose-600">{t('rejected')}</p>
             <div className="text-2xl font-extrabold text-rose-600 mt-1 font-display">
               {stats.refusees}
             </div>
-            <p className="text-[10px] text-slate-500 mt-1">غير متاحة</p>
+            <p className="text-[10px] text-slate-500 mt-1">{t('notAvailable')}</p>
           </div>
         </div>
 
@@ -355,9 +355,9 @@ const OwnerDashboard = () => {
         <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6 sm:p-8">
           {activeTab === 'overview' && (
             <div>
-              <h3 className="text-lg font-bold text-[#0E1E3D] mb-2 font-display">نظرة عامة</h3>
+              <h3 className="text-lg font-bold text-[#0E1E3D] mb-2 font-display">{t('overview')}</h3>
               <p className="text-xs sm:text-sm text-slate-600 mb-6">
-                مرحباً بك في مساحة صاحب المؤسسة. يمكنك مراجعة معلوماتك الرئيسية أدناه.
+                {t('welcomeBack')}. {t('followReservations')}
               </p>
               
               {establishments.length > 0 ? (
@@ -375,12 +375,12 @@ const OwnerDashboard = () => {
                     <div className="flex-1">
                       <div className="flex items-center justify-between gap-2 flex-wrap mb-1">
                         <h4 className="font-bold text-base sm:text-lg">
-                          حالة المؤسسة: {
+                          {t('establishmentStatus')}: {
                             (establishments[0].statut_validation === 'valide' || establishments[0].statut_validation === 'APPROVED')
-                              ? 'مقبولة وتعمل بنجاح'
+                              ? t('approvedAndWorking')
                               : (establishments[0].statut_validation === 'refuse' || establishments[0].statut_validation === 'refusee' || establishments[0].statut_validation === 'REJECTED')
-                              ? 'مرفوضة'
-                              : 'قيد الانتظار والمراجعة'
+                              ? t('rejected')
+                              : t('pendingReview')
                           }
                         </h4>
                         <span className={`text-xs font-bold px-3 py-1 rounded-full border ${
@@ -395,10 +395,10 @@ const OwnerDashboard = () => {
                       </div>
                       <p className="text-xs sm:text-sm font-medium opacity-90 leading-relaxed mt-1">
                         {(establishments[0].statut_validation === 'valide' || establishments[0].statut_validation === 'APPROVED') 
-                          ? 'مؤسستك معتمدة ومقبولة من الإدارة. يمكنك الآن إضافة الغرف والعروض واستقبال الحجوزات.'
+                          ? t('approvedDesc')
                           : (establishments[0].statut_validation === 'refuse' || establishments[0].statut_validation === 'refusee' || establishments[0].statut_validation === 'REJECTED')
-                          ? 'تم رفض طلب اعتماد هذه المؤسسة من قِبل الإدارة. يرجى التواصل مع الدعم لمزيد من التفاصيل.'
-                          : 'طلبك قيد المراجعة والتدقيق حالياً من فريق إدارة منصة ضيافة. سيتم تفعيل حسابك فور الموافقة عليه.'}
+                          ? t('rejectedDesc')
+                          : t('pendingDesc')}
                       </p>
                       <div className="mt-3">
                         <button
@@ -408,7 +408,7 @@ const OwnerDashboard = () => {
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                           </svg>
-                          تعديل معلومات المؤسسة والصور والخدمات
+                          {t('editEstablishmentDetails')}
                         </button>
                       </div>
                     </div>
@@ -419,9 +419,9 @@ const OwnerDashboard = () => {
                   <div className="flex items-start gap-3">
                     <span className="text-2xl mt-0.5 shrink-0">⏳</span>
                     <div>
-                      <h4 className="font-bold text-base">جاري تحميل بيانات المؤسسة</h4>
+                      <h4 className="font-bold text-base">{t('loadingData')}</h4>
                       <p className="text-xs mt-1 text-amber-800">
-                        إذا لم تظهر مؤسستك، يرجى تحديث الصفحة أو التأكد من إكمال التسجيل.
+                        {t('noPendingEst')}
                       </p>
                     </div>
                   </div>
@@ -434,11 +434,11 @@ const OwnerDashboard = () => {
                     <svg className="w-5 h-5 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
                     </svg>
-                    مؤسساتي ({establishments.length})
+                    {t('myEstablishments')} ({establishments.length})
                   </h4>
                   {establishments.length === 0 ? (
                     <p className="text-xs text-slate-500">
-                      لم تقم بتسجيل أي مؤسسة معتمدة بعد.
+                      {t('noEstablishmentsRegistered')}
                     </p>
                   ) : (
                     <ul className="space-y-3">
@@ -456,10 +456,10 @@ const OwnerDashboard = () => {
                               : 'bg-amber-100 text-amber-800'
                           }`}>
                             {(e.statut_validation === 'APPROVED' || e.statut_validation === 'valide') && e.actif
-                              ? 'معتمد'
+                              ? t('valide')
                               : e.statut_validation === 'refuse'
-                              ? 'مرفوض'
-                              : 'في الانتظار'}
+                              ? t('refuse')
+                              : t('pending')}
                           </span>
                         </li>
                       ))}
@@ -472,23 +472,23 @@ const OwnerDashboard = () => {
                     <svg className="w-5 h-5 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    آخر الطلبات ({reservations.length})
+                    {t('lastDemands')} ({reservations.length})
                   </h4>
                   {reservations.length === 0 ? (
-                    <p className="text-xs text-slate-500">لا توجد حجوزات حديثة.</p>
+                    <p className="text-xs text-slate-500">{t('noReservationsYet')}</p>
                   ) : (
                     <ul className="space-y-3">
                       {reservations.slice(0, 3).map((r) => (
                         <li key={r.id} className="flex justify-between items-center text-xs bg-white p-3 rounded-xl border border-neutral-200">
                           <div>
                             <p className="font-bold text-[#0E1E3D]">{r.client?.prenom} {r.client?.nom}</p>
-                            <p className="text-slate-400">من {r.dateArrivee} إلى {r.dateDepart}</p>
+                            <p className="text-slate-400">{t('period')}: {r.dateArrivee} {t('to')} {r.dateDepart}</p>
                           </div>
                           <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
                             r.statut === 'acceptee' ? 'bg-emerald-100 text-emerald-800' :
                             r.statut === 'en_attente' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'
                           }`}>
-                            {r.statut === 'acceptee' ? 'مقبولة' : r.statut === 'en_attente' ? 'في الانتظار' : 'مرفوضة'}
+                            {r.statut === 'acceptee' ? t('accepted') : r.statut === 'en_attente' ? t('pending') : t('rejected')}
                           </span>
                         </li>
                       ))}
@@ -502,7 +502,7 @@ const OwnerDashboard = () => {
           {activeTab === 'reservations' && (
             <div>
               <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
-                إدارة الحجوزات
+                {t('manageReservations')}
               </h3>
               {reservations.length === 0 ? (
                 <div className="text-center py-12 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200">
@@ -524,10 +524,10 @@ const OwnerDashboard = () => {
                             </h4>
                           </div>
                           <p className="text-xs text-slate-500 mt-1">
-                            الزبون: <strong className="text-slate-800">{reservation.client?.prenom} {reservation.client?.nom}</strong> ({reservation.client?.telephone || reservation.client?.email})
+                            {t('client')}: <strong className="text-slate-800">{reservation.client?.prenom} {reservation.client?.nom}</strong> ({reservation.client?.telephone || reservation.client?.email})
                           </p>
                           <p className="text-xs text-slate-500 mt-0.5">
-                            الفترة: <strong>{new Date(reservation.dateArrivee).toLocaleDateString('ar-DZ')}</strong> إلى <strong>{new Date(reservation.dateDepart).toLocaleDateString('ar-DZ')}</strong>
+                            {t('period')}: <strong>{new Date(reservation.dateArrivee).toLocaleDateString(i18n.language === 'ar' ? 'ar-DZ' : 'en-US')}</strong> {t('to')} <strong>{new Date(reservation.dateDepart).toLocaleDateString(i18n.language === 'ar' ? 'ar-DZ' : 'en-US')}</strong>
                           </p>
                         </div>
                         <div className="flex flex-col items-end gap-3">
@@ -542,10 +542,10 @@ const OwnerDashboard = () => {
                                 : 'bg-slate-100 text-slate-700 border border-slate-300'
                             }`}
                           >
-                            {STATUT_ICON[reservation.statut] || ''} {reservation.statut === 'en_attente' ? 'في الانتظار' : 
-                             reservation.statut === 'acceptee' ? 'مقبولة' : 
-                             reservation.statut === 'refusee' ? 'مرفوضة' : 
-                             reservation.statut === 'annulee' ? 'ملغية' : 'منتهية'}
+                            {STATUT_ICON[reservation.statut] || ''} {reservation.statut === 'en_attente' ? t('pending') : 
+                             reservation.statut === 'acceptee' ? t('accepted') : 
+                             reservation.statut === 'refusee' ? t('rejected') : 
+                             reservation.statut === 'annulee' ? t('cancelled') : t('finished')}
                           </span>
                           {reservation.statut === 'en_attente' && (
                             <div className="flex items-center gap-2">
@@ -556,7 +556,7 @@ const OwnerDashboard = () => {
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
-                                قبول
+                                {t('accept')}
                               </button>
                               <button
                                 onClick={() => handleRejectReservation(reservation.id)}
@@ -565,7 +565,7 @@ const OwnerDashboard = () => {
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
-                                رفض
+                                {t('reject')}
                               </button>
                             </div>
                           )}
@@ -581,12 +581,12 @@ const OwnerDashboard = () => {
           {activeTab === 'establishments' && (
             <div>
               <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
-                مؤسساتي
+                {t('myEstablishments')}
               </h3>
               {establishments.length === 0 ? (
                 <div className="text-center py-12 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200">
-                  <p className="text-sm font-semibold text-slate-600">ليس لديك أي مؤسسة مسجلة.</p>
-                  <p className="text-xs text-slate-400 mt-1 mb-4">سجل فندقك، مرقدك أو بيت ضيافتك لاستقبال الحجوزات.</p>
+                  <p className="text-sm font-semibold text-slate-600">{t('noEstablishmentsRegistered')}</p>
+                  <p className="text-xs text-slate-400 mt-1 mb-4">{t('noEstablishmentsRegisteredDesc')}</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -601,11 +601,11 @@ const OwnerDashboard = () => {
                             <div className="h-36 w-full rounded-xl overflow-hidden mb-3.5 bg-neutral-100 relative">
                               <img src={estCover} alt={est.nom} className="w-full h-full object-cover" />
                               <span className="absolute top-2 left-2 bg-[#0E1E3D]/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
-                                {est.type === 'hotel' ? 'فندق' : est.type === 'mraqed' ? 'مرقد' : 'مؤسسة'}
+                                {est.type === 'hotel' ? t('hotel') : est.type === 'mraqed' ? t('mraqed') : t('establishment')}
                               </span>
                               {Array.isArray(est.images) && est.images.length > 0 && (
                                 <span className="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                                  📷 {est.images.length} صورة
+                                  📷 {est.images.length} {t('photos')}
                                 </span>
                               )}
                             </div>
@@ -626,19 +626,19 @@ const OwnerDashboard = () => {
                               }`}
                             >
                               {(est.statut_validation === 'APPROVED' || est.statut_validation === 'valide') && est.actif
-                                ? 'معتمد'
+                                ? t('valide')
                                 : (est.statut_validation === 'en_attente' || !est.statut_validation)
-                                ? 'في الانتظار'
-                                : 'مرفوض'}
+                                ? t('pending')
+                                : t('refuse')}
                             </span>
                           </div>
 
-                          <p className="text-xs text-slate-600 line-clamp-2 mb-3">{est.description || 'مؤسسة معتمدة من ضيافة'}</p>
+                          <p className="text-xs text-slate-600 line-clamp-2 mb-3">{est.description || t('approvedEstablishment')}</p>
 
                           {/* شارات الخدمات */}
                           {estServices.length > 0 && (
                             <div className="mb-4">
-                              <p className="text-[11px] font-bold text-slate-400 mb-1">الخدمات والتجهيزات:</p>
+                              <p className="text-[11px] font-bold text-slate-400 mb-1">{t('servicesAndFacilities')}:</p>
                               <div className="flex flex-wrap gap-1">
                                 {estServices.map((srv, idx) => (
                                   <span key={idx} className="bg-amber-50 text-amber-900 border border-amber-200 px-2 py-0.5 rounded-md text-[10px] font-bold">
@@ -658,13 +658,13 @@ const OwnerDashboard = () => {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
-                            تعديل
+                            {t('edit')}
                           </button>
                           <Link
                             to={`/etablissements/${est.id}`}
                             className="px-3.5 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-[#0E1E3D] text-xs font-bold transition"
                           >
-                            عرض ←
+                            {t('view')} ←
                           </Link>
                         </div>
                       </div>
@@ -827,22 +827,22 @@ const RoomManagement = ({ establishments }) => {
     }
 
     if (res.success) {
-      setSuccess(editingRoomId ? 'تم تحديث الغرفة بنجاح!' : 'تم إضافة الغرفة بنجاح!')
+      setSuccess(editingRoomId ? t('roomUpdatedSuccess') : t('roomAddedSuccess'))
       resetForm()
       setShowForm(false)
       loadRooms()
     } else {
-      setError(res.message || 'حدث خطأ أثناء حفظ الغرفة.')
+      setError(res.message || t('errorSavingRoom'))
     }
   }
 
   const handleDeleteRoom = async (roomId) => {
-    if (!confirm('هل أنت متأكد من حذف هذه الغرفة؟')) return
+    if (!confirm(t('confirmDeleteRoom'))) return
     const res = await establishmentsApi.deleteRoom(roomId)
     if (res.success) {
       loadRooms()
     } else {
-      alert(res.message || 'حدث خطأ أثناء الحذف.')
+      alert(res.message || t('errorDeletingRoom'))
     }
   }
 
@@ -850,17 +850,17 @@ const RoomManagement = ({ establishments }) => {
     return (
       <div>
         <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
-          الغرف والعروض
+          {t('roomsAndOffers')}
         </h3>
         <div className="text-center py-12 bg-amber-50 rounded-2xl border border-amber-200">
           <svg className="w-12 h-12 mx-auto text-amber-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <p className="text-sm font-semibold text-amber-800">
-            مؤسستك قيد المراجعة
+            {t('establishmentUnderReview')}
           </p>
           <p className="text-xs text-amber-600 mt-1">
-            ستتمكن من إضافة الغرف بعد مصادقة المدير على مؤسستك.
+            {t('canAddRoomsAfterApproval')}
           </p>
         </div>
       </div>
@@ -872,9 +872,9 @@ const RoomManagement = ({ establishments }) => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
-            الغرف والعروض
+            {t('roomsAndOffers')}
           </h3>
-          <p className="text-xs text-slate-500 mt-0.5">قم بإدارة غرف مؤسستك، أضف أو عدل الصور، الوصف والخدمات.</p>
+          <p className="text-xs text-slate-500 mt-0.5">{t('manageRoomsDesc')}</p>
         </div>
         <button
           onClick={() => {
@@ -891,13 +891,13 @@ const RoomManagement = ({ establishments }) => {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
-          {showForm ? 'إلغاء' : 'إضافة غرفة'}
+          {showForm ? t('cancel') : t('addRoom')}
         </button>
       </div>
 
       {validatedEsts.length > 1 && (
         <div className="mb-4">
-          <label className="block text-xs font-semibold text-slate-600 mb-1.5">المؤسسة</label>
+          <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('establishment')}</label>
           <select
             value={selectedEstId}
             onChange={(e) => setSelectedEstId(e.target.value)}
@@ -914,11 +914,11 @@ const RoomManagement = ({ establishments }) => {
         <form onSubmit={handleSaveRoom} className="mb-6 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 space-y-4">
           <div className="flex items-center justify-between pb-2 border-b border-neutral-200">
             <h4 className="font-bold text-[#0E1E3D] text-sm">
-              {editingRoomId ? 'تعديل الغرفة' : 'إضافة غرفة'}
+              {editingRoomId ? t('editRoom') : t('addRoom')}
             </h4>
             {editingRoomId && (
               <span className="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
-                وضع التعديل
+                {t('editingMode')}
               </span>
             )}
           </div>
@@ -930,17 +930,17 @@ const RoomManagement = ({ establishments }) => {
           )}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">نوع الغرفة *</label>
+              <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('roomType')} *</label>
               <input
                 value={formData.nomType}
                 onChange={(e) => setFormData({ ...formData, nomType: e.target.value })}
                 required
-                placeholder="مثال: جناح ديلوكس، غرفة مزدوجة..."
+                placeholder={t('roomTypePlaceholder')}
                 className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">السعر لكل ليلة (دج) *</label>
+              <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('pricePerNight')} ({t('dzd')}) *</label>
               <input
                 type="number"
                 value={formData.prixNuit}
@@ -954,7 +954,7 @@ const RoomManagement = ({ establishments }) => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">السعة (أشخاص)</label>
+              <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('capacityPersons')}</label>
               <input
                 type="number"
                 value={formData.capacite}
@@ -964,7 +964,7 @@ const RoomManagement = ({ establishments }) => {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">العدد المتاح</label>
+              <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('availableCount')}</label>
               <input
                 type="number"
                 value={formData.nbDisponible}
@@ -976,24 +976,24 @@ const RoomManagement = ({ establishments }) => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">وصف الغرفة</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('roomDescription')}</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               rows={3}
-              placeholder="صف التجهيزات، الراحة، الإطلالة، الشرفة..."
+              placeholder={t('roomDescriptionPlaceholder')}
               className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">خدمات الغرفة</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('roomServices')}</label>
             <div className="flex gap-2 mb-2">
               <input
                 type="text"
                 value={newServiceInput}
                 onChange={(e) => setNewServiceInput(e.target.value)}
-                placeholder="مثال: تكييف، واي فاي، تلفاز 4K، ميني بار، إطلالة على البحر..."
+                placeholder={t('roomServicesPlaceholder')}
                 className="block flex-1 px-3.5 py-2 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
                 onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddService(); } }}
               />
@@ -1002,7 +1002,7 @@ const RoomManagement = ({ establishments }) => {
                 onClick={handleAddService}
                 className="px-4 py-2 bg-[#0E1E3D] text-white rounded-xl text-xs font-bold hover:bg-[#CB9A56] hover:text-[#0E1E3D] transition cursor-pointer"
               >
-                إضافة
+                {t('add')}
               </button>
             </div>
             {formData.services.length > 0 && (
@@ -1024,12 +1024,12 @@ const RoomManagement = ({ establishments }) => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">صور الغرفة</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('roomImages')}</label>
             <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#CB9A56] bg-white transition text-center mb-2">
               <svg className="w-6 h-6 text-[#CB9A56] mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <span className="text-xs font-bold text-[#0E1E3D]">انقر لإضافة صور</span>
+              <span className="text-xs font-bold text-[#0E1E3D]">{t('clickToAddPhotos')}</span>
               <input type="file" accept="image/*" multiple onChange={handleRoomImageChange} className="hidden" />
             </label>
             {formData.images.length > 0 && (
@@ -1041,7 +1041,7 @@ const RoomManagement = ({ establishments }) => {
                       type="button"
                       onClick={() => handleRemoveRoomImage(idx)}
                       className="absolute top-1 right-1 w-5 h-5 bg-rose-600 text-white rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition cursor-pointer"
-                      title="حذف الصورة"
+                      title={t('deletePhoto')}
                     >
                       ×
                     </button>
@@ -1056,7 +1056,7 @@ const RoomManagement = ({ establishments }) => {
               type="submit"
               className="flex-1 bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white px-5 py-3 rounded-xl text-xs font-bold transition shadow-xs cursor-pointer"
             >
-              {editingRoomId ? 'تحديث الغرفة' : 'حفظ وإضافة الغرفة'}
+              {editingRoomId ? t('updateRoom') : t('saveAndAddRoom')}
             </button>
             {editingRoomId && (
               <button
@@ -1067,7 +1067,7 @@ const RoomManagement = ({ establishments }) => {
                 }}
                 className="px-4 py-3 bg-neutral-200 hover:bg-neutral-300 text-neutral-800 rounded-xl text-xs font-bold transition cursor-pointer"
               >
-                إلغاء
+                {t('cancel')}
               </button>
             )}
           </div>
@@ -1083,8 +1083,8 @@ const RoomManagement = ({ establishments }) => {
           <svg className="w-12 h-12 mx-auto text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
           </svg>
-          <p className="text-sm font-semibold text-slate-700">لا توجد غرف حالياً</p>
-          <p className="text-xs text-slate-400 mt-1">انقر على "إضافة غرفة" للبدء.</p>
+          <p className="text-sm font-semibold text-slate-700">{t('noRoomsYet')}</p>
+          <p className="text-xs text-slate-400 mt-1">{t('clickAddRoomToStart')}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -1098,7 +1098,7 @@ const RoomManagement = ({ establishments }) => {
                     <button
                       onClick={() => openEditRoom(room)}
                       className="w-7 h-7 flex items-center justify-center bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white rounded-full text-xs font-bold shadow-md transition cursor-pointer"
-                      title="تعديل الغرفة"
+                      title={t('editRoom')}
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -1107,14 +1107,14 @@ const RoomManagement = ({ establishments }) => {
                     <button
                       onClick={() => handleDeleteRoom(room.id)}
                       className="w-7 h-7 flex items-center justify-center bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-bold shadow-md transition cursor-pointer"
-                      title="حذف الغرفة"
+                      title={t('deleteRoom')}
                     >
                       ×
                     </button>
                   </div>
                   {room.images && room.images.length > 1 && (
                     <span className="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] font-bold px-2 py-0.5 rounded-full backdrop-blur-xs">
-                      📷 {room.images.length} صور
+                      📷 {room.images.length} {t('photos')}
                     </span>
                   )}
                 </div>
@@ -1126,7 +1126,7 @@ const RoomManagement = ({ establishments }) => {
                         onClick={() => openEditRoom(room)}
                         className="text-[11px] font-bold text-[#CB9A56] hover:underline shrink-0 cursor-pointer"
                       >
-                        تعديل
+                        {t('edit')}
                       </button>
                     </div>
                     {room.description && (
@@ -1144,15 +1144,15 @@ const RoomManagement = ({ establishments }) => {
                   </div>
                   <div className="space-y-1.5 text-xs pt-2 border-t border-neutral-100">
                     <div className="flex justify-between">
-                      <span className="text-slate-500">السعر/ليلة:</span>
-                      <span className="font-bold text-[#0E1E3D]">{(room.prixNuit || 0).toLocaleString('ar-DZ')} دج</span>
+                      <span className="text-slate-500">{t('pricePerNight')}:</span>
+                      <span className="font-bold text-[#0E1E3D]">{(room.prixNuit || 0).toLocaleString(i18n.language === 'ar' ? 'ar-DZ' : 'en-US')} {t('dzd')}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">السعة:</span>
-                      <span className="font-bold text-[#0E1E3D]">{room.capacite} شخص</span>
+                      <span className="text-slate-500">{t('capacity')}:</span>
+                      <span className="font-bold text-[#0E1E3D]">{room.capacite} {t('person')}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">المتاحة:</span>
+                      <span className="text-slate-500">{t('available')}:</span>
                       <span className={`font-bold ${room.nbDisponible > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
                         {room.nbDisponible}
                       </span>
@@ -1271,13 +1271,13 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
     setLoading(false)
 
     if (res.success) {
-      setSuccess('تم تحديث بيانات المؤسسة بنجاح')
+      setSuccess(t('establishmentUpdatedSuccess'))
       setTimeout(() => {
         onSuccess()
         onClose()
       }, 1000)
     } else {
-      setError(res.message || 'حدث خطأ أثناء تحديث المؤسسة.')
+      setError(res.message || t('errorUpdatingEstablishment'))
     }
   }
 
@@ -1292,12 +1292,12 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
         </button>
 
         <div className="mb-6">
-          <span className="text-[11px] font-bold text-[#CB9A56] uppercase tracking-wider">تعديل المؤسسة</span>
+          <span className="text-[11px] font-bold text-[#CB9A56] uppercase tracking-wider">{t('editEstablishment')}</span>
           <h3 className="text-xl font-extrabold text-[#0E1E3D] font-display">
-            تعديل معلومات المؤسسة والصور والخدمات
+            {t('editEstablishmentDetails')}
           </h3>
           <p className="text-xs text-slate-500 mt-1">
-            عدل الاسم، الوصف، الخدمات المتاحة وأدر معرض الصور.
+            {t('editEstablishmentDesc')}
           </p>
         </div>
 
@@ -1318,7 +1318,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-                اسم المؤسسة *
+                {t('establishmentName')} *
               </label>
               <input
                 type="text"
@@ -1326,24 +1326,24 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                 value={formData.nom}
                 onChange={(e) => setFormData({ ...formData, nom: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
-                placeholder="مثال: فندق الأوراسي"
+                placeholder={t('establishmentNamePlaceholder')}
               />
             </div>
 
             <div>
               <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-                نوع المؤسسة *
+                {t('establishmentType')} *
               </label>
               <select
                 value={formData.type}
                 onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
               >
-                <option value="hotel">فندق</option>
-                <option value="dortoir">مرقد</option>
-                <option value="residence">إقامة</option>
-                <option value="villa">فيلا</option>
-                <option value="auberge">مأوى</option>
+                <option value="hotel">{t('hotel')}</option>
+                <option value="dortoir">{t('mraqed')}</option>
+                <option value="residence">{t('residence')}</option>
+                <option value="villa">{t('villa')}</option>
+                <option value="auberge">{t('auberge')}</option>
               </select>
             </div>
           </div>
@@ -1352,7 +1352,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
               <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-                الولاية *
+                {t('wilaya')} *
               </label>
               <select
                 value={formData.wilaya}
@@ -1367,7 +1367,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
 
             <div>
               <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-                المدينة *
+                {t('ville')} *
               </label>
               <input
                 type="text"
@@ -1375,20 +1375,20 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                 value={formData.ville}
                 onChange={(e) => setFormData({ ...formData, ville: e.target.value })}
                 className="w-full px-3 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
-                placeholder="مثال: باب الواد"
+                placeholder={t('villePlaceholder')}
               />
             </div>
 
             <div>
               <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-                العنوان
+                {t('address')}
               </label>
               <input
                 type="text"
                 value={formData.adresse}
                 onChange={(e) => setFormData({ ...formData, adresse: e.target.value })}
                 className="w-full px-3 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
-                placeholder="الشارع، الحي..."
+                placeholder={t('addressPlaceholder')}
               />
             </div>
           </div>
@@ -1396,24 +1396,24 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
           {/* الوصف */}
           <div>
             <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-              وصف المؤسسة
+              {t('establishmentDescription')}
             </label>
             <textarea
               rows={3}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-medium focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
-              placeholder="صف مميزات المكان، الإطلالة، القرب من المدينة أو الشاطئ..."
+              placeholder={t('establishmentDescriptionPlaceholder')}
             />
           </div>
 
           {/* الخدمات والتجهيزات */}
           <div>
             <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-              خدمات ومرافق المؤسسة
+              {t('servicesAndFacilities')}
             </label>
             <p className="text-[11px] text-slate-500 mb-2">
-              اختر الخدمات التي يقدمها مؤسستك لتظهر على بطاقة المؤسسة:
+              {t('chooseServices')}
             </p>
             
             {/* الخدمات الافتراضية */}
@@ -1443,7 +1443,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                 type="text"
                 value={newServiceInput}
                 onChange={(e) => setNewServiceInput(e.target.value)}
-                placeholder="أضف خدمة أخرى (مثال: حمام مغربي، نقل من وإلى المطار...)"
+                placeholder={t('addOtherServicePlaceholder')}
                 className="flex-1 px-3.5 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
                 onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCustomService(); } }}
               />
@@ -1452,7 +1452,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                 onClick={handleAddCustomService}
                 className="px-4 py-2 bg-[#CB9A56] text-[#0E1E3D] rounded-xl text-xs font-bold hover:bg-[#E4C48A] transition cursor-pointer"
               >
-                إضافة
+                {t('add')}
               </button>
             </div>
 
@@ -1481,15 +1481,15 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
           {/* الصور والصورة الرئيسية */}
           <div>
             <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-              صور المؤسسة
+              {t('establishmentImages')}
             </label>
 
             <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#CB9A56] bg-neutral-50 hover:bg-white transition text-center mb-3">
               <svg className="w-7 h-7 text-[#CB9A56] mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <span className="text-xs font-bold text-[#0E1E3D]">انقر لاستيراد الصور</span>
-              <span className="text-[10px] text-slate-400 mt-0.5">الصيغ المدعومة: JPG, PNG, WEBP</span>
+              <span className="text-xs font-bold text-[#0E1E3D]">{t('clickToImportPhotos')}</span>
+              <span className="text-[10px] text-slate-400 mt-0.5">{t('supportedFormats')}</span>
               <input type="file" accept="image/*" multiple onChange={handleImageUpload} className="hidden" />
             </label>
 
@@ -1503,7 +1503,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                       
                       {isVedette && (
                         <span className="absolute top-1 left-1 bg-[#CB9A56] text-[#0E1E3D] text-[9px] font-black px-1.5 py-0.5 rounded shadow-xs">
-                          رئيسية
+                          {t('main')}
                         </span>
                       )}
 
@@ -1513,7 +1513,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                           onClick={() => setFormData({ ...formData, image_vedette: img })}
                           className="absolute bottom-1 left-1 bg-black/70 hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-[9px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition cursor-pointer"
                         >
-                          تعيين كصورة رئيسية
+                          {t('setAsMain')}
                         </button>
                       )}
 
@@ -1521,7 +1521,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                         type="button"
                         onClick={() => handleRemoveImage(idx)}
                         className="absolute top-1 right-1 w-5 h-5 bg-rose-600 text-white rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition cursor-pointer"
-                        title="حذف الصورة"
+                        title={t('deletePhoto')}
                       >
                         ×
                       </button>
@@ -1542,7 +1542,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
               {loading ? (
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
               ) : (
-                'حفظ التعديلات'
+                t('saveChanges')
               )}
             </button>
 
@@ -1551,7 +1551,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
               onClick={onClose}
               className="px-4 py-3 bg-neutral-200 hover:bg-neutral-300 text-neutral-800 rounded-xl text-xs font-bold transition cursor-pointer"
             >
-              إلغاء
+              {t('cancel')}
             </button>
           </div>
         </form>

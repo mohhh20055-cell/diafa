@@ -16,11 +16,11 @@ const STATUS_STYLES = {
 }
 
 const STATUS_LABELS = {
-  en_attente: 'في الانتظار',
-  acceptee: 'مقبولة',
-  refusee: 'مرفوضة',
-  annulee: 'ملغية',
-  terminee: 'منتهية',
+  en_attente: 'pending',
+  acceptee: 'accepted',
+  refusee: 'rejected',
+  annulee: 'cancelled',
+  terminee: 'finished',
 }
 
 const Reservations = () => {
@@ -61,14 +61,14 @@ const Reservations = () => {
         setNotifications(notifData.data || [])
       }
     } catch (err) {
-      setError('حدث خطأ أثناء تحميل البيانات.')
+      setError(t('errorOccurred'))
     } finally {
       setLoading(false)
     }
   }
 
   const handleCancelReservation = async (id) => {
-    if (!confirm('هل أنت متأكد من إلغاء هذا الحجز؟')) return
+    if (!confirm(t('cancelReservationConfirm'))) return
     const res = await reservationsApi.cancelReservation(id)
     if (res.success) {
       loadAllData()
@@ -100,10 +100,10 @@ const Reservations = () => {
     setContactSubmitting(false)
 
     if (res.success) {
-      setContactSuccess('تم إرسال رسالتك إلى فريق الدعم! ستتلقى الرد هنا.')
+      setContactSuccess(t('messageSentSupport'))
       setContactForm({ sujet: '', message: '' })
     } else {
-      alert(res.message || 'حدث خطأ أثناء إرسال الرسالة.')
+      alert(res.message || t('errorOccurred'))
     }
   }
 
@@ -140,7 +140,7 @@ const Reservations = () => {
             </svg>
           </button>
           <div>
-            <span className="text-[10px] uppercase tracking-wider text-[#CB9A56] font-bold">مساحة الزبون</span>
+            <span className="text-[10px] uppercase tracking-wider text-[#CB9A56] font-bold">{t('clientSpace')}</span>
             <h2 className="text-sm font-bold text-white leading-tight">{activeTabObj?.label}</h2>
           </div>
         </div>
@@ -176,8 +176,8 @@ const Reservations = () => {
                 ض
               </div>
               <div>
-                <h2 className="text-lg font-bold font-display text-white leading-tight">زبون ضيافة</h2>
-                <span className="text-[11px] text-[#E4C48A] font-medium">حساب الزبون</span>
+                <h2 className="text-lg font-bold font-display text-white leading-tight">{t('clientAccount')}</h2>
+                <span className="text-[11px] text-[#E4C48A] font-medium">{t('clientSpace')}</span>
               </div>
             </div>
             <button
@@ -205,7 +205,7 @@ const Reservations = () => {
         {/* عناصر التنقل في الشريط الجانبي */}
         <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto thin-scrollbar">
           <p className="px-3 text-[10px] font-bold text-[#E4C48A] uppercase tracking-wider mb-2">
-            القائمة الرئيسية
+            {t('quickLinks')}
           </p>
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id
@@ -256,7 +256,7 @@ const Reservations = () => {
             <svg className="w-4 h-4 text-[#E4C48A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <span>البحث عن إقامة</span>
+            <span>{t('search')}</span>
           </Link>
 
           <button
@@ -269,7 +269,7 @@ const Reservations = () => {
             <svg className="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
-            <span>تسجيل الخروج</span>
+            <span>{t('logout')}</span>
           </button>
         </div>
       </aside>
@@ -281,20 +281,20 @@ const Reservations = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <span className="text-[#E4C48A] text-xs font-bold uppercase tracking-wider block mb-1">
-                المساحة الشخصية للزبون
+                {t('clientSpace')}
               </span>
               <h1 className="text-xl sm:text-2xl font-bold font-display text-white">
-                مرحباً، {user?.prenom || 'زبون'} !
+                {t('welcomeClient', { name: user?.prenom || t('client') })}
               </h1>
               <p className="text-slate-300 text-xs sm:text-sm mt-1">
-                تابع حجوزاتك، اطلع على ردود الإدارة وأدر حسابك.
+                {t('followReservations')}
               </p>
             </div>
             <Link
               to="/etablissements"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#CB9A56] hover:bg-[#E4C48A] text-[#0E1E3D] font-bold text-xs transition shadow-md self-start sm:self-auto"
             >
-              <span>حجز جديد</span>
+              <span>{t('bookNow')}</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -314,10 +314,10 @@ const Reservations = () => {
             <div>
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
-                  حجوزاتي
+                  {t('myReservations')}
                 </h3>
                 <span className="px-3 py-1 bg-neutral-100 text-[#0E1E3D] text-xs font-bold rounded-full">
-                  المجموع: {reservations.length}
+                  {t('total')}: {reservations.length}
                 </span>
               </div>
 
@@ -326,13 +326,13 @@ const Reservations = () => {
                   <svg className="w-12 h-12 text-slate-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <p className="text-sm font-semibold text-slate-700">لا توجد حجوزات حالياً</p>
-                  <p className="text-xs text-slate-400 mt-1 mb-4">استكشف الفنادق والمراقد المتاحة في الجزائر.</p>
+                  <p className="text-sm font-semibold text-slate-700">{t('noReservations')}</p>
+                  <p className="text-xs text-slate-400 mt-1 mb-4">{t('homeHeroSubtitle')}</p>
                   <Link
                     to="/etablissements"
                     className="inline-block px-5 py-2.5 bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-xs font-bold rounded-xl transition"
                   >
-                    استعراض المؤسسات
+                    {t('browseEstablishments')}
                   </Link>
                 </div>
               ) : (
@@ -342,22 +342,22 @@ const Reservations = () => {
                       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                         <div>
                           <h4 className="font-bold text-[#0E1E3D] text-base">
-                            {reservation.etablissement?.nom || 'مؤسسة ضيافة'}
+                            {reservation.etablissement?.nom || t('establishment')}
                           </h4>
                           <p className="text-xs text-slate-500 mt-1">
-                            النوع / الغرفة: <strong>{reservation.room?.nomType || 'إقامة عادية'}</strong>
+                            {t('roomType')}: <strong>{reservation.room?.nomType || t('details')}</strong>
                           </p>
                           <p className="text-xs text-slate-500 mt-0.5">
-                            فترة الإقامة: <strong>{new Date(reservation.dateArrivee).toLocaleDateString('ar-DZ')}</strong> إلى <strong>{new Date(reservation.dateDepart).toLocaleDateString('ar-DZ')}</strong>
+                            {t('period')}: <strong>{new Date(reservation.dateArrivee).toLocaleDateString()}</strong> {t('to')} <strong>{new Date(reservation.dateDepart).toLocaleDateString()}</strong>
                           </p>
                           <p className="text-xs font-bold text-[#CB9A56] mt-1.5">
-                            السعر الإجمالي: {parseFloat(reservation.prixTotal || 0).toLocaleString('ar-DZ')} دج
+                            {t('totalPrice')}: {parseFloat(reservation.prixTotal || 0).toLocaleString()} DZD
                           </p>
                         </div>
 
                         <div className="flex flex-col items-end gap-3">
                           <span className={`px-3 py-1 rounded-full text-xs font-bold border ${STATUS_STYLES[reservation.statut] || 'bg-neutral-100 text-neutral-800'}`}>
-                            {STATUS_LABELS[reservation.statut] || reservation.statut}
+                            {t(STATUS_LABELS[reservation.statut] || reservation.statut)}
                           </span>
 
                           {(reservation.statut === 'en_attente' || reservation.statut === 'acceptee') && (
@@ -365,7 +365,7 @@ const Reservations = () => {
                               onClick={() => handleCancelReservation(reservation.id)}
                               className="text-xs font-bold text-rose-600 hover:text-rose-800 underline cursor-pointer"
                             >
-                              إلغاء الحجز
+                              {t('cancelReservation')}
                             </button>
                           )}
                         </div>
@@ -382,15 +382,15 @@ const Reservations = () => {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
-                    الإشعارات والردود الإدارية
+                    {t('notificationsAndResponses')}
                   </h3>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    جميع الردود على رسائل الدعم وتحديثات الحجوزات تظهر هنا.
+                    {t('receiveNotifWhenReply')}
                   </p>
                 </div>
                 {unreadNotifsCount > 0 && (
                   <span className="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full">
-                    {unreadNotifsCount} غير مقروءة
+                    {unreadNotifsCount} {t('unread')}
                   </span>
                 )}
               </div>
@@ -400,8 +400,8 @@ const Reservations = () => {
                   <svg className="w-12 h-12 text-slate-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
                   </svg>
-                  <p className="text-sm font-semibold text-slate-700">لا توجد إشعارات مسجلة</p>
-                  <p className="text-xs text-slate-400 mt-1">ستتلقى إشعاراً فور رد الإدارة أو صاحب المؤسسة.</p>
+                  <p className="text-sm font-semibold text-slate-700">{t('noNotificationsYet')}</p>
+                  <p className="text-xs text-slate-400 mt-1">{t('noNotificationsDesc')}</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -426,7 +426,7 @@ const Reservations = () => {
                               {notif.message}
                             </p>
                             <span className="text-[10px] text-slate-400 font-mono mt-1 block">
-                              {notif.createdAt ? new Date(notif.createdAt).toLocaleString('ar-DZ') : 'تاريخ غير معروف'}
+                              {notif.createdAt ? new Date(notif.createdAt).toLocaleString() : t('loading')}
                             </span>
                           </div>
                         </div>
@@ -436,7 +436,7 @@ const Reservations = () => {
                             onClick={() => handleMarkNotificationRead(notif.id)}
                             className="px-3 py-1 bg-[#0E1E3D] text-white hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-[10px] font-bold rounded-lg transition shrink-0 cursor-pointer"
                           >
-                            وضع كـ مقروء
+                            {t('markAsRead')}
                           </button>
                         )}
                       </div>
@@ -450,35 +450,35 @@ const Reservations = () => {
           {activeTab === 'profile' && (
             <div>
               <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
-                الملف الشخصي
+                {t('profile')}
               </h3>
 
               <div className="bg-neutral-50 rounded-2xl p-6 border border-neutral-200 space-y-4 max-w-lg">
                 <div className="flex items-center gap-4 border-b border-neutral-200 pb-4">
                   <div className="w-14 h-14 rounded-2xl bg-[#0E1E3D] text-[#E4C48A] text-xl font-extrabold flex items-center justify-center shadow-sm">
-                    {(user?.prenom || user?.nom || 'ز').charAt(0).toUpperCase()}
+                    {(user?.prenom || user?.nom || 'U').charAt(0).toUpperCase()}
                   </div>
                   <div>
                     <h4 className="font-bold text-[#0E1E3D] text-base">{user?.prenom} {user?.nom}</h4>
                     <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-extrabold rounded-full uppercase">
-                      حساب {user?.role === 'owner' ? 'صاحب مؤسسة' : 'زبون'}
+                      {t('accountType')}: {user?.role === 'owner' ? t('owner') : t('client')}
                     </span>
                   </div>
                 </div>
 
                 <div className="space-y-3 text-xs text-slate-700">
                   <div className="flex justify-between py-1 border-b border-neutral-100">
-                    <span className="text-slate-500">البريد الإلكتروني:</span>
-                    <span className="font-bold text-[#0E1E3D]">{user?.email || 'غير مسجل'}</span>
+                    <span className="text-slate-500">{t('emailAddress')}:</span>
+                    <span className="font-bold text-[#0E1E3D]">{user?.email || t('noResults')}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-neutral-100">
-                    <span className="text-slate-500">رقم الهاتف:</span>
-                    <span className="font-bold text-[#0E1E3D]">{user?.telephone || 'غير مسجل'}</span>
+                    <span className="text-slate-500">{t('phoneNumber')}:</span>
+                    <span className="font-bold text-[#0E1E3D]">{user?.telephone || t('noResults')}</span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-slate-500">مسجل منذ:</span>
+                    <span className="text-slate-500">{t('registeredSince')}:</span>
                     <span className="font-bold text-[#0E1E3D]">
-                      {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('ar-DZ') : 'تاريخ غير معروف'}
+                      {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : t('loading')}
                     </span>
                   </div>
                 </div>
@@ -489,10 +489,10 @@ const Reservations = () => {
           {activeTab === 'contact' && (
             <div>
               <h3 className="text-lg font-bold text-[#0E1E3D] mb-1 font-display">
-                إرسال رسالة دعم
+                {t('supportMessage')}
               </h3>
               <p className="text-xs text-slate-500 mb-6">
-                بحاجة إلى مساعدة؟ اطرح سؤالك هنا. سيرد عليك فريق إدارة ضيافة مباشرة في هذه المساحة.
+                {t('askHere')}
               </p>
 
               {contactSuccess && (
@@ -503,25 +503,25 @@ const Reservations = () => {
 
               <form onSubmit={handleSendSupportMessage} className="space-y-4 max-w-xl">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">موضوع طلبك *</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">{t('subject')} *</label>
                   <input
                     type="text"
                     value={contactForm.sujet}
                     onChange={(e) => setContactForm({ ...contactForm, sujet: e.target.value })}
                     required
-                    placeholder="مثال: استفسار حول حجزي، مشكلة في الحساب..."
+                    placeholder={t('subject')}
                     className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">رسالتك *</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">{t('message')} *</label>
                   <textarea
                     rows={4}
                     value={contactForm.message}
                     onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
                     required
-                    placeholder="صف طلبك بالتفصيل..."
+                    placeholder={t('message')}
                     className="w-full p-3 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
                   ></textarea>
                 </div>
@@ -531,7 +531,7 @@ const Reservations = () => {
                   disabled={contactSubmitting}
                   className="px-6 py-2.5 bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-xs font-bold rounded-xl transition shadow-md disabled:opacity-50 cursor-pointer"
                 >
-                  {contactSubmitting ? 'جاري الإرسال...' : 'إرسال رسالتي'}
+                  {contactSubmitting ? t('loading') : t('send')}
                 </button>
               </form>
             </div>
