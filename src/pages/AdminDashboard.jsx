@@ -179,7 +179,7 @@ const AdminDashboard = () => {
     setEditSuccess(null)
 
     if (editForm.motDePasse && editForm.motDePasse.length < 8) {
-      setEditError('كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل. / Le mot de passe doit contenir au moins 8 caractères.')
+      setEditError(t('passwordTooShort'))
       return
     }
 
@@ -478,7 +478,7 @@ const AdminDashboard = () => {
                     Établissements en attente de validation ({pendingEstablishments.length})
                   </h4>
                   {pendingEstablishments.length === 0 ? (
-                    <p className="text-xs text-slate-500">Aucun établissement en attente pour le moment.</p>
+                    <p className="text-xs text-slate-500">لا توجد مؤسسات في الانتظار حالياً.</p>
                   ) : (
                     <ul className="space-y-3">
                       {pendingEstablishments.map((est) => (
@@ -530,7 +530,7 @@ const AdminDashboard = () => {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-white">
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">Top 5 des wilayas par nombre d'établissements</h4>
+                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">أكثر 5 ولايات تحتوي على مؤسسات</h4>
                   <ResponsiveContainer width="100%" height={240}>
                     <BarChart
                       layout="vertical"
@@ -587,7 +587,7 @@ const AdminDashboard = () => {
           {activeTab === 'pending' && (
             <div>
               <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
-                Établissements en attente de validation / طلبات التوثيق
+                {t('pendingEstablishments')}
               </h3>
               {pendingEstablishments.length === 0 ? (
                 <div className="text-center py-12 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200">

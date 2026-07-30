@@ -88,6 +88,7 @@ export const resources = {
       backToLogin: 'العودة لتسجيل الدخول',
       // Owner & Admin
       dashboard: 'لوحة التحكم',
+      pendingEstablishments: 'المؤسسات قيد الانتظار',
       establishmentsManagement: 'إدارة المؤسسات',
       reservationsManagement: 'إدارة الحجوزات',
       usersManagement: 'إدارة المستخدمين',
