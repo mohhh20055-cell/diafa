@@ -32,11 +32,11 @@ const OVERVIEW_PIE_COLORS = ['#34d399', '#f97316', '#8b5cf6']
 const VALID_TABS = ['overview', 'pending', 'create', 'reservations', 'messages', 'users', 'stats']
 
 const RESERVATION_STATUS_LABELS = {
-  en_attente: 'En attente',
-  acceptee: 'Acceptée',
-  refusee: 'Refusée',
-  annulee: 'Annulée',
-  terminee: 'Terminée',
+  en_attente: 'pending',
+  acceptee: 'accepted',
+  refusee: 'rejected',
+  annulee: 'cancelled',
+  terminee: 'finished',
 }
 
 const RESERVATION_STATUS_STYLES = {
@@ -1320,7 +1320,7 @@ const AdminReservationsTab = ({ reservations, filter, setFilter }) => {
                   </td>
                   <td className="px-4 py-3">
                     <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${RESERVATION_STATUS_STYLES[r.statut] || 'bg-slate-100 text-slate-600'}`}>
-                      {RESERVATION_STATUS_LABELS[r.statut] || r.statut}
+                      {t(RESERVATION_STATUS_LABELS[r.statut] || r.statut)}
                     </span>
                   </td>
                 </tr>

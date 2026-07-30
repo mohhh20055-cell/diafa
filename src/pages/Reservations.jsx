@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
+import { useTranslation } from 'react-i18next'
 import * as reservationsApi from '../api/reservations'
 import * as notificationsApi from '../api/notifications'
 import * as contactApi from '../api/contact'
@@ -23,6 +25,7 @@ const STATUS_LABELS = {
 
 const Reservations = () => {
   const { user, logout } = useAuth()
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [reservations, setReservations] = useState([])
   const [notifications, setNotifications] = useState([])
@@ -115,10 +118,10 @@ const Reservations = () => {
   }
 
   const tabs = [
-    { id: 'reservations', label: 'Mes Réservations', labelAr: 'حجوزاتي', count: reservations.length, icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
-    { id: 'notifications', label: 'Notifications & Réponses', labelAr: 'الإشعارات والردود', count: unreadNotifsCount > 0 ? unreadNotifsCount : null, icon: 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9' },
-    { id: 'profile', label: 'Mon Profil', labelAr: 'الملف الشخصي', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' },
-    { id: 'contact', label: 'Support & Aide', labelAr: 'الدعم والمساعدة', icon: 'M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' },
+    { id: 'reservations', label: t('myReservations'), count: reservations.length, icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
+    { id: 'notifications', label: t('notificationsAndResponses'), count: unreadNotifsCount > 0 ? unreadNotifsCount : null, icon: 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9' },
+    { id: 'profile', label: t('myProfile'), icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' },
+    { id: 'contact', label: t('supportAndHelp'), icon: 'M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' },
   ]
 
   const activeTabObj = tabs.find((t) => t.id === activeTab)
@@ -146,8 +149,9 @@ const Reservations = () => {
           to="/etablissements"
           className="px-3 py-1.5 rounded-lg bg-[#CB9A56] text-[#0E1E3D] text-xs font-bold"
         >
-          Explorer
+          {t('browseEstablishments')}
         </Link>
+        <LanguageSwitcher />
       </div>
 
       {/* Mobile Overlay */}
@@ -224,9 +228,6 @@ const Reservations = () => {
                   </svg>
                   <div className="text-left truncate">
                     <span className="block leading-tight">{tab.label}</span>
-                    <span className={`block text-[10px] font-normal leading-tight ${isActive ? 'text-[#0E1E3D]/80' : 'text-slate-400'}`}>
-                      {tab.labelAr}
-                    </span>
                   </div>
                 </div>
 
