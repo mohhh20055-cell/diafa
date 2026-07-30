@@ -194,8 +194,7 @@ const OwnerDashboard = () => {
                 ض
               </div>
               <div>
-                <h2 className="text-lg font-bold font-display text-white leading-tight">{t('partnerSpace')}</h2>
-                <span className="text-[11px] text-[#E4C48A] font-medium">{t('ownerDashboard')}</span>
+                <h2 className="text-lg font-bold font-display text-white leading-tight">{establishments[0]?.nom || t('owner')}</h2>
               </div>
             </div>
             <button
@@ -265,31 +264,6 @@ const OwnerDashboard = () => {
           })}
         </nav>
 
-        {/* تذييل الشريط الجانبي */}
-        <div className="p-4 border-t border-white/10 space-y-2">
-          <Link
-            to="/etablissements"
-            className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition"
-          >
-            <svg className="w-4 h-4 text-[#E4C48A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-            <span>{t('viewSite')}</span>
-          </Link>
-
-          <button
-            onClick={() => {
-              logout()
-              navigate('/')
-            }}
-            className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 text-xs font-bold transition border border-rose-500/30"
-          >
-            <svg className="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            <span>{t('logout')}</span>
-          </button>
-        </div>
       </aside>
 
       {/* منطقة المحتوى الرئيسية */}
@@ -361,61 +335,50 @@ const OwnerDashboard = () => {
                 {t('welcomeBack')}. {t('followReservations')}
               </p>
               
-              {establishments.length > 0 ? (
-                <div className={`mb-6 p-5 rounded-2xl border shadow-xs transition-all ${
-                  (establishments[0].statut_validation === 'valide' || establishments[0].statut_validation === 'APPROVED')
-                    ? 'bg-emerald-50/90 border-emerald-300 text-emerald-950' 
-                    : (establishments[0].statut_validation === 'refuse' || establishments[0].statut_validation === 'refusee' || establishments[0].statut_validation === 'REJECTED')
-                    ? 'bg-rose-50/90 border-rose-300 text-rose-950'
-                    : 'bg-amber-50/90 border-amber-300 text-amber-950'
-                }`}>
-                  <div className="flex items-start gap-3.5">
-                    <span className="text-3xl mt-0.5 shrink-0">
-                      {(establishments[0].statut_validation === 'valide' || establishments[0].statut_validation === 'APPROVED') ? '✅' : (establishments[0].statut_validation === 'refuse' || establishments[0].statut_validation === 'refusee' || establishments[0].statut_validation === 'REJECTED') ? '❌' : '⏳'}
-                    </span>
+              {establishments.length > 0 ? (() => {
+                const est0 = establishments[0]
+                const isApproved = est0.statut_validation === 'valide' || est0.statut_validation === 'APPROVED'
+                const isRejected = est0.statut_validation === 'refuse' || est0.statut_validation === 'refusee' || est0.statut_validation === 'REJECTED'
+                const accent = isApproved ? '#10B981' : isRejected ? '#F43F5E' : '#F59E0B'
+                return (
+                <div className="mb-6 rounded-2xl border border-neutral-200 bg-white shadow-xs overflow-hidden">
+                  <div className="h-1 w-full" style={{ backgroundColor: accent }} />
+                  <div className="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0"
+                      style={{ backgroundColor: `${accent}1A` }}
+                    >
+                      {isApproved ? '✅' : isRejected ? '❌' : '⏳'}
+                    </div>
                     <div className="flex-1">
-                      <div className="flex items-center justify-between gap-2 flex-wrap mb-1">
-                        <h4 className="font-bold text-base sm:text-lg">
-                          {t('establishmentStatus')}: {
-                            (establishments[0].statut_validation === 'valide' || establishments[0].statut_validation === 'APPROVED')
-                              ? t('approvedAndWorking')
-                              : (establishments[0].statut_validation === 'refuse' || establishments[0].statut_validation === 'refusee' || establishments[0].statut_validation === 'REJECTED')
-                              ? t('rejected')
-                              : t('pendingReview')
-                          }
-                        </h4>
-                        <span className={`text-xs font-bold px-3 py-1 rounded-full border ${
-                          (establishments[0].statut_validation === 'valide' || establishments[0].statut_validation === 'APPROVED')
-                            ? 'bg-emerald-200/80 text-emerald-900 border-emerald-400'
-                            : (establishments[0].statut_validation === 'refuse' || establishments[0].statut_validation === 'refusee' || establishments[0].statut_validation === 'REJECTED')
-                            ? 'bg-rose-200/80 text-rose-900 border-rose-400'
-                            : 'bg-amber-200/80 text-amber-900 border-amber-400'
-                        }`}>
-                          {establishments[0].nom}
+                      <div className="flex items-center gap-2 flex-wrap mb-0.5">
+                        <span
+                          className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full"
+                          style={{ backgroundColor: `${accent}1A`, color: accent }}
+                        >
+                          {isApproved ? t('approvedAndWorking') : isRejected ? t('rejected') : t('pendingReview')}
                         </span>
                       </div>
-                      <p className="text-xs sm:text-sm font-medium opacity-90 leading-relaxed mt-1">
-                        {(establishments[0].statut_validation === 'valide' || establishments[0].statut_validation === 'APPROVED') 
-                          ? t('approvedDesc')
-                          : (establishments[0].statut_validation === 'refuse' || establishments[0].statut_validation === 'refusee' || establishments[0].statut_validation === 'REJECTED')
-                          ? t('rejectedDesc')
-                          : t('pendingDesc')}
+                      <h4 className="font-bold text-base sm:text-lg text-[#0E1E3D] mt-1">
+                        {est0.nom}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-slate-500 leading-relaxed mt-1">
+                        {isApproved ? t('approvedDesc') : isRejected ? t('rejectedDesc') : t('pendingDesc')}
                       </p>
-                      <div className="mt-3">
-                        <button
-                          onClick={() => openEditEstablishment(establishments[0])}
-                          className="px-4 py-2 rounded-xl bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-xs"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                          </svg>
-                          {t('editEstablishmentDetails')}
-                        </button>
-                      </div>
                     </div>
+                    <button
+                      onClick={() => openEditEstablishment(est0)}
+                      className="shrink-0 px-4 py-2.5 rounded-xl bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-xs"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                      {t('editEstablishmentDetails')}
+                    </button>
                   </div>
                 </div>
-              ) : (
+                )
+              })() : (
                 <div className="mb-6 p-5 rounded-2xl border border-amber-300 bg-amber-50 text-amber-950">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl mt-0.5 shrink-0">⏳</span>
