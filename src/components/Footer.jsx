@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
-import { useLanguage } from "../context/LanguageContext";
+import { useTranslation } from 'react-i18next'
 import {
   IconPhone,
   IconMail,
@@ -15,7 +15,7 @@ import {
 } from "./Icons";
 
 export function Footer() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const DESTINATIONS_POPULAIRES = ["Alger", "Oran", "Annaba", "Constantine"];
 
   const A_PROPOS_LINKS = [

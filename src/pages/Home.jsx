@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useLanguage } from "../context/LanguageContext";
+import { useTranslation } from 'react-i18next'
 import {
   IconPin,
   IconCalendar,
@@ -103,7 +103,7 @@ function StarRating({ rating, count, size = "sm" }) {
 }
 
 function FeaturedCard({ establishment }) {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const cover =
     establishment.imageVedette ||
     (establishment.images || [])[0] ||
@@ -196,7 +196,7 @@ function FeaturedCard({ establishment }) {
 }
 
 function FeaturedEstablishments() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const scrollerRef = useRef(null);
@@ -327,7 +327,7 @@ function FeaturedEstablishments() {
 }
 
 function PourquoiSection() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const POURQUOI_ITEMS = [
     {
       Icon: IconOffer,
@@ -376,7 +376,7 @@ function PourquoiSection() {
 
 export function Home() {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [destination, setDestination] = useState("");
   const [dateDebut, setDateDebut] = useState("");
   const [dateFin, setDateFin] = useState("");

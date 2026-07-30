@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { useLanguage } from '../context/LanguageContext'
+import { useTranslation } from 'react-i18next'
 import Logo from '../components/Logo'
 import { WILAYAS } from '../constants/wilayas'
 
@@ -10,7 +10,7 @@ const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024
 const MAX_PHOTOS = 8
 
 const Register = () => {
-  const { t } = useLanguage()
+  const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const initialType = searchParams.get('type') === 'etablissement' || searchParams.get('role') === 'owner' ? 'owner' : 'client'
 

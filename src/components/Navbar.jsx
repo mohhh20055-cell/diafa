@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
 import { supabase } from '../lib/supabase'
 import Logo from './Logo'
 import { IconUserCircle, IconCalendar, IconLogout } from './Icons'
@@ -26,7 +27,8 @@ function NavText({ to, children, active }) {
 }
 
 function LanguageSwitcher() {
-  const { lang } = i18n
+  const { i18n } = useTranslation()
+  const lang = i18n.language
   const toggleLang = () => i18n.changeLanguage(lang === 'ar' ? 'en' : 'ar')
 
   return (

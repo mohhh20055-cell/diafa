@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { useLanguage } from '../context/LanguageContext'
+import { useTranslation } from 'react-i18next'
 import HoverRevealCard from '../components/HoverRevealCard'
 import * as establishmentsApi from '../api/establishments'
 import { getRatingsBatch } from '../api/reviews'
 import { WILAYAS } from '../constants/wilayas'
 
 const Establishments = () => {
-  const { t } = useLanguage()
+  const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const [establishments, setEstablishments] = useState([])
   const [loading, setLoading] = useState(true)

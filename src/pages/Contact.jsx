@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { useLanguage } from '../context/LanguageContext'
+import { useTranslation } from 'react-i18next'
 import * as contactApi from '../api/contact'
 
 const Contact = () => {
-  const { t } = useLanguage()
+  const { t } = useTranslation()
   const [formData, setFormData] = useState({
     nom: '',
     email: '',
