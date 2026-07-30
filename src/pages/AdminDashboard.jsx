@@ -82,7 +82,7 @@ const AdminDashboard = () => {
     if (res.success) {
       setReplyStatus({
         id: msg.id,
-        message: res.message || 'تم إرسال الرد والإشعار بنجاح!',
+        message: res.message || t('replySentSuccess'),
         isSuccess: true,
       })
       setContactMessages((prev) =>
@@ -95,7 +95,7 @@ const AdminDashboard = () => {
     } else {
       setReplyStatus({
         id: msg.id,
-        message: res.message || 'حدث خطأ أثناء إرسال الرد',
+        message: res.message || t('errorOccurred'),
         isSuccess: false,
       })
     }
@@ -198,10 +198,10 @@ const AdminDashboard = () => {
     setEditSaving(false)
 
     if (result.success) {
-      setEditSuccess('تم تحديث المعلومات بنجاح.')
+      setEditSuccess(t('profileUpdatedSuccessfully'))
       setEditForm((prev) => ({ ...prev, motDePasse: '' }))
     } else {
-      setEditError(result.error || 'حدث خطأ أثناء التحديث.')
+      setEditError(result.error || t('errorUpdatingProfile'))
     }
   }
 
@@ -225,7 +225,7 @@ const AdminDashboard = () => {
       if (ratingData.success) setGlobalRating(ratingData.data)
       if (reservationsData.success) setAllReservations(reservationsData.data || [])
     } catch (err) {
-      console.error('خطأ في تحميل بيانات المدير:', err)
+      console.error('Error loading admin data:', err)
     } finally {
       setLoading(false)
     }
@@ -238,13 +238,13 @@ const AdminDashboard = () => {
         : establishmentsApi.rejectEstablishment
       const res = await action(id)
       if (!res.success) {
-        alert(res.message || "حدث خطأ أثناء المصادقة على المؤسسة.")
+        alert(res.message || t('errorValidatingEst'))
         return
       }
       setSelectedEst(null)
       loadData()
     } catch (err) {
-      alert("حدث خطأ أثناء المصادقة على المؤسسة.")
+      alert(t('errorValidatingEst'))
     }
   }
 
@@ -255,10 +255,10 @@ const AdminDashboard = () => {
         setSelectedEst((prev) => (prev && prev.id === id ? { ...prev, imageVedette: imageUrl } : prev))
         loadData()
       } else {
-        alert(res.message || "حدث خطأ أثناء تحديث الصورة.")
+        alert(res.message || t('errorUpdatingFeaturedImg'))
       }
     } catch (err) {
-      alert("حدث خطأ أثناء تحديث الصورة.")
+      alert(t('errorUpdatingFeaturedImg'))
     }
   }
 
@@ -268,27 +268,22 @@ const AdminDashboard = () => {
       await adminApi.updateUserStatus(id, { statut })
       loadData()
     } catch (err) {
-      alert('حدث خطأ أثناء تحديث حالة المستخدم.')
+      alert(t('errorUpdatingUserStatus'))
     }
   }
 
   const handleDeleteUser = async (id, name) => {
-    if (!confirm(
-      `هل أنت متأكد من حذف المستخدم « ${name} » بشكل نهائي؟\n\n` +
-      `سيتم حذف جميع بياناته (المؤسسات، الغرف، الحجوزات، التقييمات، الإشعارات).\n` +
-      `يمكن إعادة استخدام بريده الإلكتروني للتسجيل مجدداً.\n\n` +
-      `هذا الإجراء لا يمكن التراجع عنه.`
-    )) return
+    if (!confirm(t('confirmDeleteUser', { name }))) return
 
     try {
       const res = await adminApi.deleteUser(id)
       if (res.success) {
         loadData()
       } else {
-        alert(res.message || 'حدث خطأ أثناء الحذف.')
+        alert(res.message || t('errorDeletingUser'))
       }
     } catch (err) {
-      alert('حدث خطأ أثناء حذف المستخدم.')
+      alert(t('errorDeletingUser'))
     }
   }
 
