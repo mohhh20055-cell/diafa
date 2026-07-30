@@ -48,7 +48,8 @@ const RESERVATION_STATUS_STYLES = {
 }
 
 const AdminDashboard = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const isAr = i18n.language?.startsWith('ar')
   const { user, logout, updateProfile } = useAuth()
   const navigate = useNavigate()
   const { tab: tabParam } = useParams()
@@ -337,7 +338,7 @@ const AdminDashboard = () => {
                 <svg className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#CB9A56]' : 'text-slate-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
                 </svg>
-                <span className="flex-1 text-left">{tab.label}</span>
+                <span className="flex-1 text-left">{isAr ? tab.labelAr : tab.label}</span>
               </Link>
             )
           })}
@@ -434,19 +435,19 @@ const AdminDashboard = () => {
         {activeTab === 'overview' && stats && (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Utilisateurs Inscris</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{t('usersManagement')}</p>
               <div className="text-2xl sm:text-3xl font-extrabold text-[#0E1E3D] mt-1 font-display">
                 {stats.totalUsers || users.length}
               </div>
-              <p className="text-[11px] text-slate-500 mt-1">Clients & Établissements</p>
+              <p className="text-[11px] text-slate-500 mt-1">{isAr ? 'زبائن وأصحاب مؤسسات' : 'Clients & Établissements'}</p>
             </div>
 
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#0E1E3D]">Établissements</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#0E1E3D]">{t('establishmentsManagement')}</p>
               <div className="text-2xl sm:text-3xl font-extrabold text-[#0E1E3D] mt-1 font-display">
                 {stats.totalEstablishments || 0}
               </div>
-              <p className="text-[11px] text-slate-500 mt-1">Enregistrés sur la plateforme</p>
+              <p className="text-[11px] text-slate-500 mt-1">{isAr ? 'مسجلة في المنصة' : 'Enregistrés sur la plateforme'}</p>
             </div>
 
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-5">

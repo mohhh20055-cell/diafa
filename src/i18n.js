@@ -442,8 +442,13 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'ar',
+    supportedLngs: ['ar', 'en'],
     fallbackLng: 'ar',
+    detection: {
+      order: ['localStorage', 'navigator'],
+      lookupLocalStorage: 'i18nextLng',
+      caches: ['localStorage'],
+    },
     interpolation: {
       escapeValue: false,
     },

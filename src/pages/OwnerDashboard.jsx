@@ -26,6 +26,8 @@ const STATUT_ICON = {
 
 const OwnerDashboard = () => {
   const { user, logout } = useAuth()
+  const { t, i18n } = useTranslation()
+  const isAr = i18n.language?.startsWith('ar')
   const navigate = useNavigate()
   const [ownerProfile, setOwnerProfile] = useState(null)
   const [establishments, setEstablishments] = useState([])
@@ -242,10 +244,7 @@ const OwnerDashboard = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
                   </svg>
                   <div className="text-left truncate">
-                    <span className="block leading-tight">{tab.label}</span>
-                    <span className={`block text-[10px] font-normal leading-tight ${isActive ? 'text-[#0E1E3D]/80' : 'text-slate-400'}`}>
-                      {tab.labelAr}
-                    </span>
+                    <span className="block leading-tight font-medium">{isAr ? tab.labelAr : tab.label}</span>
                   </div>
                 </div>
 
@@ -299,19 +298,19 @@ const OwnerDashboard = () => {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 text-[#E4C48A] text-xs font-semibold uppercase tracking-wider mb-1">
-                <span>Espace Propriétaire / لوحة التحكم</span>
+                <span>{isAr ? 'لوحة التحكم' : 'Espace Propriétaire'}</span>
               </div>
               <h1 className="text-xl sm:text-2xl font-bold font-display text-white">
-                Bonjour, {user?.prenom || 'Partenaire'} !
+                {t('welcomePartner', { name: user?.prenom || (isAr ? 'شريك' : 'Partenaire') })}
               </h1>
               <p className="text-slate-300 text-xs sm:text-sm mt-1">
-                Gérez vos établissements, suivez vos réservations et vos offres
+                {t('manageEstablishments')}
               </p>
             </div>
             <div className="bg-white/10 px-4 py-2 rounded-xl border border-white/10 text-right">
-              <span className="text-[10px] text-slate-300 block">Réservations en attente</span>
+              <span className="text-[10px] text-slate-300 block">{t('pendingDemands')}</span>
               <span className="text-xs font-bold text-amber-400 flex items-center gap-1.5 justify-end">
-                {stats.enAttente} demandes
+                {stats.enAttente} {isAr ? 'طلبات' : 'demandes'}
               </span>
             </div>
           </div>
@@ -320,7 +319,7 @@ const OwnerDashboard = () => {
         {/* Stats Row */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Total Réservations</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">{t('totalReservations')}</p>
             <div className="text-2xl font-extrabold text-[#0E1E3D] mt-1 font-display">
               {stats.total}
             </div>
@@ -336,19 +335,19 @@ const OwnerDashboard = () => {
           </div>
 
           <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600">Acceptées</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600">{t('accepted')}</p>
             <div className="text-2xl font-extrabold text-emerald-600 mt-1 font-display">
               {stats.acceptees}
             </div>
-            <p className="text-[10px] text-slate-500 mt-1">Confirmées</p>
+            <p className="text-[10px] text-slate-500 mt-1">{isAr ? 'مؤكدة' : 'Confirmées'}</p>
           </div>
 
           <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-rose-600">Refusées</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-rose-600">{t('refused')}</p>
             <div className="text-2xl font-extrabold text-rose-600 mt-1 font-display">
               {stats.refusees}
             </div>
-            <p className="text-[10px] text-slate-500 mt-1">Non disponibles</p>
+            <p className="text-[10px] text-slate-500 mt-1">{isAr ? 'غير متاحة' : 'Non disponibles'}</p>
           </div>
         </div>
 
