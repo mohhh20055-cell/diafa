@@ -123,7 +123,7 @@ function FeaturedCard({ establishment }) {
               src={toAssetUrl(cover)}
               alt={establishment.nom}
               loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              className="absolute inset-0 h-full w-full object-contain transition duration-500 group-hover:scale-105"
             />
           )}
           <span className="absolute left-2 top-2 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#0E1E3D] shadow">
