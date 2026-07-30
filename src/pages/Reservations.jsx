@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { LanguageSwitcher } from '../components/LanguageSwitcher'
 import { useTranslation } from 'react-i18next'
 import * as reservationsApi from '../api/reservations'
 import * as notificationsApi from '../api/notifications'
@@ -24,15 +23,14 @@ const STATUS_LABELS = {
 }
 
 const Reservations = () => {
-  const { user, logout } = useAuth()
+  const { user } = useAuth()
   const { t } = useTranslation()
-  const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [reservations, setReservations] = useState([])
   const [notifications, setNotifications] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [activeTab, setActiveTab] = useState('reservations')
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'reservations')
 
   // حالة نموذج الاتصال
   const [contactForm, setContactForm] = useState({ sujet: '', message: '' })
@@ -42,6 +40,19 @@ const Reservations = () => {
   useEffect(() => {
     loadAllData()
   }, [])
+
+  useEffect(() => {
+    const tabFromUrl = searchParams.get('tab')
+    if (tabFromUrl && tabFromUrl !== activeTab) {
+      setActiveTab(tabFromUrl)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams])
+
+  const selectTab = (tabId) => {
+    setActiveTab(tabId)
+    setSearchParams({ tab: tabId })
+  }
 
   const loadAllData = async () => {
     try {
@@ -129,160 +140,11 @@ const Reservations = () => {
     { id: 'contact', label: t('supportAndHelp'), icon: 'M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' },
   ]
 
-  const activeTabObj = tabs.find((t) => t.id === activeTab)
-
   return (
-    <div className="min-h-screen bg-[#FAF7F1] flex flex-col md:flex-row">
-      {/* شريط التنقل العلوي للجوال */}
-      <div className="md:hidden bg-[#0E1E3D] text-white px-4 py-3 border-b border-[#CB9A56]/30 flex items-center justify-between sticky top-0 z-40">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-            className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-[#E4C48A]"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-          <div>
-            <span className="text-[10px] uppercase tracking-wider text-[#CB9A56] font-bold">{t('clientSpace')}</span>
-            <h2 className="text-sm font-bold text-white leading-tight">{activeTabObj?.label}</h2>
-          </div>
-        </div>
-
-        <Link
-          to="/etablissements"
-          className="px-3 py-1.5 rounded-lg bg-[#CB9A56] text-[#0E1E3D] text-xs font-bold"
-        >
-          {t('browseEstablishments')}
-        </Link>
-        <LanguageSwitcher />
-      </div>
-
-      {/* طبقة التعتيم للجوال */}
-      {mobileSidebarOpen && (
-        <div
-          onClick={() => setMobileSidebarOpen(false)}
-          className="fixed inset-0 bg-black/60 z-40 md:hidden backdrop-blur-xs"
-        />
-      )}
-
-      {/* حاوية الشريط الجانبي */}
-      <aside
-        className={`fixed md:sticky top-0 left-0 bottom-0 z-50 md:z-auto w-72 bg-[#0E1E3D] text-white flex flex-col justify-between border-r border-[#CB9A56]/20 transition-transform duration-300 ease-in-out shrink-0 h-screen ${
-          mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-        }`}
-      >
-        {/* رأس الشريط الجانبي والعلامة التجارية */}
-        <div className="p-6 border-b border-white/10">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-2xl bg-[#CB9A56] text-[#0E1E3D] font-black flex items-center justify-center text-lg shadow-md">
-                ض
-              </div>
-              <div>
-                <h2 className="text-lg font-bold font-display text-white leading-tight">{t('clientAccount')}</h2>
-                <span className="text-[11px] text-[#E4C48A] font-medium">{t('clientSpace')}</span>
-              </div>
-            </div>
-            <button
-              onClick={() => setMobileSidebarOpen(false)}
-              className="md:hidden text-slate-400 hover:text-white"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          {/* بطاقة الملف الشخصي */}
-          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-[#CB9A56] text-[#0E1E3D] font-extrabold flex items-center justify-center text-xs shrink-0">
-              {(user?.prenom || user?.nom || 'ز').charAt(0).toUpperCase()}
-            </div>
-            <div className="overflow-hidden">
-              <p className="text-xs font-bold text-white truncate">{user?.prenom || 'زبون'} {user?.nom || ''}</p>
-              <p className="text-[10px] text-slate-400 truncate">{user?.email || user?.telephone}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* عناصر التنقل في الشريط الجانبي */}
-        <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto thin-scrollbar">
-          <p className="px-3 text-[10px] font-bold text-[#E4C48A] uppercase tracking-wider mb-2">
-            {t('quickLinks')}
-          </p>
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab.id
-            return (
-              <button
-                key={tab.id}
-                onClick={() => {
-                  setActiveTab(tab.id)
-                  setMobileSidebarOpen(false)
-                }}
-                className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  isActive
-                    ? 'bg-[#CB9A56] text-[#0E1E3D] shadow-md'
-                    : 'text-slate-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <div className="flex items-center gap-3 truncate">
-                  <svg className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#0E1E3D]' : 'text-[#E4C48A]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
-                  </svg>
-                  <div className="text-left truncate">
-                    <span className="block leading-tight">{tab.label}</span>
-                  </div>
-                </div>
-
-                {tab.count !== undefined && tab.count !== null && (
-                  <span className={`px-2 py-0.5 text-[10px] font-extrabold rounded-full shrink-0 ${
-                    isActive
-                      ? 'bg-[#0E1E3D] text-white'
-                      : tab.id === 'notifications' && unreadNotifsCount > 0
-                      ? 'bg-amber-500 text-slate-950 animate-pulse'
-                      : 'bg-white/10 text-[#E4C48A]'
-                  }`}>
-                    {tab.count}
-                  </span>
-                )}
-              </button>
-            )
-          })}
-        </nav>
-
-        {/* تذييل الشريط الجانبي */}
-        <div className="p-4 border-t border-white/10 space-y-2">
-          <Link
-            to="/etablissements"
-            className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition"
-          >
-            <svg className="w-4 h-4 text-[#E4C48A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <span>{t('search')}</span>
-          </Link>
-
-          <button
-            onClick={() => {
-              logout()
-              navigate('/')
-            }}
-            className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 text-xs font-bold transition border border-rose-500/30 cursor-pointer"
-          >
-            <svg className="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            <span>{t('logout')}</span>
-          </button>
-        </div>
-      </aside>
-
-      {/* منطقة المحتوى الرئيسية */}
-      <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto w-full overflow-y-auto">
+    <div className="min-h-screen bg-[#FAF7F1]">
+      <div className="max-w-6xl mx-auto w-full p-4 sm:p-6 lg:p-8">
         {/* رأس الصفحة */}
-        <div className="bg-[#0E1E3D] text-white rounded-2xl p-6 mb-8 border border-[#CB9A56]/30 shadow-md">
+        <div className="bg-[#0E1E3D] text-white rounded-2xl p-6 mb-6 border border-[#CB9A56]/30 shadow-md">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <span className="text-[#E4C48A] text-xs font-bold uppercase tracking-wider block mb-1">
@@ -305,6 +167,40 @@ const Reservations = () => {
               </svg>
             </Link>
           </div>
+        </div>
+
+        {/* أشرطة التبويبات الأفقية */}
+        <div className="flex items-center gap-2 mb-6 overflow-x-auto scrollbar-none">
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id
+            return (
+              <button
+                key={tab.id}
+                onClick={() => selectTab(tab.id)}
+                className={`flex items-center gap-2 whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                  isActive
+                    ? 'bg-[#0E1E3D] text-white border-[#0E1E3D] shadow-md'
+                    : 'bg-white text-slate-600 border-neutral-200 hover:border-[#CB9A56] hover:text-[#0E1E3D]'
+                }`}
+              >
+                <svg className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#CB9A56]' : 'text-slate-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
+                </svg>
+                <span>{tab.label}</span>
+                {tab.count !== undefined && tab.count !== null && (
+                  <span className={`px-1.5 py-0.5 text-[10px] font-extrabold rounded-full shrink-0 ${
+                    isActive
+                      ? 'bg-white/15 text-[#E4C48A]'
+                      : tab.id === 'notifications' && unreadNotifsCount > 0
+                      ? 'bg-amber-500 text-slate-950'
+                      : 'bg-neutral-100 text-slate-500'
+                  }`}>
+                    {tab.count}
+                  </span>
+                )}
+              </button>
+            )
+          })}
         </div>
 
         {error && (
@@ -573,7 +469,7 @@ const Reservations = () => {
             </div>
           )}
         </div>
-      </main>
+      </div>
     </div>
   )
 }
