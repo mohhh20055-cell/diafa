@@ -39,7 +39,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0E1E3D] relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
-      {/* Background Ambient Glow */}
+      {/* تأثير الخلفية المتوهج */}
       <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[#CB9A56]/15 blur-3xl" />
 
       <div className="max-w-md w-full relative z-10">
@@ -80,7 +80,7 @@ const Login = () => {
                 value={identifiant}
                 onChange={(e) => setIdentifiant(e.target.value)}
                 className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
-                placeholder="exemple@email.com / 06XXXXXXXX"
+                placeholder="مثال@بريد.com / 06XXXXXXXX"
                 disabled={isSubmitting}
               />
             </div>
