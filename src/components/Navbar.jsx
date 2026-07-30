@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import i18n from '../i18n'
 import { supabase } from '../lib/supabase'
 import Logo from './Logo'
-import { IconUserCircle, IconCalendar, IconLogout } from './Icons'
+import { IconUserCircle, IconCalendar, IconLogout, IconBell, IconHeadset } from './Icons'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
 /* Texte de nav avec effet hover (soulignement animé + couleur or) */
@@ -139,23 +139,51 @@ function AccountMenu() {
           </div>
 
           <div className="py-1">
-            <Link
-              to={dashboardLink()}
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
-            >
-              <IconUserCircle className="h-4 w-4 text-[#CB9A56]" />
-              <span>{t('mySpace')}</span>
-            </Link>
-
-            <Link
-              to="/mes-reservations"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
-            >
-              <IconCalendar className="h-4 w-4 text-[#CB9A56]" />
-              <span>{t('myReservations')}</span>
-            </Link>
+            {user?.role === 'owner' || user?.role === 'admin' ? (
+              <Link
+                to={dashboardLink()}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
+              >
+                <IconUserCircle className="h-4 w-4 text-[#CB9A56]" />
+                <span>{t('mySpace')}</span>
+              </Link>
+            ) : (
+              <>
+                <Link
+                  to="/mes-reservations?tab=reservations"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
+                >
+                  <IconCalendar className="h-4 w-4 text-[#CB9A56]" />
+                  <span>{t('myReservations')}</span>
+                </Link>
+                <Link
+                  to="/mes-reservations?tab=notifications"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
+                >
+                  <IconBell className="h-4 w-4 text-[#CB9A56]" />
+                  <span>{t('notificationsAndResponses')}</span>
+                </Link>
+                <Link
+                  to="/mes-reservations?tab=profile"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
+                >
+                  <IconUserCircle className="h-4 w-4 text-[#CB9A56]" />
+                  <span>{t('myProfile')}</span>
+                </Link>
+                <Link
+                  to="/mes-reservations?tab=contact"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
+                >
+                  <IconHeadset className="h-4 w-4 text-[#CB9A56]" />
+                  <span>{t('supportAndHelp')}</span>
+                </Link>
+              </>
+            )}
           </div>
 
           <div className="border-t border-neutral-100 py-1">
