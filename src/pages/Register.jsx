@@ -232,44 +232,6 @@ const Register = () => {
         </div>
 
         <div className="bg-white rounded-2xl shadow-2xl p-8 border border-neutral-100">
-          {/* Badge du type de compte choisi depuis le menu "Inscription" de la navbar */}
-          <div className="mb-8 flex items-center justify-between gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3">
-            <div className="flex items-center gap-3">
-              <span
-                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-                  accountRole === 'owner' ? 'bg-[#CB9A56]/20 text-[#CB9A56]' : 'bg-[#0E1E3D]/10 text-[#0E1E3D]'
-                }`}
-              >
-                {accountRole === 'owner' ? (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth="2" />
-                    <path d="M9 8h1M14 8h1M9 12h1M14 12h1M9 16h6" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                ) : (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <circle cx="12" cy="8" r="4" strokeWidth="2" />
-                    <path d="M5 20c1.5-4 4.5-6 7-6s5.5 2 7 6" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                )}
-              </span>
-              <div>
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-                  Type de compte
-                </p>
-                <p className="text-sm font-bold text-[#0E1E3D]">
-                  {accountRole === 'owner' ? 'Établissement (مؤسسة)' : 'Client (زبون)'}
-                </p>
-              </div>
-            </div>
-
-            <Link
-              to={accountRole === 'owner' ? '/register?type=client' : '/register?type=etablissement'}
-              className="shrink-0 text-xs font-bold text-[#CB9A56] hover:text-[#0E1E3D] transition-colors whitespace-nowrap"
-            >
-              Changer
-            </Link>
-          </div>
-
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
               <div className="bg-red-50 border-2 border-red-300 text-red-800 px-4 py-4 rounded-xl">
