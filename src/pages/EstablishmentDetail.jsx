@@ -459,12 +459,13 @@ const EstablishmentDetail = () => {
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {establishment.images.map((img, index) => (
-                    <img
-                      key={index}
-                      src={img}
-                      alt={`${establishment.nom} - ${index + 1}`}
-                      className="w-full aspect-square object-cover rounded-xl hover:opacity-90 transition"
-                    />
+                    <div key={index} className="w-full aspect-square rounded-xl bg-neutral-100 overflow-hidden">
+                      <img
+                        src={img}
+                        alt={`${establishment.nom} - ${index + 1}`}
+                        className="w-full h-full object-contain hover:opacity-90 transition"
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -490,7 +491,7 @@ const EstablishmentDetail = () => {
                             <img
                               src={roomImg}
                               alt={room.nomType}
-                              className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                              className="absolute inset-0 h-full w-full object-contain transition duration-500 group-hover:scale-105"
                             />
                           ) : (
                             <div className="absolute inset-0 flex items-center justify-center text-neutral-300">
