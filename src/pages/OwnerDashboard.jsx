@@ -190,11 +190,10 @@ const OwnerDashboard = () => {
         <div className="p-6 border-b border-white/10">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-2xl bg-[#CB9A56] text-[#0E1E3D] font-black flex items-center justify-center text-lg shadow-md">
-                ض
-              </div>
               <div>
-                <h2 className="text-lg font-bold font-display text-white leading-tight">{establishments[0]?.nom || t('owner')}</h2>
+                <h2 className="text-lg font-bold font-display text-white leading-tight">
+                  {t('welcomePartnerName', { name: user?.prenom || t('owner') })}
+                </h2>
               </div>
             </div>
             <button
