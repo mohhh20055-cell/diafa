@@ -198,10 +198,10 @@ const AdminDashboard = () => {
     setEditSaving(false)
 
     if (result.success) {
-      setEditSuccess('Informations mises à jour avec succès. / تم تحديث المعلومات بنجاح.')
+      setEditSuccess('تم تحديث المعلومات بنجاح.')
       setEditForm((prev) => ({ ...prev, motDePasse: '' }))
     } else {
-      setEditError(result.error || 'Erreur lors de la mise à jour.')
+      setEditError(result.error || 'حدث خطأ أثناء التحديث.')
     }
   }
 
@@ -225,7 +225,7 @@ const AdminDashboard = () => {
       if (ratingData.success) setGlobalRating(ratingData.data)
       if (reservationsData.success) setAllReservations(reservationsData.data || [])
     } catch (err) {
-      console.error('Error loading admin data:', err)
+      console.error('خطأ في تحميل بيانات المدير:', err)
     } finally {
       setLoading(false)
     }
@@ -238,13 +238,13 @@ const AdminDashboard = () => {
         : establishmentsApi.rejectEstablishment
       const res = await action(id)
       if (!res.success) {
-        alert(res.message || "Erreur lors de la validation de l'établissement.")
+        alert(res.message || "حدث خطأ أثناء المصادقة على المؤسسة.")
         return
       }
       setSelectedEst(null)
       loadData()
     } catch (err) {
-      alert("Erreur lors de la validation de l'établissement.")
+      alert("حدث خطأ أثناء المصادقة على المؤسسة.")
     }
   }
 
@@ -255,10 +255,10 @@ const AdminDashboard = () => {
         setSelectedEst((prev) => (prev && prev.id === id ? { ...prev, imageVedette: imageUrl } : prev))
         loadData()
       } else {
-        alert(res.message || "Erreur lors de la mise à jour de l'image.")
+        alert(res.message || "حدث خطأ أثناء تحديث الصورة.")
       }
     } catch (err) {
-      alert("Erreur lors de la mise à jour de l'image.")
+      alert("حدث خطأ أثناء تحديث الصورة.")
     }
   }
 
@@ -268,16 +268,16 @@ const AdminDashboard = () => {
       await adminApi.updateUserStatus(id, { statut })
       loadData()
     } catch (err) {
-      alert('Erreur lors de la mise à jour du statut utilisateur.')
+      alert('حدث خطأ أثناء تحديث حالة المستخدم.')
     }
   }
 
   const handleDeleteUser = async (id, name) => {
     if (!confirm(
-      `Supprimer définitivement l'utilisateur « ${name} » ?\n\n` +
-      `Toutes ses données seront effacées (établissements, chambres, réservations, avis, notifications).\n` +
-      `Son email pourra être réutilisé pour une nouvelle inscription.\n\n` +
-      `Cette action est IRRÉVERSIBLE.`
+      `هل أنت متأكد من حذف المستخدم « ${name} » بشكل نهائي؟\n\n` +
+      `سيتم حذف جميع بياناته (المؤسسات، الغرف، الحجوزات، التقييمات، الإشعارات).\n` +
+      `يمكن إعادة استخدام بريده الإلكتروني للتسجيل مجدداً.\n\n` +
+      `هذا الإجراء لا يمكن التراجع عنه.`
     )) return
 
     try {
@@ -285,10 +285,10 @@ const AdminDashboard = () => {
       if (res.success) {
         loadData()
       } else {
-        alert(res.message || 'Erreur lors de la suppression.')
+        alert(res.message || 'حدث خطأ أثناء الحذف.')
       }
     } catch (err) {
-      alert('Erreur lors de la suppression de l\'utilisateur.')
+      alert('حدث خطأ أثناء حذف المستخدم.')
     }
   }
 
@@ -301,24 +301,24 @@ const AdminDashboard = () => {
   }
 
   const tabs = [
-    { id: 'overview', label: 'Aperçu', labelAr: 'نظرة عامة', icon: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' },
-    { id: 'pending', label: 'Validation', labelAr: 'المصادقة', count: pendingEstablishments.length, icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
-    { id: 'create', label: 'Ajouter Établissement', labelAr: 'إضافة مؤسسة', icon: 'M12 4v16m8-8H4' },
-    { id: 'reservations', label: 'Réservations', labelAr: 'الحجوزات', count: allReservations.length, icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
-    { id: 'messages', label: 'Messages Contact', labelAr: 'الرسائل', count: contactMessages.length, icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
-    { id: 'users', label: 'Utilisateurs', labelAr: 'المستخدمين', count: users.length, icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z' },
-    { id: 'stats', label: 'Statistiques', labelAr: 'الإحصائيات', icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
+    { id: 'overview', label: 'نظرة عامة', labelAr: 'نظرة عامة', icon: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' },
+    { id: 'pending', label: 'المصادقة', labelAr: 'المصادقة', count: pendingEstablishments.length, icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
+    { id: 'create', label: 'إضافة مؤسسة', labelAr: 'إضافة مؤسسة', icon: 'M12 4v16m8-8H4' },
+    { id: 'reservations', label: 'الحجوزات', labelAr: 'الحجوزات', count: allReservations.length, icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
+    { id: 'messages', label: 'رسائل التواصل', labelAr: 'الرسائل', count: contactMessages.length, icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
+    { id: 'users', label: 'المستخدمين', labelAr: 'المستخدمين', count: users.length, icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z' },
+    { id: 'stats', label: 'الإحصائيات', labelAr: 'الإحصائيات', icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
   ]
 
   return (
     <>
     <div className="min-h-screen bg-[#FAF7F1] flex flex-col lg:flex-row">
-      {/* ---------- Sidebar ---------- */}
+      {/* ---------- الشريط الجانبي ---------- */}
       <aside className="shrink-0 bg-[#0E1E3D] text-white border-b lg:border-b-0 lg:border-r border-[#CB9A56]/20 lg:w-64 lg:min-h-screen lg:sticky lg:top-0 lg:flex lg:flex-col">
         <div className="flex items-center gap-2 px-5 py-4 border-b border-white/10">
           <Logo className="h-8" withText={false} dark />
           <div className="min-w-0">
-            <p className="font-display font-bold text-sm truncate leading-tight">Admin Dashboard</p>
+            <p className="font-display font-bold text-sm truncate leading-tight">لوحة التحكم</p>
           </div>
         </div>
 
@@ -345,22 +345,22 @@ const AdminDashboard = () => {
         </nav>
       </aside>
 
-      {/* ---------- Main column ---------- */}
+      {/* ---------- العمود الرئيسي ---------- */}
       <div className="flex-1 min-w-0">
-        {/* Slim top bar */}
+        {/* شريط علوي رفيع */}
         <div className="flex items-center justify-between lg:justify-end gap-3 px-4 sm:px-6 lg:px-8 py-3.5 border-b border-neutral-200 bg-white">
           <LanguageSwitcher />
           <Link
             to="/etablissements"
             className="lg:hidden inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#CB9A56] hover:bg-[#E4C48A] text-[#0E1E3D] text-xs font-bold transition shadow-sm"
           >
-            Voir la plateforme
+            عرض المنصة
           </Link>
 
           <Link
             to="/notifications"
             className="relative flex items-center justify-center w-9 h-9 rounded-full border border-[#0E1E3D]/15 text-[#0E1E3D] hover:bg-[#0E1E3D]/5 hover:border-[#CB9A56] transition"
-            title="Notifications"
+            title="الإشعارات"
           >
             <IconBell className="w-4 h-4" />
             {unreadCount > 0 && (
@@ -377,9 +377,9 @@ const AdminDashboard = () => {
               className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#0E1E3D]/5 hover:bg-[#0E1E3D]/10 border border-[#0E1E3D]/15 text-[#0E1E3D] text-xs font-bold transition"
             >
               <div className="w-7 h-7 rounded-full bg-[#CB9A56] text-[#0E1E3D] font-extrabold flex items-center justify-center text-xs">
-                A
+                م
               </div>
-              <span className="hidden sm:inline">Admin</span>
+              <span className="hidden sm:inline">مدير</span>
               <svg className={`w-3.5 h-3.5 text-[#0E1E3D]/60 transition-transform ${profileOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
@@ -388,8 +388,8 @@ const AdminDashboard = () => {
             {profileOpen && (
               <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-neutral-200 py-2 text-slate-800 z-50">
                 <div className="px-4 py-3 border-b border-neutral-100 bg-neutral-50/60 rounded-t-2xl">
-                  <p className="text-xs font-bold text-[#0E1E3D]">{user?.prenom || 'Admin'} {user?.nom || ''}</p>
-                  <p className="text-[11px] text-slate-500 truncate">{user?.email || 'Administrateur'}</p>
+                  <p className="text-xs font-bold text-[#0E1E3D]">{user?.prenom || 'مدير'} {user?.nom || ''}</p>
+                  <p className="text-[11px] text-slate-500 truncate">{user?.email || 'مدير'}</p>
                 </div>
                 <div className="pt-1">
                   <button
@@ -398,7 +398,7 @@ const AdminDashboard = () => {
                     className="w-full text-left px-4 py-2.5 text-xs font-bold text-[#0E1E3D] hover:bg-[#CB9A56]/15 transition flex items-center gap-2"
                   >
                     <IconEdit className="w-4 h-4 text-[#CB9A56]" />
-                    <span>Modifier mes informations / تعديل معلوماتي</span>
+                    <span>تعديل معلوماتي</span>
                   </button>
                 </div>
                 <div className="pt-1 border-t border-neutral-100">
@@ -414,7 +414,7 @@ const AdminDashboard = () => {
                     <svg className="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                     </svg>
-                    <span>Déconnexion / تسجيل الخروج</span>
+                    <span>تسجيل الخروج</span>
                   </button>
                 </div>
               </div>
@@ -428,10 +428,10 @@ const AdminDashboard = () => {
             <svg className="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
             </svg>
-            <span>Certaines statistiques n'ont pas pu être chargées depuis la base de données (erreur Supabase). Ouvrez la console du navigateur (F12) pour voir le détail exact de l'erreur.</span>
+            <span>تعذر تحميل بعض الإحصائيات من قاعدة البيانات (خطأ في Supabase). افتح وحدة تحكم المتصفح (F12) لرؤية تفاصيل الخطأ.</span>
           </div>
         )}
-        {/* Stats */}
+        {/* الإحصائيات */}
         {activeTab === 'overview' && stats && (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-5">
@@ -451,24 +451,24 @@ const AdminDashboard = () => {
             </div>
 
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600">Réservations</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600">الحجوزات</p>
               <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1 font-display">
                 {stats.totalReservations || 0}
               </div>
-              <p className="text-[11px] text-slate-500 mt-1">Effectuées par clients</p>
+              <p className="text-[11px] text-slate-500 mt-1">تمت من قبل الزبائن</p>
             </div>
 
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-amber-600">En Attente Validation</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-amber-600">في انتظار المصادقة</p>
               <div className="text-2xl sm:text-3xl font-extrabold text-amber-600 mt-1 font-display">
                 {pendingEstablishments.length}
               </div>
-              <p className="text-[11px] text-slate-500 mt-1">À valider par l'admin</p>
+              <p className="text-[11px] text-slate-500 mt-1">بانتظار مصادقة المدير</p>
             </div>
           </div>
         )}
 
-        {/* Tab Content Panels */}
+        {/* لوحات محتوى التبويبات */}
         <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-6 sm:p-8">
           {activeTab === 'overview' && (
             <div>
@@ -478,7 +478,7 @@ const AdminDashboard = () => {
                     <svg className="w-5 h-5 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Établissements en attente de validation ({pendingEstablishments.length})
+                    المؤسسات في انتظار المصادقة ({pendingEstablishments.length})
                   </h4>
                   {pendingEstablishments.length === 0 ? (
                     <p className="text-xs text-slate-500">لا توجد مؤسسات في الانتظار حالياً.</p>
@@ -494,7 +494,7 @@ const AdminDashboard = () => {
                             onClick={() => { setSelectedEst(est.id); goToTab('pending') }}
                             className="px-3 py-1 rounded-full text-[10px] font-bold bg-[#CB9A56] text-[#0E1E3D]"
                           >
-                            Examiner →
+                            مراجعة ←
                           </button>
                         </li>
                       ))}
@@ -507,10 +507,10 @@ const AdminDashboard = () => {
                     <svg className="w-5 h-5 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
-                    Derniers Utilisateurs ({users.length})
+                    آخر المستخدمين ({users.length})
                   </h4>
                   {users.length === 0 ? (
-                    <p className="text-xs text-slate-500">Aucun utilisateur enregistré.</p>
+                    <p className="text-xs text-slate-500">لا يوجد مستخدمين مسجلين.</p>
                   ) : (
                     <ul className="space-y-3">
                       {users.slice(0, 4).map((u) => (
@@ -522,7 +522,7 @@ const AdminDashboard = () => {
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
                             u.role === 'owner' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700'
                           }`}>
-                            {u.role}
+                            {u.role === 'owner' ? 'صاحب مؤسسة' : 'زبون'}
                           </span>
                         </li>
                       ))}
@@ -553,20 +553,20 @@ const AdminDashboard = () => {
                       <XAxis type="number" allowDecimals={false} tick={{ fontSize: 11, fill: '#64748b' }} />
                       <YAxis type="category" dataKey="name" width={90} tick={{ fontSize: 11, fill: '#64748b' }} />
                       <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #e5e5e5', fontSize: 12 }} />
-                      <Bar dataKey="value" name="Établissements" fill="#0E1E3D" radius={[0, 6, 6, 0]} />
+                      <Bar dataKey="value" name="المؤسسات" fill="#0E1E3D" radius={[0, 6, 6, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
 
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-white">
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">Établissements par type</h4>
+                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">المؤسسات حسب النوع</h4>
                   <ResponsiveContainer width="100%" height={240}>
                     <PieChart>
                       <Pie
                         data={[
-                          { name: 'Hôtels', value: validatedEstablishments.filter((e) => e.type === 'hotel').length },
-                          { name: 'Dortoirs', value: validatedEstablishments.filter((e) => e.type === 'mraqed').length },
-                          { name: 'Maisons', value: validatedEstablishments.filter((e) => e.type === 'maison').length },
+                          { name: 'فنادق', value: validatedEstablishments.filter((e) => e.type === 'hotel').length },
+                          { name: 'مراقد', value: validatedEstablishments.filter((e) => e.type === 'mraqed').length },
+                          { name: 'بيوت ضيافة', value: validatedEstablishments.filter((e) => e.type === 'maison').length },
                         ]}
                         dataKey="value"
                         nameKey="name"
@@ -597,15 +597,15 @@ const AdminDashboard = () => {
                   <svg className="w-12 h-12 mx-auto text-emerald-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p className="text-sm font-semibold text-slate-700">Aucune demande en attente</p>
-                  <p className="text-xs text-slate-400 mt-1">Tous les établissements soumis ont été traités.</p>
+                  <p className="text-sm font-semibold text-slate-700">لا توجد طلبات في الانتظار</p>
+                  <p className="text-xs text-slate-400 mt-1">تمت معالجة جميع المؤسسات المقدمة.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
                   {pendingEstablishments.map((est) => (
                     <div key={est.id} className="border border-neutral-200 rounded-2xl overflow-hidden bg-white shadow-xs">
                       <div className="flex flex-col md:flex-row">
-                        {/* Image */}
+                        {/* الصورة */}
                         <div className="md:w-64 h-48 md:h-auto bg-neutral-100 shrink-0">
                           {(est.imageVedette || (est.images && est.images.length > 0)) ? (
                             <img
@@ -622,14 +622,14 @@ const AdminDashboard = () => {
                           )}
                         </div>
 
-                        {/* Details */}
+                        {/* التفاصيل */}
                         <div className="flex-1 p-5">
                           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                             <div>
                               <h4 className="font-bold text-[#0E1E3D] text-lg">{est.nom}</h4>
                               <p className="text-xs text-slate-500 mt-1">
                                 <span className="inline-block bg-[#CB9A56]/15 text-[#0E1E3D] px-2 py-0.5 rounded-full font-bold uppercase mr-2">
-                                  {est.type === 'hotel' ? 'Hôtel' : est.type === 'mraqed' ? 'Marqad' : "Maison d'hôtes"}
+                                  {est.type === 'hotel' ? 'فندق' : est.type === 'mraqed' ? 'مرقد' : 'بيت ضيافة'}
                                 </span>
                                 {est.ville}, {est.wilaya}
                               </p>
@@ -638,13 +638,13 @@ const AdminDashboard = () => {
                               )}
                             </div>
                             <span className="self-start px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">
-                              En attente
+                              في الانتظار
                             </span>
                           </div>
 
-                          {/* Owner info */}
+                          {/* معلومات المالك */}
                           <div className="bg-neutral-50 rounded-xl p-3 mb-3 border border-neutral-100">
-                            <p className="text-xs font-bold text-slate-600 mb-1">Propriétaire:</p>
+                            <p className="text-xs font-bold text-slate-600 mb-1">المالك:</p>
                             <p className="text-xs text-slate-700">
                               {est.owner?.prenom} {est.owner?.nom}
                               {est.owner?.email && <span className="text-slate-400"> — {est.owner.email}</span>}
@@ -652,12 +652,12 @@ const AdminDashboard = () => {
                             </p>
                           </div>
 
-                          {/* Description */}
+                          {/* الوصف */}
                           {est.description && (
                             <p className="text-sm text-slate-600 mb-3 line-clamp-3">{est.description}</p>
                           )}
 
-                          {/* Gallery thumbnails */}
+                          {/* معرض الصور المصغرة */}
                           {est.images && est.images.length > 0 && (
                             <div className="flex gap-2 mb-4 overflow-x-auto">
                               {est.images.slice(0, 5).map((img, i) => (
@@ -666,7 +666,7 @@ const AdminDashboard = () => {
                             </div>
                           )}
 
-                          {/* Actions */}
+                          {/* الإجراءات */}
                           <div className="flex items-center gap-2 pt-2 border-t border-neutral-100">
                             <button
                               onClick={() => handleValidateEstablishment(est.id, 'valide')}
@@ -675,7 +675,7 @@ const AdminDashboard = () => {
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                               </svg>
-                              Valider
+                              مصادقة
                             </button>
                             <button
                               onClick={() => handleValidateEstablishment(est.id, 'refuse')}
@@ -684,7 +684,7 @@ const AdminDashboard = () => {
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                               </svg>
-                              Refuser
+                              رفض
                             </button>
                             <button
                               onClick={() => setSelectedEst(est)}
@@ -694,7 +694,7 @@ const AdminDashboard = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                               </svg>
-                              Voir les images {est.images?.length ? `(${est.images.length})` : ''}
+                              عرض الصور {est.images?.length ? `(${est.images.length})` : ''}
                             </button>
                           </div>
                         </div>
@@ -741,7 +741,7 @@ const AdminDashboard = () => {
                   </p>
                 </div>
                 <span className="self-start sm:self-auto px-3 py-1 bg-sky-100 text-sky-800 text-xs font-bold rounded-full">
-                  Total: {contactMessages.length} message(s)
+                  المجموع: {contactMessages.length} رسالة
                 </span>
               </div>
 
@@ -751,7 +751,7 @@ const AdminDashboard = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                   <p className="text-sm font-semibold text-slate-700">{t('noContactMessages')}</p>
-                  <p className="text-xs text-slate-400 mt-1">Les nouveaux messages soumis apparaîtront automatiquement ici.</p>
+                  <p className="text-xs text-slate-400 mt-1">ستظهر الرسائل الجديدة تلقائياً هنا.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-4">
@@ -760,23 +760,23 @@ const AdminDashboard = () => {
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-neutral-100 pb-3 mb-3">
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-bold text-[#0E1E3D] text-base">{msg.sujet || 'Sans sujet'}</span>
+                            <span className="font-bold text-[#0E1E3D] text-base">{msg.sujet || 'بدون موضوع'}</span>
                             <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase bg-slate-100 text-slate-700">
-                              {msg.type || 'contact'}
+                              {msg.type || 'اتصال'}
                             </span>
                             {msg.repondu && (
                               <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-100 text-emerald-800 flex items-center gap-1">
-                                ✓ تم الرد / Répondu
+                                ✓ تم الرد
                               </span>
                             )}
                           </div>
                           <p className="text-xs text-slate-500 mt-0.5">
-                            De: <strong className="text-slate-800">{msg.nom}</strong> &lt;{msg.email}&gt;
+                            من: <strong className="text-slate-800">{msg.nom}</strong> &lt;{msg.email}&gt;
                           </p>
                         </div>
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-[11px] text-slate-400 font-mono">
-                            {msg.createdAt ? new Date(msg.createdAt).toLocaleString('fr-FR') : 'Récemment'}
+                            {msg.createdAt ? new Date(msg.createdAt).toLocaleString('ar-DZ') : 'مؤخراً'}
                           </span>
                           <button
                             type="button"
@@ -794,7 +794,7 @@ const AdminDashboard = () => {
                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
                             </svg>
-                            <span>{activeReplyId === msg.id ? 'إغلاق / Fermer' : 'رد بالإشعار / Répondre'}</span>
+                            <span>{activeReplyId === msg.id ? 'إغلاق' : 'رد بالإشعار'}</span>
                           </button>
                           <a
                             href={`mailto:${msg.email}?subject=Re: ${encodeURIComponent(msg.sujet || 'Diyafa Contact')}`}
@@ -804,7 +804,7 @@ const AdminDashboard = () => {
                             <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
-                            <span>Mailto</span>
+                            <span>بريد</span>
                           </a>
                         </div>
                       </div>
@@ -813,21 +813,21 @@ const AdminDashboard = () => {
                         {msg.message}
                       </div>
 
-                      {/* Display existing response if present */}
+                      {/* عرض الرد الموجود */}
                       {msg.reponse && activeReplyId !== msg.id && (
                         <div className="mt-3 p-3 bg-emerald-50/70 border border-emerald-200/60 rounded-xl text-xs text-emerald-900">
                           <div className="font-bold mb-1 flex items-center gap-1 text-emerald-800">
-                            <span>رد الإدارة / Réponse de l'administration:</span>
+                            <span>رد الإدارة:</span>
                           </div>
                           <p className="whitespace-pre-wrap text-emerald-900">{msg.reponse}</p>
                         </div>
                       )}
 
-                      {/* Inline reply form */}
+                      {/* نموذج الرد المضمن */}
                       {activeReplyId === msg.id && (
                         <div className="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-xl">
                           <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
-                            الرد على الرسالة (سيصل كإشعار في حساب المستخدم) / Répondre par notification:
+                            الرد على الرسالة (سيصل كإشعار في حساب المستخدم):
                           </label>
                           <textarea
                             rows={3}
@@ -849,7 +849,7 @@ const AdminDashboard = () => {
                                 }}
                                 className="px-3 py-1.5 bg-neutral-200 hover:bg-neutral-300 text-slate-700 rounded-lg text-xs font-semibold transition"
                               >
-                                إلغاء / Annuler
+                                إلغاء
                               </button>
                               <button
                                 type="button"
@@ -873,7 +873,7 @@ const AdminDashboard = () => {
                         </div>
                       )}
 
-                      {/* Notification response feedback */}
+                      {/* ملاحظات حالة الرد */}
                       {replyStatus?.id === msg.id && (
                         <div className={`mt-2 p-2.5 rounded-lg text-xs font-semibold ${
                           replyStatus.isSuccess
@@ -893,22 +893,22 @@ const AdminDashboard = () => {
           {activeTab === 'users' && (
             <div>
               <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
-                Gestion des Utilisateurs / إدارة المستخدمين
+                إدارة المستخدمين
               </h3>
               
-              {/* --- Clients --- */}
-              <h4 className="text-sm font-bold text-slate-700 mb-3 mt-6">الزبائن / Clients</h4>
+              {/* --- الزبائن --- */}
+              <h4 className="text-sm font-bold text-slate-700 mb-3 mt-6">الزبائن</h4>
               {users.filter(u => u.role === 'client').length === 0 ? (
-                <p className="text-xs text-slate-500 mb-6">Aucun client.</p>
+                <p className="text-xs text-slate-500 mb-6">لا يوجد زبائن.</p>
               ) : (
                 <div className="overflow-x-auto rounded-xl border border-neutral-200 mb-8">
                   <table className="min-w-full divide-y divide-neutral-200 text-left">
                     <thead className="bg-neutral-50 text-xs font-bold text-slate-500 uppercase">
                       <tr>
-                        <th className="px-4 py-3">Nom</th>
-                        <th className="px-4 py-3">Contact</th>
-                        <th className="px-4 py-3">Statut</th>
-                        <th className="px-4 py-3 text-right">Actions</th>
+                        <th className="px-4 py-3">الاسم</th>
+                        <th className="px-4 py-3">معلومات التواصل</th>
+                        <th className="px-4 py-3">الحالة</th>
+                        <th className="px-4 py-3 text-right">إجراءات</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-neutral-100 text-xs">
@@ -918,7 +918,7 @@ const AdminDashboard = () => {
                           <td className="px-4 py-3.5 text-slate-500">{u.email || u.telephone}</td>
                           <td className="px-4 py-3.5">
                             <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${u.statut === 'actif' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
-                              {u.statut || 'actif'}
+                              {u.statut === 'actif' ? 'نشط' : 'محظور'}
                             </span>
                           </td>
                           <td className="px-4 py-3.5 text-right whitespace-nowrap">
@@ -927,13 +927,13 @@ const AdminDashboard = () => {
                                 onClick={() => handleUpdateUserStatus(u.id, u.statut === 'actif' ? 'bloque' : 'actif')}
                                 className={`px-3 py-1 rounded-full text-[10px] font-extrabold ${u.statut === 'actif' ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`}
                               >
-                                {u.statut === 'actif' ? 'Bloquer' : 'Activer'}
+                                {u.statut === 'actif' ? 'حظر' : 'تفعيل'}
                               </button>
                               <button
                                 onClick={() => handleDeleteUser(u.id, `${u.prenom} ${u.nom}`)}
                                 className="px-3 py-1 rounded-full text-[10px] font-extrabold bg-rose-600 text-white"
                               >
-                                Supprimer
+                                حذف
                               </button>
                             </div>
                           </td>
@@ -944,19 +944,19 @@ const AdminDashboard = () => {
                 </div>
               )}
 
-              {/* --- Owners --- */}
-              <h4 className="text-sm font-bold text-slate-700 mb-3 mt-6">أصحاب المؤسسات / Propriétaires</h4>
+              {/* --- أصحاب المؤسسات --- */}
+              <h4 className="text-sm font-bold text-slate-700 mb-3 mt-6">أصحاب المؤسسات</h4>
               {users.filter(u => u.role === 'owner').length === 0 ? (
-                <p className="text-xs text-slate-500 mb-6">Aucun propriétaire.</p>
+                <p className="text-xs text-slate-500 mb-6">لا يوجد أصحاب مؤسسات.</p>
               ) : (
                 <div className="overflow-x-auto rounded-xl border border-neutral-200">
                   <table className="min-w-full divide-y divide-neutral-200 text-left">
                     <thead className="bg-neutral-50 text-xs font-bold text-slate-500 uppercase">
                       <tr>
-                        <th className="px-4 py-3">Nom</th>
-                        <th className="px-4 py-3">Contact</th>
-                        <th className="px-4 py-3">Statut</th>
-                        <th className="px-4 py-3 text-right">Actions</th>
+                        <th className="px-4 py-3">الاسم</th>
+                        <th className="px-4 py-3">معلومات التواصل</th>
+                        <th className="px-4 py-3">الحالة</th>
+                        <th className="px-4 py-3 text-right">إجراءات</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-neutral-100 text-xs">
@@ -966,7 +966,7 @@ const AdminDashboard = () => {
                           <td className="px-4 py-3.5 text-slate-500">{u.email || u.telephone}</td>
                           <td className="px-4 py-3.5">
                             <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${u.statut === 'actif' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
-                              {u.statut || 'actif'}
+                              {u.statut === 'actif' ? 'نشط' : 'محظور'}
                             </span>
                           </td>
                           <td className="px-4 py-3.5 text-right whitespace-nowrap">
@@ -975,13 +975,13 @@ const AdminDashboard = () => {
                                 onClick={() => handleUpdateUserStatus(u.id, u.statut === 'actif' ? 'bloque' : 'actif')}
                                 className={`px-3 py-1 rounded-full text-[10px] font-extrabold ${u.statut === 'actif' ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`}
                               >
-                                {u.statut === 'actif' ? 'Bloquer' : 'Activer'}
+                                {u.statut === 'actif' ? 'حظر' : 'تفعيل'}
                               </button>
                               <button
                                 onClick={() => handleDeleteUser(u.id, `${u.prenom} ${u.nom}`)}
                                 className="px-3 py-1 rounded-full text-[10px] font-extrabold bg-rose-600 text-white"
                               >
-                                Supprimer
+                                حذف
                               </button>
                             </div>
                           </td>
@@ -997,57 +997,57 @@ const AdminDashboard = () => {
           {activeTab === 'stats' && (
             <div>
               <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
-                Statistiques Globale / الإحصائيات العامة
+                الإحصائيات العامة
               </h3>
               <p className="text-xs text-slate-600 mb-6">
-                Statistiques d'utilisation et d'activité de la plateforme Diyafa sur l'ensemble du territoire national.
+                إحصائيات استخدام ونشاط منصة الضيافة على مستوى الوطن.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                 <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-xl">
-                  <p className="text-xs text-slate-500 font-semibold">Taux d'acceptation des réservations</p>
+                  <p className="text-xs text-slate-500 font-semibold">نسبة قبول الحجوزات</p>
                   <p className="text-xl font-extrabold text-[#0E1E3D] mt-1">
                     {stats?.totalReservations
                       ? `${Math.round((stats.acceptedReservations / stats.totalReservations) * 100)}%`
                       : '—'}
                   </p>
                   <p className="text-[11px] text-slate-400 mt-1">
-                    {stats?.acceptedReservations || 0} acceptées sur {stats?.totalReservations || 0}
+                    {stats?.acceptedReservations || 0} مقبولة من {stats?.totalReservations || 0}
                   </p>
                 </div>
                 <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-xl">
-                  <p className="text-xs text-slate-500 font-semibold">Nouveaux utilisateurs (7 derniers jours)</p>
+                  <p className="text-xs text-slate-500 font-semibold">مستخدمون جدد (آخر 7 أيام)</p>
                   <p className="text-xl font-extrabold text-[#0E1E3D] mt-1">
                     {users.filter((u) => u.createdAt && (Date.now() - new Date(u.createdAt).getTime()) <= 7 * 24 * 60 * 60 * 1000).length}
                   </p>
                   <p className="text-[11px] text-slate-400 mt-1">
-                    Sur un total de {users.length} utilisateur(s)
+                    من مجموع {users.length} مستخدم
                   </p>
                 </div>
                 <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-xl">
-                  <p className="text-xs text-slate-500 font-semibold">Wilayas couvertes</p>
+                  <p className="text-xs text-slate-500 font-semibold">الولايات المغطاة</p>
                   <p className="text-xl font-extrabold text-[#0E1E3D] mt-1">
                     {new Set(
                       validatedEstablishments
                         .filter((e) => e.statut_validation === 'valide')
                         .map((e) => e.wilaya)
                         .filter(Boolean)
-                    ).size} Wilaya(s)
+                    ).size} ولاية
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-1">Parmi les établissements validés</p>
+                  <p className="text-[11px] text-slate-400 mt-1">من بين المؤسسات المصادق عليها</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Réservations par statut */}
+                {/* الحجوزات حسب الحالة */}
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-white">
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">Réservations par statut</h4>
+                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">الحجوزات حسب الحالة</h4>
                   <ResponsiveContainer width="100%" height={260}>
                     <BarChart
                       data={[
-                        { name: 'En attente', value: stats?.pendingReservations || 0 },
-                        { name: 'Acceptées', value: stats?.acceptedReservations || 0 },
-                        { name: 'Refusées', value: stats?.rejectedReservations || 0 },
+                        { name: 'في الانتظار', value: stats?.pendingReservations || 0 },
+                        { name: 'مقبولة', value: stats?.acceptedReservations || 0 },
+                        { name: 'مرفوضة', value: stats?.rejectedReservations || 0 },
                       ]}
                       margin={{ top: 5, right: 10, left: -10, bottom: 5 }}
                     >
@@ -1057,20 +1057,20 @@ const AdminDashboard = () => {
                       <Tooltip
                         contentStyle={{ borderRadius: 12, border: '1px solid #e5e5e5', fontSize: 12 }}
                       />
-                      <Bar dataKey="value" name="Réservations" fill="#CB9A56" radius={[6, 6, 0, 0]} />
+                      <Bar dataKey="value" name="الحجوزات" fill="#CB9A56" radius={[6, 6, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
 
-                {/* Établissements validés vs en attente */}
+                {/* المؤسسات المصادق عليها مقابل في الانتظار */}
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-white">
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">Établissements : validés vs en attente</h4>
+                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">المؤسسات: مصادق عليها مقابل في الانتظار</h4>
                   <ResponsiveContainer width="100%" height={260}>
                     <PieChart>
                       <Pie
                         data={[
-                          { name: 'Validés', value: stats?.totalEstablishments || 0 },
-                          { name: 'En attente', value: pendingEstablishments.length },
+                          { name: 'مصادق عليها', value: stats?.totalEstablishments || 0 },
+                          { name: 'في الانتظار', value: pendingEstablishments.length },
                         ]}
                         dataKey="value"
                         nameKey="name"
@@ -1088,15 +1088,15 @@ const AdminDashboard = () => {
                   </ResponsiveContainer>
                 </div>
 
-                {/* Répartition des utilisateurs */}
+                {/* توزيع المستخدمين */}
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-white lg:col-span-2">
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">Répartition des utilisateurs</h4>
+                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">توزيع المستخدمين</h4>
                   <ResponsiveContainer width="100%" height={240}>
                     <BarChart
                       layout="vertical"
                       data={[
-                        { name: 'Clients', value: stats?.totalClients || 0 },
-                        { name: 'Établissements (propriétaires)', value: stats?.totalOwners || 0 },
+                        { name: 'الزبائن', value: stats?.totalClients || 0 },
+                        { name: 'أصحاب المؤسسات', value: stats?.totalOwners || 0 },
                       ]}
                       margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
                     >
@@ -1104,7 +1104,7 @@ const AdminDashboard = () => {
                       <XAxis type="number" allowDecimals={false} tick={{ fontSize: 11, fill: '#64748b' }} />
                       <YAxis type="category" dataKey="name" width={170} tick={{ fontSize: 11, fill: '#64748b' }} />
                       <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #e5e5e5', fontSize: 12 }} />
-                      <Bar dataKey="value" name="Utilisateurs" fill="#0E1E3D" radius={[0, 6, 6, 0]} />
+                      <Bar dataKey="value" name="المستخدمين" fill="#0E1E3D" radius={[0, 6, 6, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -1120,7 +1120,7 @@ const AdminDashboard = () => {
       <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 px-4">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-neutral-200 overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-100 bg-neutral-50">
-            <h3 className="text-sm font-bold text-[#0E1E3D]">Modifier mes informations / تعديل معلوماتي</h3>
+            <h3 className="text-sm font-bold text-[#0E1E3D]">تعديل معلوماتي</h3>
             <button
               type="button"
               onClick={() => setEditProfileOpen(false)}
@@ -1146,7 +1146,7 @@ const AdminDashboard = () => {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1.5">Prénom</label>
+                <label className="block text-xs font-semibold text-slate-600 mb-1.5">الاسم الأول</label>
                 <input
                   type="text"
                   value={editForm.prenom}
@@ -1155,7 +1155,7 @@ const AdminDashboard = () => {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1.5">Nom</label>
+                <label className="block text-xs font-semibold text-slate-600 mb-1.5">الاسم العائلي</label>
                 <input
                   type="text"
                   value={editForm.nom}
@@ -1166,7 +1166,7 @@ const AdminDashboard = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">Email</label>
+              <label className="block text-xs font-semibold text-slate-600 mb-1.5">البريد الإلكتروني</label>
               <input
                 type="email"
                 value={editForm.email}
@@ -1176,7 +1176,7 @@ const AdminDashboard = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">Téléphone</label>
+              <label className="block text-xs font-semibold text-slate-600 mb-1.5">رقم الهاتف</label>
               <input
                 type="text"
                 value={editForm.telephone}
@@ -1187,7 +1187,7 @@ const AdminDashboard = () => {
 
             <div>
               <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                Nouveau mot de passe <span className="font-normal text-slate-400">(laisser vide pour ne pas changer)</span>
+                كلمة المرور الجديدة <span className="font-normal text-slate-400">(اتركه فارغاً إذا لم ترغب في التغيير)</span>
               </label>
               <input
                 type="password"
@@ -1204,14 +1204,14 @@ const AdminDashboard = () => {
                 onClick={() => setEditProfileOpen(false)}
                 className="flex-1 px-4 py-2.5 rounded-xl border border-neutral-200 text-sm font-bold text-slate-600 hover:bg-neutral-50 transition"
               >
-                Annuler
+                إلغاء
               </button>
               <button
                 type="submit"
                 disabled={editSaving}
                 className="flex-1 px-4 py-2.5 rounded-xl bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-sm font-bold transition disabled:opacity-50"
               >
-                {editSaving ? 'Enregistrement...' : 'Enregistrer'}
+                {editSaving ? 'جاري الحفظ...' : 'حفظ'}
               </button>
             </div>
           </form>
@@ -1223,7 +1223,7 @@ const AdminDashboard = () => {
 }
 
 // ============================================================
-// Admin Reservations Tab — every reservation, every status, today included
+// تبويب حجوزات المدير — كل الحجوزات، كل الحالات، بما في ذلك اليوم
 // ============================================================
 const isToday = (dateStr) => {
   if (!dateStr) return false
@@ -1234,13 +1234,13 @@ const isToday = (dateStr) => {
 
 const AdminReservationsTab = ({ reservations, filter, setFilter }) => {
   const filters = [
-    { id: 'tous', label: 'Toutes' },
-    { id: 'aujourdhui', label: "Aujourd'hui" },
-    { id: 'en_attente', label: 'En attente' },
-    { id: 'acceptee', label: 'Acceptées' },
-    { id: 'refusee', label: 'Refusées' },
-    { id: 'annulee', label: 'Annulées' },
-    { id: 'terminee', label: 'Terminées' },
+    { id: 'tous', label: 'الكل' },
+    { id: 'aujourdhui', label: 'اليوم' },
+    { id: 'en_attente', label: 'في الانتظار' },
+    { id: 'acceptee', label: 'مقبولة' },
+    { id: 'refusee', label: 'مرفوضة' },
+    { id: 'annulee', label: 'ملغية' },
+    { id: 'terminee', label: 'منتهية' },
   ]
 
   const filtered = reservations.filter((r) => {
@@ -1254,14 +1254,14 @@ const AdminReservationsTab = ({ reservations, filter, setFilter }) => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
         <div>
           <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
-            Réservations
+            الحجوزات
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
-            Toutes les réservations de la plateforme, tous établissements et tous statuts confondus.
+            جميع حجوزات المنصة، لكل المؤسسات ولكل الحالات.
           </p>
         </div>
         <span className="self-start sm:self-auto px-3 py-1 bg-[#CB9A56]/15 text-[#0E1E3D] text-xs font-bold rounded-full">
-          Total: {reservations.length} réservation(s)
+          المجموع: {reservations.length} حجز
         </span>
       </div>
 
@@ -1287,20 +1287,20 @@ const AdminReservationsTab = ({ reservations, filter, setFilter }) => {
           <svg className="w-12 h-12 mx-auto text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
-          <p className="text-sm font-semibold text-slate-700">Aucune réservation pour ce filtre</p>
-          <p className="text-xs text-slate-400 mt-1">Les nouvelles réservations apparaîtront automatiquement ici.</p>
+          <p className="text-sm font-semibold text-slate-700">لا توجد حجوزات لهذا الفلتر</p>
+          <p className="text-xs text-slate-400 mt-1">ستظهر الحجوزات الجديدة تلقائياً هنا.</p>
         </div>
       ) : (
         <div className="overflow-x-auto border border-neutral-200 rounded-2xl bg-white">
           <table className="min-w-full divide-y divide-neutral-200 text-left">
             <thead className="bg-neutral-50">
               <tr>
-                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Client</th>
-                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Établissement</th>
-                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Arrivée</th>
-                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Départ</th>
-                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Prix</th>
-                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Statut</th>
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">الزبون</th>
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">المؤسسة</th>
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">الوصول</th>
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">المغادرة</th>
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">السعر</th>
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">الحالة</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-neutral-100">
@@ -1311,17 +1311,21 @@ const AdminReservationsTab = ({ reservations, filter, setFilter }) => {
                   </td>
                   <td className="px-4 py-3 text-xs text-slate-700">{r.etablissement?.nom || '—'}</td>
                   <td className="px-4 py-3 text-xs text-slate-700">
-                    {r.dateArrivee ? new Date(r.dateArrivee).toLocaleDateString('fr-FR') : '—'}
+                    {r.dateArrivee ? new Date(r.dateArrivee).toLocaleDateString('ar-DZ') : '—'}
                   </td>
                   <td className="px-4 py-3 text-xs text-slate-700">
-                    {r.dateDepart ? new Date(r.dateDepart).toLocaleDateString('fr-FR') : '—'}
+                    {r.dateDepart ? new Date(r.dateDepart).toLocaleDateString('ar-DZ') : '—'}
                   </td>
                   <td className="px-4 py-3 text-xs font-semibold text-slate-700">
-                    {r.prixTotal ? `${r.prixTotal} DA` : '—'}
+                    {r.prixTotal ? `${r.prixTotal} دج` : '—'}
                   </td>
                   <td className="px-4 py-3">
                     <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${RESERVATION_STATUS_STYLES[r.statut] || 'bg-slate-100 text-slate-600'}`}>
-                      {t(RESERVATION_STATUS_LABELS[r.statut] || r.statut)}
+                      {r.statut === 'en_attente' ? 'في الانتظار' :
+                       r.statut === 'acceptee' ? 'مقبولة' :
+                       r.statut === 'refusee' ? 'مرفوضة' :
+                       r.statut === 'annulee' ? 'ملغية' :
+                       r.statut === 'terminee' ? 'منتهية' : r.statut}
                     </span>
                   </td>
                 </tr>
@@ -1335,7 +1339,7 @@ const AdminReservationsTab = ({ reservations, filter, setFilter }) => {
 }
 
 // ============================================================
-// Establishment Images Modal — admin picks the "best" photo for the card
+// نافذة صور المؤسسة — يختار المدير الصورة "الأفضل" للبطاقة
 // ============================================================
 const EstablishmentImagesModal = ({ establishment, onClose, onSelectFeatured }) => {
   const images = establishment.images && establishment.images.length > 0 ? establishment.images : []
@@ -1352,7 +1356,7 @@ const EstablishmentImagesModal = ({ establishment, onClose, onSelectFeatured }) 
           <div>
             <h4 className="font-bold text-[#0E1E3D] text-base">{establishment.nom}</h4>
             <p className="text-xs text-slate-500 mt-0.5">
-              Choisissez l'image qui apparaîtra sur la carte de l'établissement. Par défaut, c'est la première photo.
+              اختر الصورة التي ستظهر على بطاقة المؤسسة. الصورة الأولى هي الافتراضية.
             </p>
           </div>
           <button
@@ -1369,7 +1373,7 @@ const EstablishmentImagesModal = ({ establishment, onClose, onSelectFeatured }) 
         <div className="p-5">
           {images.length === 0 ? (
             <div className="text-center py-12 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200">
-              <p className="text-sm font-semibold text-slate-700">Aucune image envoyée par cet établissement.</p>
+              <p className="text-sm font-semibold text-slate-700">لا توجد صور مرفقة من هذه المؤسسة.</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -1386,12 +1390,12 @@ const EstablishmentImagesModal = ({ establishment, onClose, onSelectFeatured }) 
                     />
                     {isFeatured && (
                       <span className="absolute top-2 left-2 bg-[#CB9A56] text-[#0E1E3D] text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow">
-                        Photo actuelle
+                        الصورة الحالية
                       </span>
                     )}
                     {img === defaultImage && (
                       <span className="absolute top-2 right-2 bg-white/90 text-slate-600 text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
-                        Par défaut
+                        افتراضية
                       </span>
                     )}
                     {!isFeatured && (
@@ -1401,7 +1405,7 @@ const EstablishmentImagesModal = ({ establishment, onClose, onSelectFeatured }) 
                         className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 rounded-xl transition"
                       >
                         <span className="opacity-0 group-hover:opacity-100 transition bg-white text-[#0E1E3D] text-[11px] font-bold px-3 py-1.5 rounded-lg shadow">
-                          Choisir comme photo principale
+                          اختر كصورة رئيسية
                         </span>
                       </button>
                     )}
@@ -1417,7 +1421,7 @@ const EstablishmentImagesModal = ({ establishment, onClose, onSelectFeatured }) 
 }
 
 // ============================================================
-// Create Establishment Form (admin creates, auto-validated)
+// نموذج إضافة مؤسسة (المدير يضيفها، مصادقة تلقائية)
 // ============================================================
 const CreateEstablishmentForm = ({ owners, onSuccess }) => {
   const [formData, setFormData] = useState({
@@ -1459,7 +1463,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
 
     const remainingSlots = MAX_PHOTOS - photos.length
     if (remainingSlots <= 0) {
-      setPhotoError(`Maximum ${MAX_PHOTOS} photos autorisées.`)
+      setPhotoError(`الحد الأقصى ${MAX_PHOTOS} صور مسموح بها.`)
       e.target.value = ''
       return
     }
@@ -1468,7 +1472,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
     const validFiles = []
     for (const file of filesToProcess) {
       if (file.size > MAX_SIZE_BYTES) {
-        setPhotoError(`Une ou plusieurs photos dépassent ${MAX_SIZE_MB} Mo.`)
+        setPhotoError(`واحدة أو أكثر من الصور تتجاوز ${MAX_SIZE_MB} ميغابايت.`)
         continue
       }
       validFiles.push(file)
@@ -1518,7 +1522,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
     setSubmitting(false)
 
     if (res.success) {
-      setSuccess('Établissement créé et validé avec succès! Il apparaît maintenant sur la page d\'accueil.')
+      setSuccess('تم إنشاء المؤسسة والمصادقة عليها بنجاح! ستظهر الآن على الصفحة الرئيسية.')
       setFormData({
         nom: '', type: 'hotel', wilaya: 'Alger', ville: 'Alger',
         adresse: '', description: '', imageVedette: '', services: '', ownerId: '',
@@ -1526,17 +1530,17 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
       setPhotos([])
       onSuccess?.()
     } else {
-      setError(res.message || 'Erreur lors de la création.')
+      setError(res.message || 'حدث خطأ أثناء الإنشاء.')
     }
   }
 
   return (
     <div>
       <h3 className="text-lg font-bold text-[#0E1E3D] mb-2 font-display">
-        Ajouter un Établissement / إضافة مؤسسة
+        إضافة مؤسسة
       </h3>
       <p className="text-xs text-slate-500 mb-6">
-        L'établissement sera automatiquement validé et visible sur la page d'accueil.
+        سيتم المصادقة على المؤسسة تلقائياً وستظهر على الصفحة الرئيسية.
       </p>
 
       {error && (
@@ -1553,34 +1557,34 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">Nom de l'établissement *</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">اسم المؤسسة *</label>
             <input
               name="nom"
               value={formData.nom}
               onChange={handleChange}
               required
               className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
-              placeholder="Ex: Hôtel El Aurassi"
+              placeholder="مثال: فندق الأوراسي"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">Type</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">النوع</label>
             <select
               name="type"
               value={formData.type}
               onChange={handleChange}
               className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
             >
-              <option value="hotel">Hôtel / فندق</option>
-              <option value="mraqed">Marqad / مرقد</option>
-              <option value="maison">Maison d'hôtes / دار ضيافة</option>
+              <option value="hotel">فندق</option>
+              <option value="mraqed">مرقد</option>
+              <option value="maison">بيت ضيافة</option>
             </select>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">Wilaya</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">الولاية</label>
             <select
               name="wilaya"
               value={formData.wilaya}
@@ -1593,42 +1597,42 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
             </select>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">Ville</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">المدينة</label>
             <input
               name="ville"
               value={formData.ville}
               onChange={handleChange}
               className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
-              placeholder="Ex: Alger Centre"
+              placeholder="مثال: الجزائر الوسطى"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-600 mb-1.5">Adresse</label>
+          <label className="block text-xs font-semibold text-slate-600 mb-1.5">العنوان</label>
           <input
             name="adresse"
             value={formData.adresse}
             onChange={handleChange}
             className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
-            placeholder="Ex: 2 Bd Frantz Fanon, Alger"
+            placeholder="مثال: 2 شارع فرانتز فانون، الجزائر"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-600 mb-1.5">Description</label>
+          <label className="block text-xs font-semibold text-slate-600 mb-1.5">الوصف</label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             rows={3}
             className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
-            placeholder="Décrivez l'établissement..."
+            placeholder="وصف المؤسسة..."
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-600 mb-1.5">Photos de l'établissement (depuis l'appareil)</label>
+          <label className="block text-xs font-semibold text-slate-600 mb-1.5">صور المؤسسة (من الجهاز)</label>
           {photoError && (
             <div className="mb-2 text-xs text-rose-600 font-medium">
               {photoError}
@@ -1641,10 +1645,10 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
               <span className="text-xs font-bold text-[#0E1E3D]">
-                Cliquez pour importer des photos (Max {MAX_PHOTOS})
+                انقر لاستيراد صور (الحد الأقصى {MAX_PHOTOS})
               </span>
               <span className="text-[10px] text-slate-500 mt-0.5">
-                PNG, JPG, WEBP (Max {MAX_SIZE_MB} Mo par photo)
+                PNG, JPG, WEBP (بحد أقصى {MAX_SIZE_MB} ميغابايت لكل صورة)
               </span>
               <input
                 type="file"
@@ -1660,18 +1664,18 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
             <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
               {photos.map((p, index) => (
                 <div key={index} className="relative rounded-xl overflow-hidden border border-neutral-200 bg-neutral-900 group">
-                  <img src={p.preview} alt={`Aperçu ${index + 1}`} className="w-full h-20 object-cover" />
+                  <img src={p.preview} alt={`معاينة ${index + 1}`} className="w-full h-20 object-cover" />
                   <button
                     type="button"
                     onClick={() => handleRemovePhoto(index)}
                     className="absolute top-1 right-1 w-5 h-5 flex items-center justify-center bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-bold shadow transition opacity-0 group-hover:opacity-100"
-                    aria-label="Supprimer"
+                    aria-label="حذف"
                   >
                     ×
                   </button>
                   {index === 0 && (
                     <span className="absolute bottom-1 left-1 bg-[#CB9A56] text-white text-[9px] font-bold px-1 rounded">
-                      Principale
+                      رئيسية
                     </span>
                   )}
                 </div>
@@ -1681,26 +1685,26 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-600 mb-1.5">Services (séparés par virgules)</label>
+          <label className="block text-xs font-semibold text-slate-600 mb-1.5">الخدمات (مفصولة بفواصل)</label>
           <input
             name="services"
             value={formData.services}
             onChange={handleChange}
             className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
-            placeholder="WiFi, Parking, Petit-déjeuner, Climatisation..."
+            placeholder="واي فاي، موقف سيارات، إفطار، تكييف..."
           />
         </div>
 
         {owners && owners.length > 0 && (
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">Propriétaire (optionnel)</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">المالك (اختياري)</label>
             <select
               name="ownerId"
               value={formData.ownerId}
               onChange={handleChange}
               className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
             >
-              <option value="">— Admin (moi) —</option>
+              <option value="">— المدير (أنا) —</option>
               {owners.map((o) => (
                 <option key={o.id} value={o.id}>{o.prenom} {o.nom} ({o.email || o.telephone})</option>
               ))}
@@ -1713,7 +1717,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
           disabled={submitting}
           className="w-full sm:w-auto bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white px-6 py-3 rounded-xl text-sm font-bold transition shadow-md disabled:opacity-50"
         >
-          {submitting ? 'Création...' : 'Créer & Valider l\'établissement'}
+          {submitting ? 'جاري الإنشاء...' : 'إنشاء والمصادقة على المؤسسة'}
         </button>
       </form>
     </div>
