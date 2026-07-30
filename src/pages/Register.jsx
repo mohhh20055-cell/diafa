@@ -232,6 +232,44 @@ const Register = () => {
         </div>
 
         <div className="bg-white rounded-2xl shadow-2xl p-8 border border-neutral-100">
+          {/* Badge du type de compte choisi depuis le menu "Inscription" de la navbar */}
+          <div className="mb-8 flex items-center justify-between gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3">
+            <div className="flex items-center gap-3">
+              <span
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
+                  accountRole === 'owner' ? 'bg-[#CB9A56]/20 text-[#CB9A56]' : 'bg-[#0E1E3D]/10 text-[#0E1E3D]'
+                }`}
+              >
+                {accountRole === 'owner' ? (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth="2" />
+                    <path d="M9 8h1M14 8h1M9 12h1M14 12h1M9 16h6" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="4" strokeWidth="2" />
+                    <path d="M5 20c1.5-4 4.5-6 7-6s5.5 2 7 6" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                )}
+              </span>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                  Type de compte
+                </p>
+                <p className="text-sm font-bold text-[#0E1E3D]">
+                  {accountRole === 'owner' ? 'Établissement (مؤسسة)' : 'Client (زبون)'}
+                </p>
+              </div>
+            </div>
+
+            <Link
+              to={accountRole === 'owner' ? '/register?type=client' : '/register?type=etablissement'}
+              className="shrink-0 text-xs font-bold text-[#CB9A56] hover:text-[#0E1E3D] transition-colors whitespace-nowrap"
+            >
+              Changer
+            </Link>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
               <div className="bg-red-50 border-2 border-red-300 text-red-800 px-4 py-4 rounded-xl">
@@ -268,23 +306,17 @@ const Register = () => {
                   <label htmlFor="nomEtablissement" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
                     Nom de l'établissement
                   </label>
-                  <div className="relative">
-                    <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth="2" />
-                      <path d="M9 8h1M14 8h1M9 12h1M14 12h1M9 16h6" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
-                    <input
-                      id="nomEtablissement"
-                      name="nomEtablissement"
-                      type="text"
-                      required={accountRole === 'owner'}
-                      value={formData.nomEtablissement}
-                      onChange={handleChange}
-                      placeholder="Ex: Hôtel El Aurassi, Résidence Saoura..."
-                      className="block w-full pl-10 pr-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
-                      disabled={isSubmitting}
-                    />
-                  </div>
+                  <input
+                    id="nomEtablissement"
+                    name="nomEtablissement"
+                    type="text"
+                    required={accountRole === 'owner'}
+                    value={formData.nomEtablissement}
+                    onChange={handleChange}
+                    placeholder="Ex: Hôtel El Aurassi, Résidence Saoura..."
+                    className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                    disabled={isSubmitting}
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -328,23 +360,17 @@ const Register = () => {
                   <label htmlFor="ville" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
                     Ville
                   </label>
-                  <div className="relative">
-                    <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <input
-                      id="ville"
-                      name="ville"
-                      type="text"
-                      required={accountRole === 'owner'}
-                      value={formData.ville}
-                      onChange={handleChange}
-                      placeholder="Ex: Alger, Oran, Constantine..."
-                      className="block w-full pl-10 pr-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
-                      disabled={isSubmitting}
-                    />
-                  </div>
+                  <input
+                    id="ville"
+                    name="ville"
+                    type="text"
+                    required={accountRole === 'owner'}
+                    value={formData.ville}
+                    onChange={handleChange}
+                    placeholder="Ex: Alger, Oran, Constantine..."
+                    className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                    disabled={isSubmitting}
+                  />
                 </div>
 
                 <div>
@@ -419,43 +445,31 @@ const Register = () => {
                 <label htmlFor="nom" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
                   Nom
                 </label>
-                <div className="relative">
-                  <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <circle cx="12" cy="8" r="4" strokeWidth="2" />
-                    <path d="M5 20c1.5-4 4.5-6 7-6s5.5 2 7 6" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                  <input
-                    id="nom"
-                    name="nom"
-                    type="text"
-                    required
-                    value={formData.nom}
-                    onChange={handleChange}
-                    className="block w-full pl-10 pr-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
-                    disabled={isSubmitting}
-                  />
-                </div>
+                <input
+                  id="nom"
+                  name="nom"
+                  type="text"
+                  required
+                  value={formData.nom}
+                  onChange={handleChange}
+                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  disabled={isSubmitting}
+                />
               </div>
               <div>
                 <label htmlFor="prenom" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
                   Prénom
                 </label>
-                <div className="relative">
-                  <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <circle cx="12" cy="8" r="4" strokeWidth="2" />
-                    <path d="M5 20c1.5-4 4.5-6 7-6s5.5 2 7 6" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                  <input
-                    id="prenom"
-                    name="prenom"
-                    type="text"
-                    required
-                    value={formData.prenom}
-                    onChange={handleChange}
-                    className="block w-full pl-10 pr-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
-                    disabled={isSubmitting}
-                  />
-                </div>
+                <input
+                  id="prenom"
+                  name="prenom"
+                  type="text"
+                  required
+                  value={formData.prenom}
+                  onChange={handleChange}
+                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  disabled={isSubmitting}
+                />
               </div>
             </div>
 
@@ -464,44 +478,34 @@ const Register = () => {
                 <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
                   Email
                 </label>
-                <div className="relative">
-                  <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="block w-full pl-10 pr-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
-                    placeholder="votre@email.com"
-                    disabled={isSubmitting}
-                  />
-                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  placeholder="votre@email.com"
+                  disabled={isSubmitting}
+                />
               </div>
 
               <div>
                 <label htmlFor="telephone" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
                   Téléphone
                 </label>
-                <div className="relative">
-                  <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.804l.833 4.166a1 1 0 01-.54 1.06L7.1 9.876a12.042 12.042 0 006.024 6.024l1.846-1.451a1 1 0 011.06-.54l4.166.833a1 1 0 01.804.98V19a2 2 0 01-2 2h-1C9.163 21 3 14.837 3 7V5z" />
-                  </svg>
-                  <input
-                    id="telephone"
-                    name="telephone"
-                    type="tel"
-                    required
-                    value={formData.telephone}
-                    onChange={handleChange}
-                    className="block w-full pl-10 pr-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
-                    placeholder="06XXXXXXXX"
-                    disabled={isSubmitting}
-                  />
-                </div>
+                <input
+                  id="telephone"
+                  name="telephone"
+                  type="tel"
+                  required
+                  value={formData.telephone}
+                  onChange={handleChange}
+                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  placeholder="06XXXXXXXX"
+                  disabled={isSubmitting}
+                />
               </div>
             </div>
 
@@ -510,10 +514,6 @@ const Register = () => {
                 Mot de passe
               </label>
               <div className="relative">
-                <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <rect x="5" y="11" width="14" height="9" rx="2" strokeWidth="2" />
-                  <path d="M8 11V7a4 4 0 118 0v4" strokeWidth="2" strokeLinecap="round" />
-                </svg>
                 <input
                   id="motDePasse"
                   name="motDePasse"
@@ -521,7 +521,7 @@ const Register = () => {
                   required
                   value={formData.motDePasse}
                   onChange={handleChange}
-                  className="block w-full pl-10 pr-10 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  className="block w-full px-4 py-3 pr-10 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
                   placeholder="••••••••"
                   disabled={isSubmitting}
                 />
@@ -549,23 +549,17 @@ const Register = () => {
               <label htmlFor="confirmMotDePasse" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
                 Confirmer le mot de passe
               </label>
-              <div className="relative">
-                <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <rect x="5" y="11" width="14" height="9" rx="2" strokeWidth="2" />
-                  <path d="M8 11V7a4 4 0 118 0v4" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-                <input
-                  id="confirmMotDePasse"
-                  name="confirmMotDePasse"
-                  type={showPassword ? 'text' : 'password'}
-                  required
-                  value={formData.confirmMotDePasse}
-                  onChange={handleChange}
-                  className="block w-full pl-10 pr-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
-                  placeholder="••••••••"
-                  disabled={isSubmitting}
-                />
-              </div>
+              <input
+                id="confirmMotDePasse"
+                name="confirmMotDePasse"
+                type={showPassword ? 'text' : 'password'}
+                required
+                value={formData.confirmMotDePasse}
+                onChange={handleChange}
+                className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                placeholder="••••••••"
+                disabled={isSubmitting}
+              />
             </div>
 
             <button
