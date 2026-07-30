@@ -30,28 +30,28 @@ const HERO_IMAGES = [
 
 const DESTINATIONS_PHARES = [
   {
-    nom: "Maqam Echahid",
-    wilaya: "Alger",
+    nom: "مقام الشهيد",
+    wilaya: "الجزائر",
     img: "https://commons.wikimedia.org/wiki/Special:FilePath/Martyrs_Memorial._Algiers,_Algeria.jpg?width=900",
   },
   {
-    nom: "Fort de Santa Cruz",
-    wilaya: "Oran",
+    nom: "حصن سانتا كروز",
+    wilaya: "وهران",
     img: "https://commons.wikimedia.org/wiki/Special:FilePath/Fort_Santa_Cruz,_Oran_2013-2.jpg?width=900",
   },
   {
-    nom: "Cap Carbon",
-    wilaya: "Béjaïa",
+    nom: "رأس كاربون",
+    wilaya: "بجاية",
     img: "https://commons.wikimedia.org/wiki/Special:FilePath/Cap_Carbon_(Béjaïa).jpg?width=900",
   },
   {
-    nom: "Pont Sidi M'Cid",
-    wilaya: "Constantine",
+    nom: "جسر سيدي مسيد",
+    wilaya: "قسنطينة",
     img: "https://commons.wikimedia.org/wiki/Special:FilePath/Pont_de_Sidi_M'Cid_02.jpg?width=900",
   },
   {
-    nom: "Mansourah",
-    wilaya: "Tlemcen",
+    nom: "منصورة",
+    wilaya: "تلمسان",
     img: "https://commons.wikimedia.org/wiki/Special:FilePath/Mansourah_Tlemcen_city,_Algeria.jpg?width=900",
   },
 ];
@@ -150,7 +150,7 @@ function FeaturedCard({ establishment }) {
           {price != null && !isNaN(price) && isFinite(price) && price > 0 && (
             <div className="absolute inset-x-0 bottom-0 bg-[#0E1E3D]/80 px-3 py-1.5 text-white">
               <span className="text-[11px] font-medium text-white/80">{t('price')}</span>{" "}
-              <span className="text-sm font-bold">{Math.round(price).toLocaleString("fr-FR")} DA</span>
+              <span className="text-sm font-bold">{Math.round(price).toLocaleString("ar-DZ")} دج</span>
             </div>
           )}
         </div>
@@ -159,7 +159,7 @@ function FeaturedCard({ establishment }) {
             {establishment.nom}
           </p>
           <p className="truncate text-xs text-slate-400 mb-2">
-            {[establishment.ville, establishment.wilaya].filter(Boolean).join(", ")}
+            {[establishment.ville, establishment.wilaya].filter(Boolean).join("، ")}
           </p>
           {allServices.length > 0 && (
             <div className="flex flex-wrap gap-1 mb-2">
@@ -490,7 +490,7 @@ export function Home() {
               <button
                 key={url}
                 onClick={() => setHeroIndex(i)}
-                aria-label={`Slide ${i + 1}`}
+                aria-label={`شريحة ${i + 1}`}
                 className={`h-1.5 rounded-full transition-all ${
                   i === heroIndex ? "w-6 bg-[#CB9A56]" : "w-1.5 bg-white/40"
                 }`}
