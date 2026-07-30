@@ -9,11 +9,11 @@ import * as authApi from '../api/auth'
 import { WILAYAS } from '../constants/wilayas'
 
 const STATUT_LABELS = {
-  en_attente: { text: 'En attente', cls: 'bg-amber-100 text-amber-900 border-amber-300' },
-  acceptee: { text: 'Acceptée', cls: 'bg-emerald-100 text-emerald-900 border-emerald-300' },
-  refusee: { text: 'Refusée', cls: 'bg-rose-100 text-rose-900 border-rose-300' },
-  annulee: { text: 'Annulée', cls: 'bg-slate-100 text-slate-700 border-slate-300' },
-  terminee: { text: 'Terminée', cls: 'bg-sky-100 text-sky-900 border-sky-300' },
+  en_attente: { text: 'pending', cls: 'bg-amber-100 text-amber-900 border-amber-300' },
+  acceptee: { text: 'accepted', cls: 'bg-emerald-100 text-emerald-900 border-emerald-300' },
+  refusee: { text: 'refused', cls: 'bg-rose-100 text-rose-900 border-rose-300' },
+  annulee: { text: 'cancelled', cls: 'bg-slate-100 text-slate-700 border-slate-300' },
+  terminee: { text: 'finished', cls: 'bg-sky-100 text-sky-900 border-sky-300' },
 }
 
 const STATUT_ICON = {
@@ -543,7 +543,7 @@ const OwnerDashboard = () => {
                                 : 'bg-slate-100 text-slate-700 border border-slate-300'
                             }`}
                           >
-                            {STATUT_ICON[reservation.statut] || ''} {STATUT_LABELS[reservation.statut]?.text || reservation.statut}
+                            {STATUT_ICON[reservation.statut] || ''} {t(STATUT_LABELS[reservation.statut]?.text || reservation.statut)}
                           </span>
                           {reservation.statut === 'en_attente' && (
                             <div className="flex items-center gap-2">
