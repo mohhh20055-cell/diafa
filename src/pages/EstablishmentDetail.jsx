@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import * as establishmentsApi from '../api/establishments'
 import * as reviewsApi from '../api/reviews'
@@ -141,13 +141,12 @@ const ReviewForm = ({ establishmentId, onSubmitted }) => {
   )
 }
 
-const BookingForm = ({ establishment, rooms }) => {
+const BookingForm = ({ establishment, rooms, selectedRoomId, setSelectedRoomId, formRef }) => {
   const { user } = useAuth()
   const navigate = useNavigate()
   const [dateDebut, setDateDebut] = useState('')
   const [dateFin, setDateFin] = useState('')
   const [nbPersonnes, setNbPersonnes] = useState(1)
-  const [selectedRoomId, setSelectedRoomId] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
@@ -208,7 +207,7 @@ const BookingForm = ({ establishment, rooms }) => {
 
   if (availableRooms.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-sm p-6 sticky top-24">
+      <div ref={formRef} className="bg-white rounded-xl shadow-sm p-6 sticky top-24">
         <p className="text-sm text-slate-500 text-center py-4">
           لا توجد غرف متاحة حالياً.
         </p>
@@ -217,7 +216,7 @@ const BookingForm = ({ establishment, rooms }) => {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6 sticky top-24">
+    <div ref={formRef} className="bg-white rounded-xl shadow-sm p-6 sticky top-24">
       <h3 className="text-lg font-bold text-[#152A54] mb-4" style={{ fontFamily: 'Fraunces, serif' }}>
         حجز
       </h3>
@@ -316,6 +315,13 @@ const EstablishmentDetail = () => {
   const [ratingSummary, setRatingSummary] = useState({ avgRating: 0, reviewCount: 0 })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [selectedRoomId, setSelectedRoomId] = useState('')
+  const bookingFormRef = useRef(null)
+
+  const handleReserveRoom = (roomId) => {
+    setSelectedRoomId(roomId)
+    bookingFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   const loadData = async () => {
     try {
@@ -409,8 +415,13 @@ const EstablishmentDetail = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* المحتوى الرئيسي */}
           <div className="lg:col-span-2 space-y-8">
-            <div className="bg-white rounded-xl shadow-sm p-8">
-              <h2 className="text-2xl font-bold text-[#152A54] mb-4" style={{ fontFamily: 'Fraunces, serif' }}>
+            <div className="bg-white rounded-2xl shadow-sm p-8">
+              <h2 className="flex items-center gap-2 text-2xl font-bold text-[#152A54] mb-4" style={{ fontFamily: 'Fraunces, serif' }}>
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#CB9A56]/15 text-[#CB9A56]">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </span>
                 الوصف
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -419,10 +430,15 @@ const EstablishmentDetail = () => {
 
               {establishment.services && establishment.services.length > 0 && (
                 <div className="mt-6 pt-6 border-t border-neutral-100">
-                  <h3 className="text-sm font-bold uppercase tracking-wide text-[#152A54] mb-3">الخدمات والتجهيزات</h3>
+                  <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-[#152A54] mb-3">
+                    <svg className="w-4 h-4 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    الخدمات والتجهيزات
+                  </h3>
                   <div className="flex flex-wrap gap-2">
                     {establishment.services.map((s, i) => (
-                      <span key={i} className="px-3 py-1.5 rounded-full bg-neutral-100 text-xs font-medium text-slate-700">
+                      <span key={i} className="px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200/70 text-xs font-medium text-amber-900">
                         {s}
                       </span>
                     ))}
@@ -431,75 +447,14 @@ const EstablishmentDetail = () => {
               )}
             </div>
 
-            {/* قسم الغرف */}
-            <div className="bg-white rounded-xl shadow-sm p-8">
-              <h2 className="text-2xl font-bold text-[#152A54] mb-4" style={{ fontFamily: 'Fraunces, serif' }}>
-                الغرف والأسعار
-              </h2>
-              {rooms.length === 0 ? (
-                <p className="text-sm text-slate-500">لا توجد غرف متاحة حالياً.</p>
-              ) : (
-                <div className="space-y-4">
-                  {rooms.map((room) => {
-                    const roomImg = room.images?.[0] || null
-                    return (
-                      <div key={room.id} className="border border-neutral-200 rounded-xl overflow-hidden hover:border-[#CB9A56] transition bg-white flex flex-col sm:flex-row">
-                        {roomImg && (
-                          <div className="sm:w-48 h-40 sm:h-auto shrink-0 bg-neutral-100 relative">
-                            <img src={roomImg} alt={room.nomType} className="w-full h-full object-cover" />
-                          </div>
-                        )}
-                        <div className="p-5 flex-1 flex flex-col justify-between">
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="flex-1">
-                              <h4 className="font-bold text-[#152A54] text-base mb-1">{room.nomType}</h4>
-                              {room.description && (
-                                <p className="text-xs text-slate-600 mb-3">{room.description}</p>
-                              )}
-                              {room.services && room.services.length > 0 && (
-                                <div className="flex flex-wrap gap-1.5 mb-3">
-                                  {room.services.map((s, idx) => (
-                                    <span key={idx} className="bg-amber-50 text-amber-800 text-[10px] px-2 py-0.5 rounded-md font-medium border border-amber-200">
-                                      {s}
-                                    </span>
-                                  ))}
-                                </div>
-                              )}
-                              <div className="flex flex-wrap gap-4 text-xs text-slate-500">
-                                <span className="flex items-center gap-1">
-                                  <svg className="w-4 h-4 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                  </svg>
-                                  {room.capacite} شخص
-                                </span>
-                                <span className={`flex items-center gap-1 ${room.nbDisponible > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                  </svg>
-                                  {room.nbDisponible > 0 ? `${room.nbDisponible} متاحة` : 'مكتملة'}
-                                </span>
-                              </div>
-                            </div>
-                            <div className="text-right shrink-0">
-                              <p className="text-2xl font-bold text-[#152A54]" style={{ fontFamily: 'Fraunces, serif' }}>
-                                {!isNaN(parseFloat(room.prixNuit ?? room.prix_nuit)) && isFinite(parseFloat(room.prixNuit ?? room.prix_nuit))
-                                  ? Math.round(parseFloat(room.prixNuit ?? room.prix_nuit)).toLocaleString('ar-DZ')
-                                  : '0'}
-                              </p>
-                              <p className="text-xs text-slate-400">دج / ليلة</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              )}
-            </div>
-
             {establishment.images && establishment.images.length > 1 && (
-              <div className="bg-white rounded-xl shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-[#152A54] mb-4" style={{ fontFamily: 'Fraunces, serif' }}>
+              <div className="bg-white rounded-2xl shadow-sm p-8">
+                <h2 className="flex items-center gap-2 text-2xl font-bold text-[#152A54] mb-4" style={{ fontFamily: 'Fraunces, serif' }}>
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#CB9A56]/15 text-[#CB9A56]">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M4 8h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </span>
                   المعرض
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -508,12 +463,81 @@ const EstablishmentDetail = () => {
                       key={index}
                       src={img}
                       alt={`${establishment.nom} - ${index + 1}`}
-                      className="w-full h-48 object-cover rounded-lg"
+                      className="w-full aspect-square object-cover rounded-xl hover:opacity-90 transition"
                     />
                   ))}
                 </div>
               </div>
             )}
+
+            {/* قسم الغرف */}
+            <div className="bg-white rounded-2xl shadow-sm p-8">
+              <h2 className="text-2xl font-bold text-[#152A54] mb-6" style={{ fontFamily: 'Fraunces, serif' }}>
+                الغرف والأسعار
+              </h2>
+              {rooms.length === 0 ? (
+                <p className="text-sm text-slate-500">لا توجد غرف متاحة حالياً.</p>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {rooms.map((room) => {
+                    const roomImg = room.images?.[0] || null
+                    const roomPrice = parseFloat(room.prixNuit ?? room.prix_nuit)
+                    const displayPrice = !isNaN(roomPrice) && isFinite(roomPrice) ? Math.round(roomPrice).toLocaleString('ar-DZ') : '0'
+                    return (
+                      <div key={room.id} className="group rounded-2xl border border-neutral-200 overflow-hidden bg-white hover:border-[#CB9A56] hover:shadow-lg transition">
+                        <div className="relative aspect-square w-full bg-neutral-100">
+                          {roomImg ? (
+                            <img
+                              src={roomImg}
+                              alt={room.nomType}
+                              className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center text-neutral-300">
+                              <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 7l9-4 9 4v11a1 1 0 01-1 1h-4v-6H8v6H4a1 1 0 01-1-1V7z" />
+                              </svg>
+                            </div>
+                          )}
+                          <span className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-bold text-[#152A54] shadow">
+                            <svg className="w-3.5 h-3.5 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            {room.capacite || 1}
+                          </span>
+                        </div>
+                        <div className="p-4">
+                          <h4 className="font-bold text-[#152A54] text-base mb-2 truncate">{room.nomType}</h4>
+                          {room.services && room.services.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5 mb-3">
+                              {room.services.map((s, idx) => (
+                                <span key={idx} className="bg-amber-50 text-amber-800 text-[10px] px-2 py-0.5 rounded-md font-medium border border-amber-200 truncate max-w-[110px]">
+                                  {s}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                          <div className="flex items-center justify-between mt-3 pt-3 border-t border-neutral-100">
+                            <p className="text-lg font-bold text-[#152A54]" style={{ fontFamily: 'Fraunces, serif' }}>
+                              {displayPrice}
+                              <span className="ml-1 text-xs font-normal text-slate-400">دج/ليلة</span>
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => handleReserveRoom(room.id)}
+                              disabled={!(room.nbDisponible > 0 && room.actif !== false)}
+                              className="rounded-lg bg-[#152A54] px-4 py-2 text-xs font-semibold text-white hover:bg-[#CB9A56] transition-colors disabled:opacity-40 disabled:hover:bg-[#152A54]"
+                            >
+                              حجز
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
 
             {/* قسم التقييمات */}
             <div className="bg-white rounded-xl shadow-sm p-8">
@@ -557,7 +581,13 @@ const EstablishmentDetail = () => {
 
           {/* الشريط الجانبي - الحجز */}
           <div className="lg:col-span-1">
-            <BookingForm establishment={establishment} rooms={rooms} />
+            <BookingForm
+              establishment={establishment}
+              rooms={rooms}
+              selectedRoomId={selectedRoomId}
+              setSelectedRoomId={setSelectedRoomId}
+              formRef={bookingFormRef}
+            />
 
             <div className="bg-white rounded-xl shadow-sm p-6 mt-6">
               <h3 className="text-sm font-bold uppercase tracking-wide text-[#152A54] mb-4">معلومات</h3>
