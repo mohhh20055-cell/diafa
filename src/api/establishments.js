@@ -1,5 +1,6 @@
 import { supabase } from '../lib/supabase'
 import { getAuthUser } from './auth'
+import bcrypt from 'bcryptjs'
 
 const ok = (data, message) => ({ success: true, data, message })
 const fail = (message) => ({ success: false, message })
@@ -439,12 +440,70 @@ export const rejectEstablishment = async (id, ownerId) => {
   return validateEstablishment(id, { statut_validation: 'refuse', ownerId })
 }
 
+// Creates a brand new owner account directly in the users table (no Supabase Auth
+// signUp), so the admin's own session is never affected. The account can log in
+// right away thanks to the DB-fallback login already implemented in auth.js.
+const createOwnerAccount = async (newOwner) => {
+  const nom = (newOwner.nom || '').trim()
+  const prenom = (newOwner.prenom || '').trim()
+  const email = (newOwner.email || '').trim()
+  const telephone = (newOwner.telephone || '').trim()
+  const motDePasse = newOwner.motDePasse || ''
+
+  if (!nom || !prenom) return { error: 'الاسم واللقب مطلوبان.' }
+  if (!email) return { error: 'البريد الإلكتروني مطلوب.' }
+  if (!telephone) return { error: 'رقم الهاتف مطلوب.' }
+  if (!motDePasse || motDePasse.length < 8) {
+    return { error: 'كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل. / Le mot de passe doit contenir au moins 8 caractères.' }
+  }
+
+  const { data: existingEmail } = await supabase
+    .from('users')
+    .select('id')
+    .ilike('email', email)
+    .maybeSingle()
+  if (existingEmail) return { error: 'هذا البريد الإلكتروني مستعمل بالفعل. / Cet email est déjà utilisé.' }
+
+  const { data: existingPhone } = await supabase
+    .from('users')
+    .select('id')
+    .eq('telephone', telephone)
+    .maybeSingle()
+  if (existingPhone) return { error: 'رقم الهاتف مستعمل بالفعل. / Ce numéro de téléphone est déjà utilisé.' }
+
+  const newId = crypto.randomUUID()
+  const { error: userError } = await supabase.from('users').insert({
+    id: newId,
+    nom,
+    prenom,
+    email,
+    telephone,
+    motDePasse: bcrypt.hashSync(motDePasse, 10),
+    role: 'owner',
+    statut: 'actif',
+    createdAt: new Date().toISOString(),
+  })
+  if (userError) return { error: userError.message }
+
+  return { id: newId }
+}
+
 export const adminCreateEstablishment = async (data) => {
   try {
     const user = await getAuthUser()
     if (!user) return fail('Non connecté.')
 
-    const ownerId = data.ownerId || user.id
+    let ownerId = data.ownerId
+
+    // Admin is creating a brand new owner account (partner gave their info to the admin)
+    if (!ownerId && data.newOwner) {
+      const created = await createOwnerAccount(data.newOwner)
+      if (created.error) return fail(created.error)
+      ownerId = created.id
+    }
+
+    if (!ownerId) ownerId = user.id
+
     const parsedSrvs = parseServices(data.services)
 
     // Update users table
@@ -700,4 +759,3 @@ export const getAllEstablishments = async () => {
     return fail(err.message)
   }
 }
-
