@@ -551,7 +551,19 @@ export const createRoom = async (establishment_id, data) => {
     const servicesVal = data.services || []
 
     const candidatePayloads = [
-      // Candidate 1: snake_case
+      // Candidate 1: Standard snake_case (matching inspected schema)
+      {
+        id: roomId,
+        establishment_id: targetEstId,
+        nom_type: nomVal,
+        prix_nuit: prixVal,
+        nb_disponible: dispVal,
+        images: imgVal,
+        description: descVal,
+        services: servicesVal,
+        actif: true,
+      },
+      // Candidate 2: Standard snake_case with capacite (just in case)
       {
         id: roomId,
         establishment_id: targetEstId,
@@ -564,61 +576,18 @@ export const createRoom = async (establishment_id, data) => {
         services: servicesVal,
         actif: true,
       },
-      // Candidate 2: camelCase
+      // Candidate 3: camelCase variant
       {
         id: roomId,
-        establishment_id: targetEstId,
+        establishmentId: targetEstId,
         nomType: nomVal,
         prixNuit: prixVal,
-        capacite: capVal,
         nbDisponible: dispVal,
         images: imgVal,
         description: descVal,
         services: servicesVal,
         actif: true,
-      },
-      // Candidate 3: Both snake_case and camelCase
-      {
-        id: roomId,
-        establishment_id: targetEstId,
-        nom_type: nomVal,
-        nomType: nomVal,
-        prix_nuit: prixVal,
-        prixNuit: prixVal,
-        capacite: capVal,
-        nb_disponible: dispVal,
-        nbDisponible: dispVal,
-        images: imgVal,
-        description: descVal,
-        services: servicesVal,
-        actif: true,
-      },
-      // Candidate 4: etablissement_id + snake_case
-      {
-        id: roomId,
-        etablissement_id: targetEstId,
-        nom_type: nomVal,
-        prix_nuit: prixVal,
-        capacite: capVal,
-        nb_disponible: dispVal,
-        images: imgVal,
-        description: descVal,
-        services: servicesVal,
-        actif: true,
-      },
-      // Candidate 5: etablissement_id + camelCase
-      {
-        id: roomId,
-        etablissement_id: targetEstId,
-        nomType: nomVal,
-        prixNuit: prixVal,
-        capacite: capVal,
-        nbDisponible: dispVal,
-        images: imgVal,
-        description: descVal,
-        services: servicesVal,
-        actif: true,
-      },
+      }
     ]
 
     let roomData = null
@@ -713,7 +682,7 @@ export const updateRoom = async (roomId, data) => {
     const payloadPrimary = {}
     if (nomVal !== undefined) payloadPrimary.nom_type = nomVal
     if (prixVal !== undefined) payloadPrimary.prix_nuit = prixVal
-    if (capVal !== undefined) payloadPrimary.capacite = capVal
+    // Note: capacite is intentionally omitted from primary if we suspect it doesn't exist
     if (dispVal !== undefined) payloadPrimary.nb_disponible = dispVal
     if (imgVal !== undefined) payloadPrimary.images = imgVal
     if (descVal !== undefined) payloadPrimary.description = descVal
@@ -727,11 +696,12 @@ export const updateRoom = async (roomId, data) => {
       .maybeSingle()
 
     if (resErr) {
+      console.warn('Primary update failed, trying fallback:', resErr)
       const payloadFallback = {}
-      if (nomVal !== undefined) payloadFallback.nomType = nomVal
-      if (prixVal !== undefined) payloadFallback.prixNuit = prixVal
+      if (nomVal !== undefined) payloadFallback.nom_type = nomVal
+      if (prixVal !== undefined) payloadFallback.prix_nuit = prixVal
       if (capVal !== undefined) payloadFallback.capacite = capVal
-      if (dispVal !== undefined) payloadFallback.nbDisponible = dispVal
+      if (dispVal !== undefined) payloadFallback.nb_disponible = dispVal
       if (imgVal !== undefined) payloadFallback.images = imgVal
       if (descVal !== undefined) payloadFallback.description = descVal
       if (servicesVal !== undefined) payloadFallback.services = servicesVal
