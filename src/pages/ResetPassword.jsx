@@ -55,7 +55,7 @@ const ResetPassword = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0E1E3D] relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
-      {/* Background Ambient Glow */}
+      {/* تأثير الخلفية المتوهج */}
       <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[#CB9A56]/15 blur-3xl" />
 
       <div className="max-w-md w-full relative z-10">
@@ -122,7 +122,7 @@ const ResetPassword = () => {
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
                   className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
-                  placeholder="votre@email.com"
+                  placeholder="بريدك@مثال.com"
                   disabled={isSubmitting}
                 />
               </div>
@@ -140,7 +140,7 @@ const ResetPassword = () => {
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     className="block w-full px-4 py-3 pr-10 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
-                    placeholder="Au moins 8 caractères"
+                    placeholder="8 أحرف على الأقل"
                     disabled={isSubmitting}
                   />
                   <button
@@ -174,7 +174,7 @@ const ResetPassword = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
-                  placeholder="Répétez le mot de passe"
+                  placeholder="أعد كتابة كلمة المرور"
                   disabled={isSubmitting}
                 />
               </div>
@@ -190,7 +190,7 @@ const ResetPassword = () => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    Mise à jour... / جاري التحديث
+                    جاري التحديث...
                   </span>
                 ) : (
                   'تغيير كلمة المرور'
