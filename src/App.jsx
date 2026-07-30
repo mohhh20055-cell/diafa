@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
-import Navbar from './components/Navbar'
+import Navbar, { NavbarUtilityBar } from './components/Navbar'
 import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
@@ -17,14 +17,17 @@ import Notifications from './pages/Notifications'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 
-// Admin dashboard has its own sidebar/topbar, so we hide the public Navbar/Footer there
+// Admin & Owner dashboards have their own topbar, so we hide the public Navbar/Footer there
 function AppLayout() {
   const location = useLocation()
   const isAdminRoute = location.pathname.startsWith('/admin')
+  const isOwnerRoute = location.pathname.startsWith('/owner')
+  const isDashboardRoute = isAdminRoute || isOwnerRoute
 
   return (
     <div className="min-h-screen flex flex-col">
-      {!isAdminRoute && <Navbar />}
+      {!isDashboardRoute && <Navbar />}
+      {isOwnerRoute && <NavbarUtilityBar />}
       <main className="flex-1">
         <Routes>
               <Route path="/" element={<Home />} />
@@ -74,7 +77,7 @@ function AppLayout() {
               <Route path="/recherche" element={<Establishments />} />
         </Routes>
       </main>
-      {!isAdminRoute && <Footer />}
+      {!isDashboardRoute && <Footer />}
     </div>
   )
 }
