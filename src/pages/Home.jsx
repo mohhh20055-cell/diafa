@@ -114,7 +114,7 @@ function FeaturedCard({ establishment }) {
   return (
     <Link
       to={`/etablissements/${establishment.id}`}
-      className="group block w-64 shrink-0 snap-start overflow-hidden rounded-xl border border-neutral-200 bg-white transition hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between"
+      className="group block w-80 shrink-0 snap-start overflow-hidden rounded-xl border border-neutral-200 bg-white transition hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between"
     >
       <div>
         <div className="relative aspect-square w-full bg-gradient-to-br from-[#152A54] to-[#0E1E3D]">
@@ -131,8 +131,8 @@ function FeaturedCard({ establishment }) {
           </span>
           {price != null && !isNaN(price) && isFinite(price) && price > 0 && (
             <div className="absolute inset-x-0 bottom-0 bg-[#0E1E3D]/80 px-3 py-1.5 text-white">
-              <span className="text-[11px] font-medium text-white/80">{t('startingFrom')}</span>{" "}
-              <span className="text-sm font-bold">{Math.round(price).toLocaleString("ar-DZ")} دج</span>
+              <span className="text-[11px] font-medium text-white/80">{t('startingFrom')}</span>
+              <span className="ml-1.5 text-sm font-bold">{Math.round(price).toLocaleString("ar-DZ")} دج</span>
             </div>
           )}
         </div>
@@ -140,27 +140,27 @@ function FeaturedCard({ establishment }) {
           <p className="truncate text-sm font-bold uppercase text-[#0E1E3D]">
             {establishment.nom}
           </p>
-          <p className="flex items-center gap-1 truncate text-xs text-slate-400">
-            <IconPin className="h-3.5 w-3.5 shrink-0 text-[#CB9A56]" />
-            <span className="truncate">
-              {[establishment.ville, establishment.wilaya].filter(Boolean).join("، ")}
+          <div className="mt-1 flex items-center justify-between gap-2">
+            <p className="flex min-w-0 items-center gap-1 truncate text-xs text-slate-400">
+              <IconPin className="h-3.5 w-3.5 shrink-0 text-[#CB9A56]" />
+              <span className="truncate">
+                {[establishment.ville, establishment.wilaya].filter(Boolean).join("، ")}
+              </span>
+            </p>
+            <span className="shrink-0 flex items-center gap-1 text-[11px] font-semibold text-[#CB9A56]">
+              {t('details')}
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M9 5l7 7-7 7"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </span>
-          </p>
+          </div>
         </div>
-      </div>
-      <div className="border-t border-neutral-100 px-3 py-2 flex items-center justify-between">
-        <span className="text-[11px] font-semibold text-[#CB9A56]">{t('details')}</span>
-        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#CB9A56]/15 text-[#CB9A56]">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M9 5l7 7-7 7"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
       </div>
     </Link>
   );
@@ -236,7 +236,7 @@ function FeaturedEstablishments() {
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="h-56 w-64 shrink-0 animate-pulse rounded-xl bg-neutral-200/60"
+                className="h-72 w-80 shrink-0 animate-pulse rounded-xl bg-neutral-200/60"
               />
             ))}
           </div>
@@ -260,7 +260,7 @@ function FeaturedEstablishments() {
             </button>
             <div
               ref={scrollerRef}
-              className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               {items.map((est) => (
                 <FeaturedCard key={est.id} establishment={est} />
