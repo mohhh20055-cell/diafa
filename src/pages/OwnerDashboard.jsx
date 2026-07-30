@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
+import { useTranslation } from 'react-i18next'
 import * as establishmentsApi from '../api/establishments'
 import * as reservationsApi from '../api/reservations'
 import * as authApi from '../api/auth'
@@ -164,6 +166,7 @@ const OwnerDashboard = () => {
         >
           Voir site
         </Link>
+        <LanguageSwitcher />
       </div>
 
       {/* Mobile Overlay */}

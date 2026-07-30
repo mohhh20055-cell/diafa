@@ -274,7 +274,7 @@ function FeaturedEstablishments() {
             <button
               type="button"
               onClick={() => scrollBy(-1)}
-              aria-label="Précédent"
+              aria-label={t('previous')}
               className="absolute -left-4 top-1/3 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white text-slate-500 shadow-md hover:text-[#0E1E3D] sm:flex"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -298,7 +298,7 @@ function FeaturedEstablishments() {
             <button
               type="button"
               onClick={() => scrollBy(1)}
-              aria-label="Suivant"
+              aria-label={t('next')}
               className="absolute -right-4 top-1/3 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white text-slate-500 shadow-md hover:text-[#0E1E3D] sm:flex"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -442,7 +442,7 @@ export function Home() {
             <div className="h-px w-full bg-neutral-100 md:h-10 md:w-px" />
             <div className="flex-1">
               <label className="mb-1.5 flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold uppercase tracking-wider text-slate-500">
-                <IconCalendar className="h-4 w-4 text-[#0E1E3D]" /> Arrivée
+                <IconCalendar className="h-4 w-4 text-[#0E1E3D]" /> {t('arrival')}
               </label>
               <DatePicker
                 value={dateDebut}
@@ -453,7 +453,7 @@ export function Home() {
             <div className="h-px w-full bg-neutral-100 md:h-10 md:w-px" />
             <div className="flex-1">
               <label className="mb-1.5 flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold uppercase tracking-wider text-slate-500">
-                <IconCalendar className="h-4 w-4 text-[#0E1E3D]" /> Départ
+                <IconCalendar className="h-4 w-4 text-[#0E1E3D]" /> {t('departure')}
               </label>
               <DatePicker
                 value={dateFin}

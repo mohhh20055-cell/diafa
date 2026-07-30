@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { IconBell, IconEdit } from '../components/Icons'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
 import Logo from '../components/Logo'
 import * as adminApi from '../api/admin'
 import * as establishmentsApi from '../api/establishments'
@@ -347,6 +348,7 @@ const AdminDashboard = () => {
       <div className="flex-1 min-w-0">
         {/* Slim top bar */}
         <div className="flex items-center justify-between lg:justify-end gap-3 px-4 sm:px-6 lg:px-8 py-3.5 border-b border-neutral-200 bg-white">
+          <LanguageSwitcher />
           <Link
             to="/etablissements"
             className="lg:hidden inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#CB9A56] hover:bg-[#E4C48A] text-[#0E1E3D] text-xs font-bold transition shadow-sm"

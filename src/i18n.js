@@ -154,7 +154,11 @@ export const resources = {
       messageEmpty: 'لا يمكن إرسال رسالة فارغة.',
       userNotConnected: 'يجب تسجيل الدخول لترك تقييم.',
       invalidRating: 'التقييم يجب أن يكون بين 1 و 5.',
-      alreadyRated: 'لقد قمت بالفعل بترك تقييم لهذه المؤسسة.'
+      alreadyRated: 'لقد قمت بالفعل بترك تقييم لهذه المؤسسة.',
+      arrival: 'تاريخ الوصول',
+      departure: 'تاريخ المغادرة',
+      previous: 'السابق',
+      next: 'التالي'
     }
   },
   en: {
@@ -299,7 +303,42 @@ export const resources = {
       messageEmpty: 'Cannot send an empty message.',
       userNotConnected: 'You must be logged in to leave a review.',
       invalidRating: 'Rating must be between 1 and 5.',
-      alreadyRated: 'You have already left a review for this establishment.'
+      alreadyRated: 'You have already left a review for this establishment.',
+      arrival: 'Arrival',
+      departure: 'Departure',
+      previous: 'Previous',
+      next: 'Next',
+      adminDashboard: 'Admin Dashboard',
+      establishmentPendingValidation: 'Establishments pending validation',
+      noPendingEstablishments: 'No establishments pending validation at the moment.',
+      top5Wilayas: 'Top 5 Wilayas by number of establishments',
+      contactMessages: 'Contact Messages',
+      noContactMessages: 'No contact messages received.',
+      adminResponse: 'Admin Response:',
+      manageUsers: 'Manage Users',
+      platformActivityStats: 'Platform Activity Statistics',
+      reservationAcceptanceRate: 'Reservation acceptance rate',
+      totalUsers: 'Total users',
+      userDistribution: 'User distribution',
+      newPassword: 'New password',
+      leaveEmptyNotToChange: '(leave empty not to change)',
+      allReservationsOnPlatform: 'All platform reservations',
+      noReservationsFound: 'No reservations found for this filter',
+      chooseMapImage: 'Choose the image that will appear on the establishment map.',
+      defaultPhoto: 'Default is the first photo.',
+      establishmentCreatedSuccessfully: 'Establishment created successfully! It is now visible on the home page.',
+      errorCreatingEstablishment: 'Error creating establishment.',
+      establishmentAutomaticallyValidated: 'The establishment will be automatically validated and visible on the home page.',
+      establishmentNameRequired: 'Establishment name required *',
+      establishmentPhotosFromDevice: 'Establishment photos (from device)',
+      clickToUploadPhotos: 'Click to upload photos (Max {MAX_PHOTOS})',
+      forgotPasswordTitle: 'Forgot password?',
+      forgotPasswordSubtitle: 'Enter your email or phone number to reset your password',
+      resetPasswordNow: 'Reset password now',
+      emailOrPhone: 'Email or phone number',
+      sendResetLink: 'Send reset link',
+      backToLogin: 'Back to login',
+      repeatPassword: 'Repeat password'
     }
   }
 };
