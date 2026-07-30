@@ -356,7 +356,7 @@ const OwnerDashboard = () => {
         <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6 sm:p-8">
           {activeTab === 'overview' && (
             <div>
-              <h3 className="text-lg font-bold text-[#0E1E3D] mb-2 font-display">Aperçu général / نظرة عامة</h3>
+              <h3 className="text-lg font-bold text-[#0E1E3D] mb-2 font-display">{t('overview')}</h3>
               <p className="text-xs sm:text-sm text-slate-600 mb-6">
                 Bienvenue dans votre espace propriétaire. Retrouvez vos informations clés ci-dessous.
               </p>
@@ -510,8 +510,8 @@ const OwnerDashboard = () => {
                   <svg className="w-12 h-12 mx-auto text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <p className="text-sm font-semibold text-slate-600">Aucune réservation enregistrée</p>
-                  <p className="text-xs text-slate-400 mt-1">Les réservations effectuées par vos clients s'afficheront ici.</p>
+                  <p className="text-sm font-semibold text-slate-600">{t('noReservations')}</p>
+                  <p className="text-xs text-slate-400 mt-1">{t('noReservationsDesc')}</p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -521,14 +521,14 @@ const OwnerDashboard = () => {
                         <div>
                           <div className="flex items-center gap-2">
                             <h4 className="font-bold text-[#0E1E3D] text-base">
-                              {reservation.etablissement?.nom || 'Votre établissement'}
+                              {reservation.etablissement?.nom || t('yourEstablishment')}
                             </h4>
                           </div>
                           <p className="text-xs text-slate-500 mt-1">
-                            Client: <strong className="text-slate-800">{reservation.client?.prenom} {reservation.client?.nom}</strong> ({reservation.client?.telephone || reservation.client?.email})
+                            {t('client')}: <strong className="text-slate-800">{reservation.client?.prenom} {reservation.client?.nom}</strong> ({reservation.client?.telephone || reservation.client?.email})
                           </p>
                           <p className="text-xs text-slate-500 mt-0.5">
-                            Période: <strong>{new Date(reservation.dateArrivee).toLocaleDateString('fr-FR')}</strong> au <strong>{new Date(reservation.dateDepart).toLocaleDateString('fr-FR')}</strong>
+                            {t('period')}: <strong>{new Date(reservation.dateArrivee).toLocaleDateString('fr-FR')}</strong> {t('to')} <strong>{new Date(reservation.dateDepart).toLocaleDateString('fr-FR')}</strong>
                           </p>
                         </div>
                         <div className="flex flex-col items-end gap-3">
@@ -554,7 +554,7 @@ const OwnerDashboard = () => {
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
-                                Accepter
+                                {t('accept')}
                               </button>
                               <button
                                 onClick={() => handleRejectReservation(reservation.id)}
@@ -563,7 +563,7 @@ const OwnerDashboard = () => {
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
-                                Refuser
+                                {t('reject')}
                               </button>
                             </div>
                           )}
