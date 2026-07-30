@@ -16,11 +16,11 @@ const STATUS_STYLES = {
 }
 
 const STATUS_LABELS = {
-  en_attente: 'En attente',
-  acceptee: 'Acceptée',
-  refusee: 'Refusée',
-  annulee: 'Annulée',
-  terminee: 'Terminée',
+  en_attente: 'في الانتظار',
+  acceptee: 'مقبولة',
+  refusee: 'مرفوضة',
+  annulee: 'ملغية',
+  terminee: 'منتهية',
 }
 
 const Reservations = () => {
@@ -34,7 +34,7 @@ const Reservations = () => {
   const [activeTab, setActiveTab] = useState('reservations')
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
-  // Contact form state
+  // حالة نموذج الاتصال
   const [contactForm, setContactForm] = useState({ sujet: '', message: '' })
   const [contactSubmitting, setContactSubmitting] = useState(false)
   const [contactSuccess, setContactSuccess] = useState(null)
@@ -61,19 +61,19 @@ const Reservations = () => {
         setNotifications(notifData.data || [])
       }
     } catch (err) {
-      setError('Erreur lors du chargement des données.')
+      setError('حدث خطأ أثناء تحميل البيانات.')
     } finally {
       setLoading(false)
     }
   }
 
   const handleCancelReservation = async (id) => {
-    if (!confirm('Voulez-vous vraiment annuler cette réservation ?')) return
+    if (!confirm('هل أنت متأكد من إلغاء هذا الحجز؟')) return
     const res = await reservationsApi.cancelReservation(id)
     if (res.success) {
       loadAllData()
     } else {
-      alert(res.message || "Erreur lors de l'annulation.")
+      alert(res.message || 'حدث خطأ أثناء الإلغاء.')
     }
   }
 
@@ -90,7 +90,7 @@ const Reservations = () => {
     setContactSuccess(null)
 
     const res = await contactApi.sendContactMessage({
-      nom: `${user?.prenom || ''} ${user?.nom || ''}`.trim() || 'Client Diyafa',
+      nom: `${user?.prenom || ''} ${user?.nom || ''}`.trim() || 'زبون ضيافة',
       email: user?.email || '',
       sujet: contactForm.sujet,
       message: contactForm.message,
@@ -100,10 +100,10 @@ const Reservations = () => {
     setContactSubmitting(false)
 
     if (res.success) {
-      setContactSuccess('Votre message a été envoyé à l\'équipe de support ! Vous recevrez une réponse ici.')
+      setContactSuccess('تم إرسال رسالتك إلى فريق الدعم! ستتلقى الرد هنا.')
       setContactForm({ sujet: '', message: '' })
     } else {
-      alert(res.message || 'Erreur lors de l\'envoi du message.')
+      alert(res.message || 'حدث خطأ أثناء إرسال الرسالة.')
     }
   }
 
@@ -128,7 +128,7 @@ const Reservations = () => {
 
   return (
     <div className="min-h-screen bg-[#FAF7F1] flex flex-col md:flex-row">
-      {/* Mobile Top Navigation Bar */}
+      {/* شريط التنقل العلوي للجوال */}
       <div className="md:hidden bg-[#0E1E3D] text-white px-4 py-3 border-b border-[#CB9A56]/30 flex items-center justify-between sticky top-0 z-40">
         <div className="flex items-center gap-3">
           <button
@@ -140,8 +140,8 @@ const Reservations = () => {
             </svg>
           </button>
           <div>
-            <span className="text-[10px] uppercase tracking-wider text-[#CB9A56] font-bold">Espace Client</span>
-            <h2 className="text-sm font-bold text-white leading-tight">{activeTabObj?.label} ({activeTabObj?.labelAr})</h2>
+            <span className="text-[10px] uppercase tracking-wider text-[#CB9A56] font-bold">مساحة الزبون</span>
+            <h2 className="text-sm font-bold text-white leading-tight">{activeTabObj?.label}</h2>
           </div>
         </div>
 
@@ -154,7 +154,7 @@ const Reservations = () => {
         <LanguageSwitcher />
       </div>
 
-      {/* Mobile Overlay */}
+      {/* طبقة التعتيم للجوال */}
       {mobileSidebarOpen && (
         <div
           onClick={() => setMobileSidebarOpen(false)}
@@ -162,21 +162,21 @@ const Reservations = () => {
         />
       )}
 
-      {/* SIDEBAR CONTAINER */}
+      {/* حاوية الشريط الجانبي */}
       <aside
         className={`fixed md:sticky top-0 left-0 bottom-0 z-50 md:z-auto w-72 bg-[#0E1E3D] text-white flex flex-col justify-between border-r border-[#CB9A56]/20 transition-transform duration-300 ease-in-out shrink-0 h-screen ${
           mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >
-        {/* Sidebar Header & Brand */}
+        {/* رأس الشريط الجانبي والعلامة التجارية */}
         <div className="p-6 border-b border-white/10">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2.5">
               <div className="w-10 h-10 rounded-2xl bg-[#CB9A56] text-[#0E1E3D] font-black flex items-center justify-center text-lg shadow-md">
-                D
+                ض
               </div>
               <div>
-                <h2 className="text-lg font-bold font-display text-white leading-tight">Diyafa Client</h2>
+                <h2 className="text-lg font-bold font-display text-white leading-tight">زبون ضيافة</h2>
                 <span className="text-[11px] text-[#E4C48A] font-medium">حساب الزبون</span>
               </div>
             </div>
@@ -190,22 +190,22 @@ const Reservations = () => {
             </button>
           </div>
 
-          {/* User Profile Card */}
+          {/* بطاقة الملف الشخصي */}
           <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-[#CB9A56] text-[#0E1E3D] font-extrabold flex items-center justify-center text-xs shrink-0">
-              {(user?.prenom || user?.nom || 'C').charAt(0).toUpperCase()}
+              {(user?.prenom || user?.nom || 'ز').charAt(0).toUpperCase()}
             </div>
             <div className="overflow-hidden">
-              <p className="text-xs font-bold text-white truncate">{user?.prenom || 'Client'} {user?.nom || ''}</p>
+              <p className="text-xs font-bold text-white truncate">{user?.prenom || 'زبون'} {user?.nom || ''}</p>
               <p className="text-[10px] text-slate-400 truncate">{user?.email || user?.telephone}</p>
             </div>
           </div>
         </div>
 
-        {/* Sidebar Navigation Items */}
+        {/* عناصر التنقل في الشريط الجانبي */}
         <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto thin-scrollbar">
           <p className="px-3 text-[10px] font-bold text-[#E4C48A] uppercase tracking-wider mb-2">
-            القائمة الرئيسية / Menu Client
+            القائمة الرئيسية
           </p>
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id
@@ -247,7 +247,7 @@ const Reservations = () => {
           })}
         </nav>
 
-        {/* Sidebar Footer */}
+        {/* تذييل الشريط الجانبي */}
         <div className="p-4 border-t border-white/10 space-y-2">
           <Link
             to="/etablissements"
@@ -256,7 +256,7 @@ const Reservations = () => {
             <svg className="w-4 h-4 text-[#E4C48A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <span>Rechercher un séjour</span>
+            <span>البحث عن إقامة</span>
           </Link>
 
           <button
@@ -269,32 +269,32 @@ const Reservations = () => {
             <svg className="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
-            <span>Déconnexion / تسجيل الخروج</span>
+            <span>تسجيل الخروج</span>
           </button>
         </div>
       </aside>
 
-      {/* MAIN CONTENT AREA */}
+      {/* منطقة المحتوى الرئيسية */}
       <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto w-full overflow-y-auto">
-        {/* Header Banner */}
+        {/* رأس الصفحة */}
         <div className="bg-[#0E1E3D] text-white rounded-2xl p-6 mb-8 border border-[#CB9A56]/30 shadow-md">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <span className="text-[#E4C48A] text-xs font-bold uppercase tracking-wider block mb-1">
-                Espace Personnel Client
+                المساحة الشخصية للزبون
               </span>
               <h1 className="text-xl sm:text-2xl font-bold font-display text-white">
-                Bienvenue, {user?.prenom || 'Client'} !
+                مرحباً، {user?.prenom || 'زبون'} !
               </h1>
               <p className="text-slate-300 text-xs sm:text-sm mt-1">
-                Suivez vos réservations, consultez les réponses de l'administration et gérez votre compte.
+                تابع حجوزاتك، اطلع على ردود الإدارة وأدر حسابك.
               </p>
             </div>
             <Link
               to="/etablissements"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#CB9A56] hover:bg-[#E4C48A] text-[#0E1E3D] font-bold text-xs transition shadow-md self-start sm:self-auto"
             >
-              <span>Réserver à nouveau</span>
+              <span>حجز جديد</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -308,16 +308,16 @@ const Reservations = () => {
           </div>
         )}
 
-        {/* Tab Content Cards */}
+        {/* بطاقات محتوى التبويبات */}
         <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-6 sm:p-8">
           {activeTab === 'reservations' && (
             <div>
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
-                  Mes Réservations / حجوزاتي
+                  حجوزاتي
                 </h3>
                 <span className="px-3 py-1 bg-neutral-100 text-[#0E1E3D] text-xs font-bold rounded-full">
-                  Total: {reservations.length}
+                  المجموع: {reservations.length}
                 </span>
               </div>
 
@@ -326,13 +326,13 @@ const Reservations = () => {
                   <svg className="w-12 h-12 text-slate-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <p className="text-sm font-semibold text-slate-700">Vous n'avez aucune réservation pour le moment</p>
-                  <p className="text-xs text-slate-400 mt-1 mb-4">Explorez les hôtels et résidences disponibles en Algérie.</p>
+                  <p className="text-sm font-semibold text-slate-700">لا توجد حجوزات حالياً</p>
+                  <p className="text-xs text-slate-400 mt-1 mb-4">استكشف الفنادق والمراقد المتاحة في الجزائر.</p>
                   <Link
                     to="/etablissements"
                     className="inline-block px-5 py-2.5 bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-xs font-bold rounded-xl transition"
                   >
-                    Parcourir les établissements
+                    استعراض المؤسسات
                   </Link>
                 </div>
               ) : (
@@ -342,16 +342,16 @@ const Reservations = () => {
                       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                         <div>
                           <h4 className="font-bold text-[#0E1E3D] text-base">
-                            {reservation.etablissement?.nom || 'Établissement Diyafa'}
+                            {reservation.etablissement?.nom || 'مؤسسة ضيافة'}
                           </h4>
                           <p className="text-xs text-slate-500 mt-1">
-                            Type / Chambre: <strong>{reservation.room?.nomType || 'Hébergement standard'}</strong>
+                            النوع / الغرفة: <strong>{reservation.room?.nomType || 'إقامة عادية'}</strong>
                           </p>
                           <p className="text-xs text-slate-500 mt-0.5">
-                            Période du séjour: <strong>{new Date(reservation.dateArrivee).toLocaleDateString('fr-FR')}</strong> au <strong>{new Date(reservation.dateDepart).toLocaleDateString('fr-FR')}</strong>
+                            فترة الإقامة: <strong>{new Date(reservation.dateArrivee).toLocaleDateString('ar-DZ')}</strong> إلى <strong>{new Date(reservation.dateDepart).toLocaleDateString('ar-DZ')}</strong>
                           </p>
                           <p className="text-xs font-bold text-[#CB9A56] mt-1.5">
-                            Prix total: {parseFloat(reservation.prixTotal || 0).toLocaleString('fr-FR')} DA
+                            السعر الإجمالي: {parseFloat(reservation.prixTotal || 0).toLocaleString('ar-DZ')} دج
                           </p>
                         </div>
 
@@ -365,7 +365,7 @@ const Reservations = () => {
                               onClick={() => handleCancelReservation(reservation.id)}
                               className="text-xs font-bold text-rose-600 hover:text-rose-800 underline cursor-pointer"
                             >
-                              Annuler la réservation
+                              إلغاء الحجز
                             </button>
                           )}
                         </div>
@@ -382,15 +382,15 @@ const Reservations = () => {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
-                    Notifications & Réponses Administratives / الإشعارات والردود
+                    الإشعارات والردود الإدارية
                   </h3>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    Toutes les réponses à vos messages de support et mises à jour de réservations sont affichées ici.
+                    جميع الردود على رسائل الدعم وتحديثات الحجوزات تظهر هنا.
                   </p>
                 </div>
                 {unreadNotifsCount > 0 && (
                   <span className="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full">
-                    {unreadNotifsCount} non lue(s)
+                    {unreadNotifsCount} غير مقروءة
                   </span>
                 )}
               </div>
@@ -400,8 +400,8 @@ const Reservations = () => {
                   <svg className="w-12 h-12 text-slate-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
                   </svg>
-                  <p className="text-sm font-semibold text-slate-700">Aucune notification enregistrée</p>
-                  <p className="text-xs text-slate-400 mt-1">Vous recevrez un notification dès que l'administration ou un propriétaire vous répond.</p>
+                  <p className="text-sm font-semibold text-slate-700">لا توجد إشعارات مسجلة</p>
+                  <p className="text-xs text-slate-400 mt-1">ستتلقى إشعاراً فور رد الإدارة أو صاحب المؤسسة.</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -426,7 +426,7 @@ const Reservations = () => {
                               {notif.message}
                             </p>
                             <span className="text-[10px] text-slate-400 font-mono mt-1 block">
-                              {notif.createdAt ? new Date(notif.createdAt).toLocaleString('fr-FR') : 'Date inconnue'}
+                              {notif.createdAt ? new Date(notif.createdAt).toLocaleString('ar-DZ') : 'تاريخ غير معروف'}
                             </span>
                           </div>
                         </div>
@@ -436,7 +436,7 @@ const Reservations = () => {
                             onClick={() => handleMarkNotificationRead(notif.id)}
                             className="px-3 py-1 bg-[#0E1E3D] text-white hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-[10px] font-bold rounded-lg transition shrink-0 cursor-pointer"
                           >
-                            Marquer comme lu
+                            وضع كـ مقروء
                           </button>
                         )}
                       </div>
@@ -450,35 +450,35 @@ const Reservations = () => {
           {activeTab === 'profile' && (
             <div>
               <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
-                Mon Profil / الملف الشخصي
+                الملف الشخصي
               </h3>
 
               <div className="bg-neutral-50 rounded-2xl p-6 border border-neutral-200 space-y-4 max-w-lg">
                 <div className="flex items-center gap-4 border-b border-neutral-200 pb-4">
                   <div className="w-14 h-14 rounded-2xl bg-[#0E1E3D] text-[#E4C48A] text-xl font-extrabold flex items-center justify-center shadow-sm">
-                    {(user?.prenom || user?.nom || 'C').charAt(0).toUpperCase()}
+                    {(user?.prenom || user?.nom || 'ز').charAt(0).toUpperCase()}
                   </div>
                   <div>
                     <h4 className="font-bold text-[#0E1E3D] text-base">{user?.prenom} {user?.nom}</h4>
                     <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-extrabold rounded-full uppercase">
-                      Compte {user?.role || 'Client'}
+                      حساب {user?.role === 'owner' ? 'صاحب مؤسسة' : 'زبون'}
                     </span>
                   </div>
                 </div>
 
                 <div className="space-y-3 text-xs text-slate-700">
                   <div className="flex justify-between py-1 border-b border-neutral-100">
-                    <span className="text-slate-500">Adresse E-mail:</span>
-                    <span className="font-bold text-[#0E1E3D]">{user?.email || 'Non renseigné'}</span>
+                    <span className="text-slate-500">البريد الإلكتروني:</span>
+                    <span className="font-bold text-[#0E1E3D]">{user?.email || 'غير مسجل'}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-neutral-100">
-                    <span className="text-slate-500">Numéro de Téléphone:</span>
-                    <span className="font-bold text-[#0E1E3D]">{user?.telephone || 'Non renseigné'}</span>
+                    <span className="text-slate-500">رقم الهاتف:</span>
+                    <span className="font-bold text-[#0E1E3D]">{user?.telephone || 'غير مسجل'}</span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-slate-500">Inscrit depuis:</span>
+                    <span className="text-slate-500">مسجل منذ:</span>
                     <span className="font-bold text-[#0E1E3D]">
-                      {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('fr-FR') : 'Date inconnue'}
+                      {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('ar-DZ') : 'تاريخ غير معروف'}
                     </span>
                   </div>
                 </div>
@@ -489,10 +489,10 @@ const Reservations = () => {
           {activeTab === 'contact' && (
             <div>
               <h3 className="text-lg font-bold text-[#0E1E3D] mb-1 font-display">
-                Envoyer un message de Support / الدعم والاتصال
+                إرسال رسالة دعم
               </h3>
               <p className="text-xs text-slate-500 mb-6">
-                Besoin d'aide ? Posez votre question ici. L'équipe d'administration Diyafa vous répondra directement sur cet espace.
+                بحاجة إلى مساعدة؟ اطرح سؤالك هنا. سيرد عليك فريق إدارة ضيافة مباشرة في هذه المساحة.
               </p>
 
               {contactSuccess && (
@@ -503,25 +503,25 @@ const Reservations = () => {
 
               <form onSubmit={handleSendSupportMessage} className="space-y-4 max-w-xl">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">Sujet de votre demande *</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">موضوع طلبك *</label>
                   <input
                     type="text"
                     value={contactForm.sujet}
                     onChange={(e) => setContactForm({ ...contactForm, sujet: e.target.value })}
                     required
-                    placeholder="Ex: Question concernant ma réservation, problème de compte..."
+                    placeholder="مثال: استفسار حول حجزي، مشكلة في الحساب..."
                     className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">Votre Message *</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">رسالتك *</label>
                   <textarea
                     rows={4}
                     value={contactForm.message}
                     onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
                     required
-                    placeholder="Décrivez votre demande en détail..."
+                    placeholder="صف طلبك بالتفصيل..."
                     className="w-full p-3 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
                   ></textarea>
                 </div>
@@ -531,7 +531,7 @@ const Reservations = () => {
                   disabled={contactSubmitting}
                   className="px-6 py-2.5 bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-xs font-bold rounded-xl transition shadow-md disabled:opacity-50 cursor-pointer"
                 >
-                  {contactSubmitting ? 'Envoi...' : 'Envoyer mon message / إرسال'}
+                  {contactSubmitting ? 'جاري الإرسال...' : 'إرسال رسالتي'}
                 </button>
               </form>
             </div>
