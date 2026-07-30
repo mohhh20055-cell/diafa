@@ -402,6 +402,42 @@ export function Home() {
 
   return (
     <div>
+      <style>{`
+        @keyframes heroSuitcaseTravel {
+          0%   { transform: translateX(-10%) rotate(0deg); opacity: 0; }
+          5%   { opacity: 1; }
+          10%  { transform: translateX(0%) rotate(-4deg); }
+          15%  { transform: translateX(6%) rotate(4deg); }
+          20%  { transform: translateX(12%) rotate(-4deg); }
+          25%  { transform: translateX(18%) rotate(4deg); }
+          30%  { transform: translateX(24%) rotate(-4deg); }
+          35%  { transform: translateX(30%) rotate(4deg); }
+          40%  { transform: translateX(36%) rotate(-4deg); }
+          45%  { transform: translateX(42%) rotate(4deg); }
+          50%  { transform: translateX(48%) rotate(-4deg); }
+          55%  { transform: translateX(54%) rotate(4deg); }
+          60%  { transform: translateX(60%) rotate(-4deg); }
+          65%  { transform: translateX(66%) rotate(4deg); }
+          70%  { transform: translateX(72%) rotate(-4deg); }
+          75%  { transform: translateX(78%) rotate(4deg); }
+          80%  { transform: translateX(84%) rotate(-4deg); }
+          85%  { transform: translateX(90%) rotate(4deg); }
+          90%  { transform: translateX(96%) rotate(0deg); opacity: 1; }
+          100% { transform: translateX(112%) rotate(0deg); opacity: 0; }
+        }
+        .hero-suitcase-track {
+          position: relative;
+          overflow: hidden;
+          height: 2rem;
+          width: 100%;
+        }
+        .hero-suitcase-icon {
+          position: absolute;
+          top: 0;
+          transform-origin: center bottom;
+          animation: heroSuitcaseTravel 5s linear infinite;
+        }
+      `}</style>
       <section className="relative flex min-h-[560px] items-center justify-center overflow-hidden px-6 py-24">
         {HERO_IMAGES.map((url, i) => (
           <div
@@ -484,6 +520,27 @@ export function Home() {
               <IconSearch className="h-4 w-4" /> {t('search')}
             </button>
           </form>
+
+          <div className="hero-suitcase-track mt-3">
+            <svg
+              className="hero-suitcase-icon h-7 w-7 text-[#CB9A56]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {/* poignée */}
+              <path d="M9 8V5.5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5.5V8" />
+              <path d="M10.5 5.5h3v2.2h-3z" />
+              {/* corps */}
+              <rect x="4.5" y="8" width="15" height="14.5" rx="2.2" />
+              {/* roues */}
+              <circle cx="8.5" cy="22.5" r="1.3" />
+              <circle cx="15.5" cy="22.5" r="1.3" />
+            </svg>
+          </div>
 
           <div className="mt-6 flex items-center justify-center gap-1.5">
             {HERO_IMAGES.map((url, i) => (
