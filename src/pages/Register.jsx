@@ -19,7 +19,7 @@ const Register = () => {
     prenom: '',
     nomEtablissement: '',
     typeEtablissement: 'hotel',
-    wilaya: 'Alger',
+    wilaya: 'الجزائر',
     ville: '',
     email: '',
     telephone: '',
@@ -32,8 +32,8 @@ const Register = () => {
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
 
-  // Multi-image state for establishment photos
-  // Each item: { file: File, preview: base64 data URL for display only }
+  // حالة الصور المتعددة لمؤسسة
+  // كل عنصر: { file: File, preview: base64 data URL للعرض فقط }
   const [photos, setPhotos] = useState([])
   const [photoError, setPhotoError] = useState(null)
 
@@ -75,20 +75,20 @@ const Register = () => {
 
     const remainingSlots = MAX_PHOTOS - photos.length
     if (remainingSlots <= 0) {
-      setPhotoError(`Vous avez déjà atteint le maximum de ${MAX_PHOTOS} photos.`)
+      setPhotoError(`لقد وصلت بالفعل إلى الحد الأقصى لعدد ${MAX_PHOTOS} صور.`)
       e.target.value = ''
       return
     }
 
     const filesToProcess = files.slice(0, remainingSlots)
     if (files.length > remainingSlots) {
-      setPhotoError(`Seules ${remainingSlots} photo(s) supplémentaire(s) ont été ajoutées (maximum ${MAX_PHOTOS}).`)
+      setPhotoError(`تم إضافة ${remainingSlots} صورة فقط (الحد الأقصى ${MAX_PHOTOS}).`)
     }
 
     const validFiles = []
     for (const file of filesToProcess) {
       if (file.size > MAX_SIZE_BYTES) {
-        setPhotoError(`Une ou plusieurs photos dépassent la limite autorisée de ${MAX_SIZE_MB} Mo.`)
+        setPhotoError(`واحدة أو أكثر من الصور تتجاوز الحد المسموح به ${MAX_SIZE_MB} ميغابايت.`)
         continue
       }
       validFiles.push(file)
@@ -115,57 +115,57 @@ const Register = () => {
     setError(null)
     setSuccess(null)
 
-    // Client-side validation with clear messages
+    // التحقق من صحة البيانات من جهة العميل مع رسائل واضحة
     if (!formData.nom.trim()) {
-      setError('Le nom est obligatoire.')
+      setError('الاسم العائلي مطلوب.')
       return
     }
     if (!formData.prenom.trim()) {
-      setError('Le prénom est obligatoire.')
+      setError('الاسم الأول مطلوب.')
       return
     }
     if (accountRole === 'owner' && !formData.nomEtablissement.trim()) {
-      setError("Le nom de l'établissement est obligatoire.")
+      setError('اسم المؤسسة مطلوب.')
       return
     }
     if (accountRole === 'owner' && !formData.ville.trim()) {
-      setError('La ville est obligatoire.')
+      setError('المدينة مطلوبة.')
       return
     }
     if (!formData.email.trim()) {
-      setError("L'email est obligatoire.")
+      setError('البريد الإلكتروني مطلوب.')
       return
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(formData.email.trim())) {
-      setError("Format d'email invalide.")
+      setError('صيغة البريد الإلكتروني غير صحيحة.')
       return
     }
     if (!formData.telephone.trim()) {
-      setError('Le téléphone est obligatoire.')
+      setError('رقم الهاتف مطلوب.')
       return
     }
     const phoneRegex = /^[0-9+\s-]{8,}$/
     if (!phoneRegex.test(formData.telephone.trim())) {
-      setError('Numéro de téléphone invalide.')
+      setError('رقم هاتف غير صالح.')
       return
     }
     if (!formData.motDePasse) {
-      setError('Le mot de passe est obligatoire.')
+      setError('كلمة المرور مطلوبة.')
       return
     }
     if (formData.motDePasse.length < 8) {
-      setError('Le mot de passe doit contenir au moins 8 caractères.')
+      setError('يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل.')
       return
     }
     if (formData.motDePasse !== formData.confirmMotDePasse) {
-      setError('Les mots de passe ne correspondent pas.')
+      setError('كلمات المرور غير متطابقة.')
       return
     }
 
     setIsSubmitting(true)
 
-    console.log('Registering with data:', {
+    console.log('جاري التسجيل بالبيانات:', {
       nom: formData.nom,
       prenom: formData.prenom,
       nomEtablissement: accountRole === 'owner' ? formData.nomEtablissement : '',
@@ -189,15 +189,15 @@ const Register = () => {
     if (result.success) {
       setSuccess(
         accountRole === 'owner'
-          ? "Votre demande a été soumise avec succès! Elle sera examinée par l'administration. Vous recevrez une notification dès qu'elle sera approuvée ou refusée."
-          : 'Inscription client réussie! Vous pouvez maintenant vous connecter.'
+          ? 'تم تقديم طلبك بنجاح! سيتم مراجعته من قبل الإدارة. ستتلقى إشعاراً عند الموافقة عليه أو رفضه.'
+          : 'تم التسجيل كزبون بنجاح! يمكنك الآن تسجيل الدخول.'
       )
       setFormData({
         nom: '',
         prenom: '',
         nomEtablissement: '',
         typeEtablissement: 'hotel',
-        wilaya: 'Alger',
+        wilaya: 'الجزائر',
         ville: '',
         email: '',
         telephone: '',
@@ -207,7 +207,7 @@ const Register = () => {
       setPhotos([])
       setPhotoError(null)
     } else {
-      setError(result.error || result.message || "Erreur lors de l'inscription.")
+      setError(result.error || result.message || 'حدث خطأ أثناء التسجيل.')
     }
 
     setIsSubmitting(false)
@@ -215,7 +215,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0E1E3D] relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
-      {/* Background Ambient Glow */}
+      {/* تأثير الخلفية المتوهج */}
       <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[#CB9A56]/15 blur-3xl" />
 
       <div className="max-w-xl w-full relative z-10">
@@ -224,10 +224,10 @@ const Register = () => {
             <Logo className="h-12 mx-auto" withText dark />
           </Link>
           <h1 className="text-3xl font-bold text-white mb-2 font-display">
-            Inscription
+            التسجيل
           </h1>
           <p className="text-[#E4C48A] text-sm">
-            Rejoignez Diyafa et découvrez les meilleurs hébergements en Algérie
+            انضم إلى ضيافة واكتشف أفضل أماكن الإقامة في الجزائر
           </p>
         </div>
 
@@ -239,7 +239,7 @@ const Register = () => {
                   <svg className="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p className="text-xs font-bold uppercase tracking-wider">Erreur</p>
+                  <p className="text-xs font-bold uppercase tracking-wider">خطأ</p>
                 </div>
                 <p className="text-sm font-medium leading-relaxed pr-8">{error}</p>
               </div>
@@ -257,7 +257,7 @@ const Register = () => {
                   to="/login"
                   className="mt-2 inline-block text-center rounded-xl bg-[#0E1E3D] text-white py-2.5 px-4 text-xs font-bold hover:bg-[#CB9A56] hover:text-[#0E1E3D] transition"
                 >
-                  Se connecter maintenant →
+                  تسجيل الدخول الآن →
                 </Link>
               </div>
             )}
@@ -266,7 +266,7 @@ const Register = () => {
               <div className="space-y-4">
                 <div>
                   <label htmlFor="nomEtablissement" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                    Nom de l'établissement
+                    اسم المؤسسة
                   </label>
                   <input
                     id="nomEtablissement"
@@ -275,7 +275,7 @@ const Register = () => {
                     required={accountRole === 'owner'}
                     value={formData.nomEtablissement}
                     onChange={handleChange}
-                    placeholder="Ex: Hôtel El Aurassi, Résidence Saoura..."
+                    placeholder="مثال: فندق الأوراسي، إقامة الساورة..."
                     className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
                     disabled={isSubmitting}
                   />
@@ -284,7 +284,7 @@ const Register = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="typeEtablissement" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                      Type d'établissement
+                      نوع المؤسسة
                     </label>
                     <select
                       id="typeEtablissement"
@@ -294,14 +294,14 @@ const Register = () => {
                       className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
                       disabled={isSubmitting}
                     >
-                      <option value="hotel">Hôtel</option>
-                      <option value="dortoir">Dortoir</option>
-                      <option value="maison">Maison</option>
+                      <option value="hotel">فندق</option>
+                      <option value="dortoir">مرقد</option>
+                      <option value="maison">بيت ضيافة</option>
                     </select>
                   </div>
                   <div>
                     <label htmlFor="wilaya" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                      Wilaya
+                      الولاية
                     </label>
                     <select
                       id="wilaya"
@@ -320,7 +320,7 @@ const Register = () => {
 
                 <div>
                   <label htmlFor="ville" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                    Ville
+                    المدينة
                   </label>
                   <input
                     id="ville"
@@ -329,7 +329,7 @@ const Register = () => {
                     required={accountRole === 'owner'}
                     value={formData.ville}
                     onChange={handleChange}
-                    placeholder="Ex: Alger, Oran, Constantine..."
+                    placeholder="مثال: الجزائر، وهران، قسنطينة..."
                     className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
                     disabled={isSubmitting}
                   />
@@ -337,7 +337,7 @@ const Register = () => {
 
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                    Photos de l'établissement (max {MAX_PHOTOS}, {MAX_SIZE_MB} Mo chacune)
+                    صور المؤسسة (الحد الأقصى {MAX_PHOTOS}، {MAX_SIZE_MB} ميغابايت لكل صورة)
                   </label>
 
                   {photoError && (
@@ -355,10 +355,10 @@ const Register = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                       <span className="text-xs font-bold text-[#0E1E3D]">
-                        Cliquez pour choisir ou glissez vos photos ici
+                        انقر لاختيار أو سحب صورك هنا
                       </span>
                       <span className="text-[11px] text-slate-500 mt-1">
-                        Formats supportés: PNG, JPG, WEBP (Max {MAX_SIZE_MB} Mo par photo)
+                        الصيغ المدعومة: PNG, JPG, WEBP (الحد الأقصى {MAX_SIZE_MB} ميغابايت لكل صورة)
                       </span>
                       <input
                         type="file"
@@ -380,19 +380,19 @@ const Register = () => {
                         >
                           <img
                             src={p.preview}
-                            alt={`Photo établissement ${index + 1}`}
+                            alt={`صورة المؤسسة ${index + 1}`}
                             className="w-full h-28 object-cover"
                           />
                           <button
                             type="button"
                             onClick={() => handleRemovePhoto(index)}
                             className="absolute top-1.5 right-1.5 w-6 h-6 flex items-center justify-center bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-bold shadow-md transition opacity-0 group-hover:opacity-100"
-                            aria-label="Supprimer"
+                            aria-label="حذف"
                           >
                             ×
                           </button>
                           <div className="absolute bottom-1 left-1 bg-black/70 backdrop-blur-xs text-white text-[9px] font-mono px-1.5 py-0.5 rounded-md">
-                            {(p.file.size / (1024 * 1024)).toFixed(2)} MB
+                            {(p.file.size / (1024 * 1024)).toFixed(2)} ميغابايت
                           </div>
                         </div>
                       ))}
@@ -405,7 +405,7 @@ const Register = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="nom" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                  Nom
+                  الاسم العائلي
                 </label>
                 <input
                   id="nom"
@@ -420,7 +420,7 @@ const Register = () => {
               </div>
               <div>
                 <label htmlFor="prenom" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                  Prénom
+                  الاسم الأول
                 </label>
                 <input
                   id="prenom"
@@ -438,7 +438,7 @@ const Register = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                  Email
+                  البريد الإلكتروني
                 </label>
                 <input
                   id="email"
@@ -448,14 +448,14 @@ const Register = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
-                  placeholder="votre@email.com"
+                  placeholder="بريدك@مثال.com"
                   disabled={isSubmitting}
                 />
               </div>
 
               <div>
                 <label htmlFor="telephone" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                  Téléphone
+                  رقم الهاتف
                 </label>
                 <input
                   id="telephone"
@@ -473,7 +473,7 @@ const Register = () => {
 
             <div>
               <label htmlFor="motDePasse" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                Mot de passe
+                كلمة المرور
               </label>
               <div className="relative">
                 <input
@@ -504,12 +504,12 @@ const Register = () => {
                   )}
                 </button>
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">Au moins 8 caractères</p>
+              <p className="text-[11px] text-slate-400 mt-1">8 أحرف على الأقل</p>
             </div>
 
             <div>
               <label htmlFor="confirmMotDePasse" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                Confirmer le mot de passe
+                تأكيد كلمة المرور
               </label>
               <input
                 id="confirmMotDePasse"
@@ -535,19 +535,19 @@ const Register = () => {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  Inscription en cours...
+                  جاري التسجيل...
                 </span>
               ) : (
-                `S'inscrire comme ${accountRole === 'owner' ? 'Établissement' : 'Client'}`
+                `التسجيل كـ ${accountRole === 'owner' ? 'مؤسسة' : 'زبون'}`
               )}
             </button>
           </form>
 
           <div className="mt-8 pt-6 border-t border-neutral-100 text-center">
             <p className="text-xs text-slate-500">
-              Vous avez déjà un compte ?{' '}
+              لديك حساب بالفعل؟{' '}
               <Link to="/login" className="font-bold text-[#CB9A56] hover:text-[#0E1E3D] transition-colors">
-                Se connecter
+                تسجيل الدخول
               </Link>
             </p>
           </div>
@@ -555,7 +555,7 @@ const Register = () => {
 
         <div className="mt-6 text-center">
           <Link to="/" className="text-xs font-medium text-[#E4C48A] hover:text-white transition-colors">
-            ← Retour à l'accueil
+            ← العودة إلى الصفحة الرئيسية
           </Link>
         </div>
       </div>
