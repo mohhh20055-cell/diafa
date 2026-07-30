@@ -24,17 +24,17 @@ const ResetPassword = () => {
     const targetEmail = emailInput.trim() || emailFromUrl.trim()
 
     if (!targetEmail) {
-      setErrorMessage('يرجى إدخال البريد الإلكتروني. / Veuillez entrer votre e-mail.')
+      setErrorMessage('يرجى إدخال البريد الإلكتروني.')
       return
     }
 
     if (newPassword.length < 8) {
-      setErrorMessage('كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل. / Le mot de passe doit contenir au moins 8 caractères.')
+      setErrorMessage('كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل.')
       return
     }
 
     if (newPassword !== confirmPassword) {
-      setErrorMessage('كلمات المرور غير متطابقة. / Les mots de passe ne correspondent pas.')
+      setErrorMessage('كلمات المرور غير متطابقة.')
       return
     }
 
@@ -64,10 +64,10 @@ const ResetPassword = () => {
             <Logo className="h-12 mx-auto" withText dark />
           </Link>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2 font-display">
-            Nouveau mot de passe / كلمة مرور جديدة
+            كلمة مرور جديدة
           </h1>
           <p className="text-[#E4C48A] text-sm">
-            Définissez votre nouveau mot de passe pour sécuriser votre compte
+            قم بتعيين كلمة مرور جديدة لتأمين حسابك
           </p>
         </div>
 
@@ -80,20 +80,20 @@ const ResetPassword = () => {
                 </svg>
               </div>
               <h2 className="text-lg font-bold text-[#0E1E3D]">
-                Mot de passe réinitialisé !
+                تمت إعادة تعيين كلمة المرور!
               </h2>
               <p className="text-sm text-slate-600 bg-neutral-50 p-4 rounded-xl border border-neutral-200">
                 {successMessage}
               </p>
               <p className="text-xs text-slate-400">
-                Redirection automatique vers la page de connexion...
+                جارٍ إعادة التوجيه إلى صفحة تسجيل الدخول...
               </p>
               <div className="pt-2">
                 <Link
                   to="/login"
                   className="inline-block w-full py-3 px-4 rounded-xl font-bold text-[#0E1E3D] bg-[#CB9A56] hover:bg-[#E4C48A] transition text-sm"
                 >
-                  Se connecter maintenant / تسجيل الدخول الآن
+                  تسجيل الدخول الآن
                 </Link>
               </div>
             </div>
@@ -105,7 +105,7 @@ const ResetPassword = () => {
                     <svg className="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <p className="text-xs font-bold uppercase tracking-wider">خطأ / Erreur</p>
+                    <p className="text-xs font-bold uppercase tracking-wider">خطأ</p>
                   </div>
                   <p className="text-xs text-red-700 leading-normal">{errorMessage}</p>
                 </div>
@@ -113,7 +113,7 @@ const ResetPassword = () => {
 
               <div>
                 <label htmlFor="emailInput" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                  E-mail du compte / البريد الإلكتروني للحساب
+                  البريد الإلكتروني للحساب
                 </label>
                 <input
                   id="emailInput"
@@ -129,7 +129,7 @@ const ResetPassword = () => {
 
               <div>
                 <label htmlFor="newPassword" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                  Nouveau mot de passe / كلمة المرور الجديدة
+                  كلمة المرور الجديدة
                 </label>
                 <div className="relative">
                   <input
@@ -164,7 +164,7 @@ const ResetPassword = () => {
 
               <div>
                 <label htmlFor="confirmPassword" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
-                  Confirmer le mot de passe / تأكيد كلمة المرور
+                  تأكيد كلمة المرور
                 </label>
                 <input
                   id="confirmPassword"
@@ -193,7 +193,7 @@ const ResetPassword = () => {
                     Mise à jour... / جاري التحديث
                   </span>
                 ) : (
-                  'Changer le mot de passe / تغيير كلمة المرور'
+                  'تغيير كلمة المرور'
                 )}
               </button>
             </form>
@@ -202,7 +202,7 @@ const ResetPassword = () => {
 
         <div className="mt-6 text-center">
           <Link to="/login" className="text-xs font-medium text-[#E4C48A] hover:text-white transition-colors">
-            ← Se connecter
+            ← تسجيل الدخول
           </Link>
         </div>
       </div>

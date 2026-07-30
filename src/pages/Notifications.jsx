@@ -19,7 +19,7 @@ const Notifications = () => {
         setNotifications(data.data || [])
       }
     } catch (err) {
-      setError('Erreur lors du chargement des notifications.')
+      setError('حدث خطأ أثناء تحميل التنبيهات.')
     } finally {
       setLoading(false)
     }
@@ -63,11 +63,11 @@ const Notifications = () => {
     const hours = Math.floor(diff / 3600000)
     const days = Math.floor(diff / 86400000)
 
-    if (minutes < 1) return 'À l\'instant'
-    if (minutes < 60) return `Il y a ${minutes} minute(s)`
-    if (hours < 24) return `Il y a ${hours} heure(s)`
-    if (days < 7) return `Il y a ${days} jour(s)`
-    return date.toLocaleDateString('fr-FR')
+    if (minutes < 1) return 'الآن'
+    if (minutes < 60) return `منذ ${minutes} دقيقة`
+    if (hours < 24) return `منذ ${hours} ساعة`
+    if (days < 7) return `منذ ${days} يوم`
+    return date.toLocaleDateString('ar-DZ')
   }
 
   if (loading) {
@@ -82,7 +82,7 @@ const Notifications = () => {
     <div className="min-h-screen bg-[#FAF7F1]">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-3xl font-bold text-[#152A54] mb-8" style={{ fontFamily: 'Fraunces, serif' }}>
-          Notifications
+          التنبيهات
         </h1>
 
         {error && (
@@ -96,7 +96,7 @@ const Notifications = () => {
             <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
-            <p className="text-gray-500 text-lg">Aucune notification pour le moment.</p>
+            <p className="text-gray-500 text-lg">لا توجد تنبيهات حالياً.</p>
           </div>
         ) : (
           <div className="bg-white rounded-xl shadow-sm overflow-hidden">

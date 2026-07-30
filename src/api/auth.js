@@ -42,12 +42,12 @@ export const login = async (identifiant, motDePasse) => {
 
       if (pErr) {
         if (pErr.message?.includes('Failed to fetch') || pErr.message?.includes('fetch')) {
-          return fail('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت. / Impossible de contacter le serveur. Vérifiez votre connexion internet.')
+          return fail('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت.')
         }
         return fail(`[DB ${pErr.code || ''}] ${pErr.message}`)
       }
       if (!profile?.email) {
-        return fail(`[DB] Aucun profil trouvé pour le téléphone: ${email}`)
+        return fail(`[DB] لم يتم العثور على بروفايل مرتبط برقم الهاتف: ${email}`)
       }
       email = profile.email
     }
@@ -107,9 +107,9 @@ export const login = async (identifiant, motDePasse) => {
         return fail('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت. / Impossible de contacter le serveur. Vérifiez votre connexion internet.')
       }
       if (msg.includes('invalid login credentials')) {
-        return fail('بيانات الدخول غير صحيحة. / Identifiants incorrects. Vérifiez votre email et mot de passe.')
+        return fail('بيانات الدخول غير صحيحة.')
       }
-      return fail(`[AUTH ${authError?.name || 'Error'}] ${authError?.message || 'Erreur de connexion'}`)
+      return fail(`[AUTH ${authError?.name || 'Error'}] ${authError?.message || 'خطأ في الاتصال'}`)
     }
 
     const userId = authData?.user?.id || profile?.id
@@ -210,22 +210,22 @@ export const registerUser = async (userData) => {
     const { nom, prenom, email, telephone, motDePasse, role = 'client', nomEtablissement, typeEtablissement = 'hotel', wilaya = 'Alger', ville = '', photoEtablissement } = userData
 
     if (!nom || !prenom) {
-      return fail('الاسم واللقب مطلوبان. / Le nom et le prénom sont obligatoires.')
+      return fail('الاسم واللقب مطلوبان.')
     }
     if (!email) {
-      return fail('البريد الإلكتروني مطلوب. / L\'email est obligatoire.')
+      return fail('البريد الإلكتروني مطلوب.')
     }
     if (!telephone) {
-      return fail('رقم الهاتف مطلوب. / Le numéro de téléphone est obligatoire.')
+      return fail('رقم الهاتف مطلوب.')
     }
     if (!motDePasse || motDePasse.length < 8) {
       return fail('كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل. / Le mot de passe doit contenir au moins 8 caractères.')
     }
     if (role === 'owner' && !nomEtablissement) {
-      return fail('اسم المؤسسة مطلوب. / Le nom de l\'établissement est obligatoire.')
+      return fail('اسم المؤسسة مطلوب.')
     }
     if (role === 'owner' && !ville) {
-      return fail('المدينة مطلوبة. / La ville est obligatoire.')
+      return fail('المدينة مطلوبة.')
     }
 
     // Check for duplicate phone number before signup with retry resilience
