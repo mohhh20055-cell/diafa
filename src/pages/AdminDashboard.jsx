@@ -26,6 +26,23 @@ import {
   Pie,
   Cell,
 } from 'recharts'
+import {
+  Wifi,
+  ParkingCircle,
+  Snowflake,
+  UtensilsCrossed,
+  Waves,
+  Coffee,
+  ArrowUpDown,
+  Tv,
+  Clock,
+  Eye,
+  BellRing,
+  Flame,
+  Baby,
+  Lock,
+  Sparkles,
+} from 'lucide-react'
 
 const CHART_COLORS = ['#CB9A56', '#0E1E3D', '#E4C48A', '#60a5fa', '#34d399', '#f87171']
 const OVERVIEW_PIE_COLORS = ['#34d399', '#f97316', '#8b5cf6']
@@ -1379,22 +1396,22 @@ const PRESET_SERVICES = [
 ]
 
 const SERVICE_ICONS = {
-  'واي فاي': '📶',
-  'موقف سيارات': '🅿️',
-  'تكييف': '❄️',
-  'مطعم': '🍽️',
-  'مسبح': '🏊',
-  'إفطار': '🥐',
-  'مصعد': '🛗',
-  'تلفاز': '📺',
-  'استقبال 24/24': '🕑',
-  'إطلالة على البحر': '🌊',
-  'خدمة الغرف': '🛎️',
-  'تدفئة': '🔥',
-  'منطقة أطفال': '🧸',
-  'خزنة': '🔒',
+  'واي فاي': Wifi,
+  'موقف سيارات': ParkingCircle,
+  'تكييف': Snowflake,
+  'مطعم': UtensilsCrossed,
+  'مسبح': Waves,
+  'إفطار': Coffee,
+  'مصعد': ArrowUpDown,
+  'تلفاز': Tv,
+  'استقبال 24/24': Clock,
+  'إطلالة على البحر': Eye,
+  'خدمة الغرف': BellRing,
+  'تدفئة': Flame,
+  'منطقة أطفال': Baby,
+  'خزنة': Lock,
 }
-const getServiceIcon = (srv) => SERVICE_ICONS[srv] || '✨'
+const getServiceIcon = (srv) => SERVICE_ICONS[srv] || Sparkles
 
 // حقل اختيار موحّد الشكل (سهم مخصص + نفس نمط الحقول الأخرى)
 const StyledSelect = ({ className = '', children, ...props }) => (
@@ -1767,6 +1784,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
           <div className="flex flex-wrap gap-1.5 mb-3">
             {PRESET_SERVICES.map((srv) => {
               const selected = formData.services.includes(srv)
+              const ServiceIcon = getServiceIcon(srv)
               return (
                 <button
                   key={srv}
@@ -1778,7 +1796,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
                       : 'bg-neutral-100 text-slate-700 hover:bg-neutral-200 border border-neutral-200'
                   }`}
                 >
-                  <span className="text-sm leading-none">{getServiceIcon(srv)}</span>
+                  <ServiceIcon className="w-3.5 h-3.5" />
                   <span>{srv}</span>
                   {selected && <span className="text-emerald-400">✓</span>}
                 </button>
@@ -1806,15 +1824,18 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
 
           {formData.services.length > 0 && (
             <div className="mt-2.5 flex flex-wrap gap-1.5 p-3 bg-neutral-50 rounded-xl border border-neutral-200">
-              {formData.services.map((srv, idx) => (
-                <span key={idx} className="inline-flex items-center gap-1.5 bg-amber-100/80 border border-amber-300 text-amber-900 rounded-lg px-2.5 py-1 text-xs font-bold">
-                  <span className="text-sm leading-none">{getServiceIcon(srv)}</span>
-                  {srv}
-                  <button type="button" onClick={() => handleRemoveService(idx)} className="text-amber-800 hover:text-red-700 font-black ml-1">
-                    ×
-                  </button>
-                </span>
-              ))}
+              {formData.services.map((srv, idx) => {
+                const ServiceIcon = getServiceIcon(srv)
+                return (
+                  <span key={idx} className="inline-flex items-center gap-1.5 bg-amber-100/80 border border-amber-300 text-amber-900 rounded-lg px-2.5 py-1 text-xs font-bold">
+                    <ServiceIcon className="w-3.5 h-3.5" />
+                    {srv}
+                    <button type="button" onClick={() => handleRemoveService(idx)} className="text-amber-800 hover:text-red-700 font-black ml-1">
+                      ×
+                    </button>
+                  </span>
+                )
+              })}
             </div>
           )}
         </div>
