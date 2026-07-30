@@ -662,14 +662,25 @@ export const createRoom = async (establishment_id, data) => {
 
 export const getRooms = async (establishment_id) => {
   try {
-    const { data, error } = await supabase
+    if (!establishment_id) return ok([])
+    let { data, error } = await supabase
       .from('rooms')
       .select('*')
       .eq('establishment_id', establishment_id)
-    if (error) return fail(error.message)
+    if (error || !data || data.length === 0) {
+      const { data: data2, error: error2 } = await supabase
+        .from('rooms')
+        .select('*')
+        .eq('etablissement_id', establishment_id)
+      if (!error2 && data2 && data2.length > 0) {
+        data = data2
+        error = null
+      }
+    }
+    if (error) return ok([])
     return ok((data || []).map(mapRoom))
   } catch (err) {
-    return fail(err.message)
+    return ok([])
   }
 }
 

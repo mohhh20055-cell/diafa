@@ -40,6 +40,7 @@ const OwnerDashboard = () => {
   const [showEstModal, setShowEstModal] = useState(false)
 
   const openEditEstablishment = (est) => {
+    if (!est) return
     setEditingEstablishment(est)
     setShowEstModal(true)
   }
@@ -700,7 +701,7 @@ export default OwnerDashboard
 // ============================================================
 // مكون إدارة الغرف
 // ============================================================
-const RoomManagement = ({ establishments }) => {
+const RoomManagement = ({ establishments = [] }) => {
   const [selectedEstId, setSelectedEstId] = useState('')
   const [rooms, setRooms] = useState([])
   const [loading, setLoading] = useState(false)
@@ -719,7 +720,9 @@ const RoomManagement = ({ establishments }) => {
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
 
-  const validatedEsts = establishments.filter(e => (e.statut_validation === 'APPROVED' || e.statut_validation === 'valide') && e.actif === true)
+  const validatedEsts = (establishments || []).length > 0 
+    ? establishments 
+    : []
 
   useEffect(() => {
     if (validatedEsts.length > 0 && !selectedEstId) {
@@ -1172,6 +1175,7 @@ const RoomManagement = ({ establishments }) => {
 // مكون نافذة تعديل المؤسسة
 // ============================================================
 const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
+  if (!establishment) return null
   const [formData, setFormData] = useState({
     nom: establishment.nom || '',
     type: establishment.type || 'hotel',
