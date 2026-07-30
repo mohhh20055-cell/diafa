@@ -426,10 +426,8 @@ export function Home() {
           100% { transform: translateX(112%) rotate(0deg); opacity: 0; }
         }
         .hero-suitcase-track {
-          position: relative;
           overflow: hidden;
-          height: 2rem;
-          width: 100%;
+          height: 3.75rem;
         }
         .hero-suitcase-icon {
           position: absolute;
@@ -521,28 +519,7 @@ export function Home() {
             </button>
           </form>
 
-          <div className="hero-suitcase-track mt-3">
-            <svg
-              className="hero-suitcase-icon h-7 w-7 text-[#CB9A56]"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              {/* poignée */}
-              <path d="M9 8V5.5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5.5V8" />
-              <path d="M10.5 5.5h3v2.2h-3z" />
-              {/* corps */}
-              <rect x="4.5" y="8" width="15" height="14.5" rx="2.2" />
-              {/* roues */}
-              <circle cx="8.5" cy="22.5" r="1.3" />
-              <circle cx="15.5" cy="22.5" r="1.3" />
-            </svg>
-          </div>
-
-          <div className="mt-6 flex items-center justify-center gap-1.5">
+          <div className="mt-8 flex items-center justify-center gap-1.5">
             {HERO_IMAGES.map((url, i) => (
               <button
                 key={url}
@@ -554,6 +531,27 @@ export function Home() {
               />
             ))}
           </div>
+        </div>
+
+        <div className="hero-suitcase-track absolute bottom-6 left-1/2 w-screen -translate-x-1/2 pointer-events-none">
+          <svg
+            className="hero-suitcase-icon h-14 w-14 text-[#CB9A56]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            {/* poignée */}
+            <path d="M9 8V5.5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5.5V8" />
+            <path d="M10.5 5.5h3v2.2h-3z" />
+            {/* corps */}
+            <rect x="4.5" y="8" width="15" height="14.5" rx="2.2" />
+            {/* roues */}
+            <circle cx="8.5" cy="22.5" r="1.3" />
+            <circle cx="15.5" cy="22.5" r="1.3" />
+          </svg>
         </div>
       </section>
 
