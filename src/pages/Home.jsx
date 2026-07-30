@@ -111,23 +111,13 @@ function FeaturedCard({ establishment }) {
   const price = cheapestPrice(establishment);
   const typeKey = establishment.type === 'hotel' ? 'hotel' : establishment.type === 'mraqed' ? 'mraqed' : 'maison';
   const typeLabel = t(typeKey) || establishment.type;
-  const rating = establishment.rating || { avgRating: 0, reviewCount: 0 };
-
-  const estServices = Array.isArray(establishment.services)
-    ? establishment.services
-    : (typeof establishment.services === 'string' ? establishment.services.split(',').map(s => s.trim()).filter(Boolean) : []);
-  const roomServices = (establishment.rooms || []).flatMap((r) =>
-    Array.isArray(r.services) ? r.services : (typeof r.services === 'string' ? r.services.split(',').map(s => s.trim()).filter(Boolean) : [])
-  );
-  const allServices = Array.from(new Set([...estServices, ...roomServices]));
-
   return (
     <Link
       to={`/etablissements/${establishment.id}`}
       className="group block w-64 shrink-0 snap-start overflow-hidden rounded-xl border border-neutral-200 bg-white transition hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between"
     >
       <div>
-        <div className="relative h-40 bg-gradient-to-br from-[#152A54] to-[#0E1E3D]">
+        <div className="relative aspect-square w-full bg-gradient-to-br from-[#152A54] to-[#0E1E3D]">
           {cover && (
             <img
               src={toAssetUrl(cover)}
@@ -139,17 +129,9 @@ function FeaturedCard({ establishment }) {
           <span className="absolute left-2 top-2 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#0E1E3D] shadow">
             {typeLabel}
           </span>
-          {rating.reviewCount > 0 && (
-            <span className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-[#0E1E3D]/85 px-2 py-1 text-[10px] font-bold text-white shadow backdrop-blur-sm">
-              <svg className="w-3 h-3 text-[#CB9A56]" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.922-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.196-1.54-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.05 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" />
-              </svg>
-              {rating.avgRating.toFixed(1)}
-            </span>
-          )}
           {price != null && !isNaN(price) && isFinite(price) && price > 0 && (
             <div className="absolute inset-x-0 bottom-0 bg-[#0E1E3D]/80 px-3 py-1.5 text-white">
-              <span className="text-[11px] font-medium text-white/80">{t('price')}</span>{" "}
+              <span className="text-[11px] font-medium text-white/80">{t('startingFrom')}</span>{" "}
               <span className="text-sm font-bold">{Math.round(price).toLocaleString("ar-DZ")} دج</span>
             </div>
           )}
@@ -158,23 +140,12 @@ function FeaturedCard({ establishment }) {
           <p className="truncate text-sm font-bold uppercase text-[#0E1E3D]">
             {establishment.nom}
           </p>
-          <p className="truncate text-xs text-slate-400 mb-2">
-            {[establishment.ville, establishment.wilaya].filter(Boolean).join("، ")}
+          <p className="flex items-center gap-1 truncate text-xs text-slate-400">
+            <IconPin className="h-3.5 w-3.5 shrink-0 text-[#CB9A56]" />
+            <span className="truncate">
+              {[establishment.ville, establishment.wilaya].filter(Boolean).join("، ")}
+            </span>
           </p>
-          {allServices.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-2">
-              {allServices.map((srv, idx) => (
-                <span key={idx} className="inline-block bg-amber-50 text-amber-900 border border-amber-200/80 rounded px-1.5 py-0.5 text-[10px] font-semibold truncate max-w-[110px]">
-                  {srv}
-                </span>
-              ))}
-            </div>
-          )}
-          {rating.reviewCount > 0 && (
-            <div className="mt-1">
-              <StarRating rating={rating.avgRating} count={rating.reviewCount} />
-            </div>
-          )}
         </div>
       </div>
       <div className="border-t border-neutral-100 px-3 py-2 flex items-center justify-between">
