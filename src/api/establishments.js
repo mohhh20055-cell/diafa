@@ -550,67 +550,30 @@ export const createRoom = async (establishment_id, data) => {
     const descVal = data.description || ''
     const servicesVal = data.services || []
 
-    const candidatePayloads = [
-      // Candidate 1: Standard snake_case (matching inspected schema)
-      {
-        id: roomId,
-        establishment_id: targetEstId,
-        nom_type: nomVal,
-        prix_nuit: prixVal,
-        nb_disponible: dispVal,
-        images: imgVal,
-        description: descVal,
-        services: servicesVal,
-        actif: true,
-      },
-      // Candidate 2: Standard snake_case with capacite (just in case)
-      {
-        id: roomId,
-        establishment_id: targetEstId,
-        nom_type: nomVal,
-        prix_nuit: prixVal,
-        capacite: capVal,
-        nb_disponible: dispVal,
-        images: imgVal,
-        description: descVal,
-        services: servicesVal,
-        actif: true,
-      },
-      // Candidate 3: camelCase variant
-      {
-        id: roomId,
-        establishmentId: targetEstId,
-        nomType: nomVal,
-        prixNuit: prixVal,
-        nbDisponible: dispVal,
-        images: imgVal,
-        description: descVal,
-        services: servicesVal,
-        actif: true,
-      }
-    ]
-
-    let roomData = null
-    let lastError = null
-
-    for (const payload of candidatePayloads) {
-      const { data: resData, error: resErr } = await supabase
-        .from('rooms')
-        .insert(payload)
-        .select()
-        .maybeSingle()
-
-      if (!resErr) {
-        roomData = resData
-        lastError = null
-        break
-      } else {
-        lastError = resErr
-      }
+    const payload = {
+      id: roomId,
+      establishment_id: targetEstId,
+      establishmentId: targetEstId,
+      nom_type: nomVal,
+      prix_nuit: prixVal,
+      prixNuit: prixVal,
+      nb_disponible: dispVal,
+      nbDisponible: dispVal,
+      capacite: capVal,
+      images: imgVal,
+      description: descVal,
+      services: servicesVal,
+      actif: true,
     }
 
+    const { data: roomData, error: lastError } = await supabase
+      .from('rooms')
+      .insert(payload)
+      .select()
+      .maybeSingle()
+
     if (lastError && !roomData) {
-      console.error('Error creating room after all payload variants:', lastError)
+      console.error('Error creating room:', lastError)
       return fail(`Erreur lors de la création de la chambre: ${lastError.message}`)
     }
 
