@@ -11,7 +11,7 @@ import * as establishmentsApi from '../api/establishments'
 import * as reservationsApi from '../api/reservations'
 import * as contactApi from '../api/contact'
 import * as reviewsApi from '../api/reviews'
-import { WILAYAS } from '../constants/wilayas'
+import { WILAYAS, CITIES_BY_WILAYA } from '../constants/wilayas'
 import { useTranslation } from 'react-i18next'
 import {
   ResponsiveContainer,
@@ -1378,6 +1378,39 @@ const PRESET_SERVICES = [
   'إطلالة على البحر', 'خدمة الغرف', 'تدفئة', 'منطقة أطفال', 'خزنة'
 ]
 
+const SERVICE_ICONS = {
+  'واي فاي': '📶',
+  'موقف سيارات': '🅿️',
+  'تكييف': '❄️',
+  'مطعم': '🍽️',
+  'مسبح': '🏊',
+  'إفطار': '🥐',
+  'مصعد': '🛗',
+  'تلفاز': '📺',
+  'استقبال 24/24': '🕑',
+  'إطلالة على البحر': '🌊',
+  'خدمة الغرف': '🛎️',
+  'تدفئة': '🔥',
+  'منطقة أطفال': '🧸',
+  'خزنة': '🔒',
+}
+const getServiceIcon = (srv) => SERVICE_ICONS[srv] || '✨'
+
+// حقل اختيار موحّد الشكل (سهم مخصص + نفس نمط الحقول الأخرى)
+const StyledSelect = ({ className = '', children, ...props }) => (
+  <div className="relative">
+    <select
+      {...props}
+      className={`appearance-none block w-full pl-3.5 pr-9 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm font-medium text-[#0E1E3D] focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition cursor-pointer hover:border-[#CB9A56]/40 ${className}`}
+    >
+      {children}
+    </select>
+    <svg className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+    </svg>
+  </div>
+)
+
 const CreateEstablishmentForm = ({ owners, onSuccess }) => {
   const { t } = useTranslation()
 
@@ -1391,7 +1424,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
     nom: '',
     type: 'hotel',
     wilaya: 'Alger',
-    ville: 'Alger',
+    ville: CITIES_BY_WILAYA['Alger']?.[0] || 'Alger',
     adresse: '',
     description: '',
     services: [],
@@ -1412,6 +1445,14 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
+
+  const handleWilayaChange = (e) => {
+    const wilaya = e.target.value
+    const citiesOfWilaya = CITIES_BY_WILAYA[wilaya] || []
+    setFormData((prev) => ({ ...prev, wilaya, ville: citiesOfWilaya[0] || wilaya }))
+  }
+
+  const citiesForSelectedWilaya = CITIES_BY_WILAYA[formData.wilaya] || []
 
   const handleOwnerChange = (e) => {
     setNewOwner({ ...newOwner, [e.target.name]: e.target.value })
@@ -1490,7 +1531,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
   }
 
   const resetForm = () => {
-    setFormData({ nom: '', type: 'hotel', wilaya: 'Alger', ville: 'Alger', adresse: '', description: '', services: [] })
+    setFormData({ nom: '', type: 'hotel', wilaya: 'Alger', ville: CITIES_BY_WILAYA['Alger']?.[0] || 'Alger', adresse: '', description: '', services: [] })
     setImages([])
     setImageVedette('')
     setNewOwner({ nom: '', prenom: '', email: '', telephone: '', motDePasse: '' })
@@ -1635,16 +1676,12 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
               />
             </div>
           ) : (
-            <select
-              value={ownerId}
-              onChange={(e) => setOwnerId(e.target.value)}
-              className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
-            >
+            <StyledSelect value={ownerId} onChange={(e) => setOwnerId(e.target.value)}>
               <option value="">{t('selectOwnerPlaceholder')}</option>
               {(owners || []).map((o) => (
                 <option key={o.id} value={o.id}>{o.prenom} {o.nom} ({o.email || o.telephone})</option>
               ))}
-            </select>
+            </StyledSelect>
           )}
         </div>
 
@@ -1662,42 +1699,40 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
           </div>
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('estType')}</label>
-            <select
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
-            >
+            <StyledSelect name="type" value={formData.type} onChange={handleChange}>
               <option value="hotel">{t('hotel')}</option>
               <option value="mraqed">{t('mraqed')}</option>
               <option value="maison">{t('maison')}</option>
-            </select>
+            </StyledSelect>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('wilaya')}</label>
-            <select
-              name="wilaya"
-              value={formData.wilaya}
-              onChange={handleChange}
-              className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
-            >
+            <StyledSelect name="wilaya" value={formData.wilaya} onChange={handleWilayaChange}>
               {WILAYAS.map((w, i) => (
                 <option key={w} value={w}>{i + 1} - {w}</option>
               ))}
-            </select>
+            </StyledSelect>
           </div>
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('city')}</label>
-            <input
-              name="ville"
-              value={formData.ville}
-              onChange={handleChange}
-              className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
-              placeholder={t('cityEx')}
-            />
+            {citiesForSelectedWilaya.length > 0 ? (
+              <StyledSelect name="ville" value={formData.ville} onChange={handleChange}>
+                {citiesForSelectedWilaya.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </StyledSelect>
+            ) : (
+              <input
+                name="ville"
+                value={formData.ville}
+                onChange={handleChange}
+                className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                placeholder={t('cityEx')}
+              />
+            )}
           </div>
         </div>
 
@@ -1737,13 +1772,15 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
                   key={srv}
                   type="button"
                   onClick={() => handleToggleService(srv)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition ${
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition ${
                     selected
                       ? 'bg-[#0E1E3D] text-white shadow-xs'
                       : 'bg-neutral-100 text-slate-700 hover:bg-neutral-200 border border-neutral-200'
                   }`}
                 >
-                  {selected ? '✓ ' : '+ '}{srv}
+                  <span className="text-sm leading-none">{getServiceIcon(srv)}</span>
+                  <span>{srv}</span>
+                  {selected && <span className="text-emerald-400">✓</span>}
                 </button>
               )
             })}
@@ -1771,6 +1808,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
             <div className="mt-2.5 flex flex-wrap gap-1.5 p-3 bg-neutral-50 rounded-xl border border-neutral-200">
               {formData.services.map((srv, idx) => (
                 <span key={idx} className="inline-flex items-center gap-1.5 bg-amber-100/80 border border-amber-300 text-amber-900 rounded-lg px-2.5 py-1 text-xs font-bold">
+                  <span className="text-sm leading-none">{getServiceIcon(srv)}</span>
                   {srv}
                   <button type="button" onClick={() => handleRemoveService(idx)} className="text-amber-800 hover:text-red-700 font-black ml-1">
                     ×
