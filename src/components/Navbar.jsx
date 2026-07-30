@@ -180,6 +180,17 @@ function AccountMenu() {
 
 import { NotificationDropdown } from './NotificationDropdown'
 
+export function NavbarUtilityBar() {
+  const { isAuthenticated } = useAuth()
+  return (
+    <div className="flex items-center justify-end gap-2 sm:gap-3 bg-[#FAF7F1] border-b border-[#CB9A56]/25 px-4 sm:px-6 py-2.5">
+      <LanguageSwitcher />
+      {isAuthenticated && <NotificationDropdown />}
+      {isAuthenticated && <AccountMenu />}
+    </div>
+  )
+}
+
 export function Navbar() {
   const { user, isAuthenticated } = useAuth()
   const { t } = useTranslation()
