@@ -77,9 +77,14 @@ const Reservations = () => {
     }
   }
 
-  const handleMarkNotificationRead = async (id) => {
-    await notificationsApi.markNotificationAsRead(id)
-    loadAllData()
+  const [selectedNotification, setSelectedNotification] = useState(null)
+
+  const handleNotificationClick = async (notif) => {
+    setSelectedNotification(notif)
+    if (!notif.lu) {
+      await notificationsApi.markNotificationAsRead(notif.id)
+      loadAllData()
+    }
   }
 
   const handleSendSupportMessage = async (e) => {
@@ -398,7 +403,7 @@ const Reservations = () => {
               {notifications.length === 0 ? (
                 <div className="text-center py-12 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200">
                   <svg className="w-12 h-12 text-slate-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                   </svg>
                   <p className="text-sm font-semibold text-slate-700">{t('noNotificationsYet')}</p>
                   <p className="text-xs text-slate-400 mt-1">{t('noNotificationsDesc')}</p>
@@ -408,7 +413,8 @@ const Reservations = () => {
                   {notifications.map((notif) => (
                     <div
                       key={notif.id}
-                      className={`p-4 rounded-2xl border transition ${
+                      onClick={() => handleNotificationClick(notif)}
+                      className={`p-4 rounded-2xl border cursor-pointer transition hover:bg-neutral-100 ${
                         !notif.lu
                           ? 'bg-amber-50/70 border-amber-200'
                           : 'bg-neutral-50 border-neutral-200'
@@ -432,16 +438,46 @@ const Reservations = () => {
                         </div>
 
                         {!notif.lu && (
-                          <button
-                            onClick={() => handleMarkNotificationRead(notif.id)}
-                            className="px-3 py-1 bg-[#0E1E3D] text-white hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-[10px] font-bold rounded-lg transition shrink-0 cursor-pointer"
-                          >
-                            {t('markAsRead')}
-                          </button>
+                          <span className="w-2.5 h-2.5 bg-blue-600 rounded-full flex-shrink-0 mt-2" />
                         )}
                       </div>
                     </div>
                   ))}
+                </div>
+              )}
+
+              {/* Modal تفاصيل الإشعار */}
+              {selectedNotification && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+                  <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 animate-in fade-in zoom-in duration-200">
+                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
+                      <h3 className="text-lg font-bold text-[#0E1E3D] font-display">تفاصيل الإشعار</h3>
+                      <button
+                        onClick={() => setSelectedNotification(null)}
+                        className="text-gray-400 hover:text-gray-600 p-1 cursor-pointer"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="p-4 bg-neutral-50 rounded-xl border border-gray-100">
+                        <p className="text-slate-800 leading-relaxed font-medium whitespace-pre-wrap">
+                          {selectedNotification.message}
+                        </p>
+                      </div>
+                      <div className="text-xs text-slate-400 font-mono">
+                        {selectedNotification.createdAt ? new Date(selectedNotification.createdAt).toLocaleString('ar-DZ') : ''}
+                      </div>
+                    </div>
+                    <div className="mt-6 flex justify-end">
+                      <button
+                        onClick={() => setSelectedNotification(null)}
+                        className="px-5 py-2 bg-[#0E1E3D] text-white text-sm font-bold rounded-xl hover:bg-[#CB9A56] hover:text-[#0E1E3D] transition cursor-pointer"
+                      >
+                        {t('close') || 'إغلاق'}
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>

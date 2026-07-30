@@ -7,6 +7,7 @@ const Notifications = () => {
   const [notifications, setNotifications] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [selectedNotification, setSelectedNotification] = useState(null)
 
   useEffect(() => {
     loadNotifications()
@@ -22,6 +23,14 @@ const Notifications = () => {
       setError('حدث خطأ أثناء تحميل التنبيهات.')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleNotificationClick = async (notification) => {
+    setSelectedNotification(notification)
+    if (!notification.lu) {
+      await notificationsApi.markNotificationAsRead(notification.id)
+      setNotifications(notifications.map(n => n.id === notification.id ? { ...n, lu: true } : n))
     }
   }
 
@@ -104,18 +113,54 @@ const Notifications = () => {
               {notifications.map((notification) => (
                 <div
                   key={notification.id}
-                  className={`p-6 flex gap-4 ${notification.lu ? 'bg-white' : 'bg-blue-50'}`}
+                  onClick={() => handleNotificationClick(notification)}
+                  className={`p-6 flex gap-4 cursor-pointer transition hover:bg-neutral-50 ${notification.lu ? 'bg-white' : 'bg-blue-50/70'}`}
                 >
                   {getNotificationIcon(notification.type)}
                   <div className="flex-1">
-                    <p className="text-gray-900">{notification.message}</p>
+                    <p className="text-gray-900 font-medium">{notification.message}</p>
                     <p className="text-sm text-gray-500 mt-1">{formatDate(notification.createdAt)}</p>
                   </div>
                   {!notification.lu && (
-                    <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-2" />
+                    <span className="w-2.5 h-2.5 bg-blue-600 rounded-full flex-shrink-0 mt-2" />
                   )}
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* Modal تفاصيل الإشعار */}
+        {selectedNotification && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+            <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 animate-in fade-in zoom-in duration-200">
+              <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
+                <h3 className="text-lg font-bold text-[#152A54]">تفاصيل الإشعار</h3>
+                <button
+                  onClick={() => setSelectedNotification(null)}
+                  className="text-gray-400 hover:text-gray-600 p-1"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="space-y-4">
+                <div className="p-4 bg-neutral-50 rounded-xl border border-gray-100">
+                  <p className="text-gray-900 leading-relaxed font-medium whitespace-pre-wrap">
+                    {selectedNotification.message}
+                  </p>
+                </div>
+                <div className="text-xs text-gray-400 font-mono">
+                  {selectedNotification.createdAt ? new Date(selectedNotification.createdAt).toLocaleString('ar-DZ') : ''}
+                </div>
+              </div>
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={() => setSelectedNotification(null)}
+                  className="px-5 py-2 bg-[#152A54] text-white text-sm font-bold rounded-xl hover:bg-[#CB9A56] hover:text-[#152A54] transition"
+                >
+                  إغلاق
+                </button>
+              </div>
             </div>
           </div>
         )}
