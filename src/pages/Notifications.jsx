@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { useTranslation } from 'react-i18next'
 import * as notificationsApi from '../api/notifications'
 
 const Notifications = () => {
   const { user } = useAuth()
+  const { t, i18n } = useTranslation()
   const [notifications, setNotifications] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -20,7 +22,7 @@ const Notifications = () => {
         setNotifications(data.data || [])
       }
     } catch (err) {
-      setError('حدث خطأ أثناء تحميل التنبيهات.')
+      setError(t('errorOccurred'))
     } finally {
       setLoading(false)
     }
@@ -35,12 +37,12 @@ const Notifications = () => {
   }
 
   const getNotificationIcon = (type) => {
-    const iconClass = "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+    const iconClass = "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
     const svgClass = "w-5 h-5"
     if (type?.startsWith('reservation')) {
       return (
-        <div className={`${iconClass} bg-blue-100`}>
-          <svg className={`${svgClass} text-blue-600`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className={`${iconClass} bg-blue-50 text-blue-500`}>
+          <svg className={svgClass} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
         </div>
@@ -48,118 +50,133 @@ const Notifications = () => {
     }
     if (type?.startsWith('validation') || type === 'establishment_validated') {
       return (
-        <div className={`${iconClass} bg-green-100`}>
-          <svg className={`${svgClass} text-green-600`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className={`${iconClass} bg-green-50 text-green-500`}>
+          <svg className={svgClass} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
       )
     }
     return (
-      <div className={`${iconClass} bg-gray-100`}>
-        <svg className={`${svgClass} text-gray-600`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className={`${iconClass} bg-amber-50 text-amber-500`}>
+        <svg className={svgClass} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
         </svg>
       </div>
     )
   }
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString)
-    const now = new Date()
-    const diff = now - date
-    const minutes = Math.floor(diff / 60000)
-    const hours = Math.floor(diff / 3600000)
-    const days = Math.floor(diff / 86400000)
-
-    if (minutes < 1) return 'الآن'
-    if (minutes < 60) return `منذ ${minutes} دقيقة`
-    if (hours < 24) return `منذ ${hours} ساعة`
-    if (days < 7) return `منذ ${days} يوم`
-    return date.toLocaleDateString('ar-DZ')
-  }
-
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#152A54]"></div>
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#CB9A56]"></div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF7F1]">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-3xl font-bold text-[#152A54] mb-8" style={{ fontFamily: 'Fraunces, serif' }}>
-          التنبيهات
-        </h1>
+    <div className="min-h-screen bg-[#F8FAFC] pb-20">
+      <div className="max-w-4xl mx-auto px-4 pt-8">
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-[#152A54]">{t('notifications')}</h1>
+          <p className="text-sm text-slate-500 mt-1">{t('manageNotificationsDesc')}</p>
+        </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-2xl mb-6 text-sm">
             {error}
           </div>
         )}
 
         {notifications.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-sm p-12 text-center">
-            <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-            </svg>
-            <p className="text-gray-500 text-lg">لا توجد تنبيهات حالياً.</p>
+          <div className="bg-white rounded-3xl p-12 text-center border border-slate-100 shadow-sm">
+            <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-bold text-slate-800 mb-2">{t('noNotifications')}</h3>
+            <p className="text-slate-500 max-w-xs mx-auto">{t('noNotificationsDesc')}</p>
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-            <div className="divide-y divide-gray-200">
-              {notifications.map((notification) => (
-                <div
-                  key={notification.id}
-                  onClick={() => handleNotificationClick(notification)}
-                  className={`p-6 flex gap-4 cursor-pointer transition hover:bg-neutral-50 ${notification.lu ? 'bg-white' : 'bg-blue-50/70'}`}
-                >
+          <div className="space-y-3">
+            {notifications.map((notification) => (
+              <div
+                key={notification.id}
+                onClick={() => handleNotificationClick(notification)}
+                className={`group relative overflow-hidden bg-white rounded-2xl border transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md ${
+                  !notification.lu ? 'border-[#CB9A56]/30 bg-[#CB9A56]/5' : 'border-slate-100'
+                }`}
+              >
+                {!notification.lu && (
+                  <div className="absolute top-0 left-0 w-1.5 h-full bg-[#CB9A56]" />
+                )}
+                
+                <div className="p-5 flex items-start gap-4">
                   {getNotificationIcon(notification.type)}
+
                   <div className="flex-1">
-                    <p className="text-gray-900 font-medium">{notification.message}</p>
-                    <p className="text-sm text-gray-500 mt-1">{formatDate(notification.createdAt)}</p>
+                    <p className={`text-sm leading-relaxed mb-2 ${!notification.lu ? 'text-[#152A54] font-bold' : 'text-slate-600'}`}>
+                      {notification.message}
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] font-bold text-slate-400 flex items-center gap-1 uppercase tracking-wider">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {new Date(notification.createdAt).toLocaleString(i18n.language === 'ar' ? 'ar-DZ' : 'en-US')}
+                      </span>
+                      {!notification.lu && (
+                        <span className="text-[10px] bg-[#CB9A56] text-white px-2 py-0.5 rounded-full font-bold">
+                          {t('new')}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  {!notification.lu && (
-                    <span className="w-2.5 h-2.5 bg-blue-600 rounded-full flex-shrink-0 mt-2" />
-                  )}
+
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button className="p-2 hover:bg-slate-50 rounded-lg text-slate-400">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={i18n.language === 'ar' ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'} />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         )}
 
         {/* Modal تفاصيل الإشعار */}
         {selectedNotification && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 animate-in fade-in zoom-in duration-200">
-              <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
-                <h3 className="text-lg font-bold text-[#152A54]">تفاصيل الإشعار</h3>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+            <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden animate-in fade-in zoom-in duration-200">
+              <div className="flex items-center justify-between p-6 border-b border-slate-100">
+                <h3 className="text-lg font-bold text-[#152A54]">{t('notificationDetails')}</h3>
                 <button
                   onClick={() => setSelectedNotification(null)}
-                  className="text-gray-400 hover:text-gray-600 p-1"
+                  className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 transition"
                 >
                   ✕
                 </button>
               </div>
-              <div className="space-y-4">
-                <div className="p-4 bg-neutral-50 rounded-xl border border-gray-100">
-                  <p className="text-gray-900 leading-relaxed font-medium whitespace-pre-wrap">
+              <div className="p-8">
+                <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 mb-6">
+                  <p className="text-[#152A54] leading-relaxed font-medium whitespace-pre-wrap text-sm">
                     {selectedNotification.message}
                   </p>
                 </div>
-                <div className="text-xs text-gray-400 font-mono">
-                  {selectedNotification.createdAt ? new Date(selectedNotification.createdAt).toLocaleString('ar-DZ') : ''}
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    {selectedNotification.createdAt ? new Date(selectedNotification.createdAt).toLocaleString(i18n.language === 'ar' ? 'ar-DZ' : 'en-US') : ''}
+                  </span>
+                  <button
+                    onClick={() => setSelectedNotification(null)}
+                    className="px-6 py-2.5 bg-[#152A54] text-white text-xs font-bold rounded-xl hover:bg-[#CB9A56] hover:text-[#152A54] transition shadow-lg shadow-[#152A54]/10"
+                  >
+                    {t('close')}
+                  </button>
                 </div>
-              </div>
-              <div className="mt-6 flex justify-end">
-                <button
-                  onClick={() => setSelectedNotification(null)}
-                  className="px-5 py-2 bg-[#152A54] text-white text-sm font-bold rounded-xl hover:bg-[#CB9A56] hover:text-[#152A54] transition"
-                >
-                  إغلاق
-                </button>
               </div>
             </div>
           </div>

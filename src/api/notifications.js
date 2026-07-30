@@ -12,18 +12,18 @@ export const getMyNotifications = async () => {
     const { data, error } = await supabase
       .from('notifications')
       .select('*')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false })
+      .eq('userId', user.id)
+      .order('createdAt', { ascending: false })
       .limit(50)
     if (error) return fail(error.message)
 
     const mapped = (data || []).map((n) => ({
       id: n.id,
-      userId: n.user_id,
+      userId: n.userId,
       message: n.message,
       type: n.type,
       lu: n.lu,
-      createdAt: n.created_at,
+      createdAt: n.createdAt,
     }))
 
     return ok(mapped)

@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase'
 import { IconBell, IconEdit } from '../components/Icons'
 import { LanguageSwitcher } from '../components/LanguageSwitcher'
 import Logo from '../components/Logo'
+import { NotificationDropdown } from '../components/NotificationDropdown'
 import * as adminApi from '../api/admin'
 import * as establishmentsApi from '../api/establishments'
 import * as reservationsApi from '../api/reservations'
@@ -107,7 +108,6 @@ const AdminDashboard = () => {
   const [profileOpen, setProfileOpen] = useState(false)
   const [selectedEst, setSelectedEst] = useState(null)
   const profileRef = useRef(null)
-  const [unreadCount, setUnreadCount] = useState(0)
   const [editProfileOpen, setEditProfileOpen] = useState(false)
   const [editForm, setEditForm] = useState({ nom: '', prenom: '', email: '', telephone: '', motDePasse: '' })
   const [editSaving, setEditSaving] = useState(false)
@@ -127,39 +127,6 @@ const AdminDashboard = () => {
   useEffect(() => {
     loadData()
   }, [])
-
-  useEffect(() => {
-    if (!user) return
-    let cancelled = false
-
-    const fetchUnread = async () => {
-      const { count } = await supabase
-        .from('notifications')
-        .select('*', { count: 'exact', head: true })
-        .eq('userId', user.id)
-        .eq('lu', false)
-      if (!cancelled) setUnreadCount(count || 0)
-    }
-
-    fetchUnread()
-
-    const channel = supabase
-      .channel('admin-notifications-changes')
-      .on('postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'notifications', filter: `userId=eq.${user.id}` },
-        () => fetchUnread()
-      )
-      .on('postgres_changes',
-        { event: 'UPDATE', schema: 'public', table: 'notifications', filter: `userId=eq.${user.id}` },
-        () => fetchUnread()
-      )
-      .subscribe()
-
-    return () => {
-      cancelled = true
-      supabase.removeChannel(channel)
-    }
-  }, [user])
 
   const openEditProfile = () => {
     setEditForm({
@@ -352,18 +319,7 @@ const AdminDashboard = () => {
             {t('viewPlatform')}
           </Link>
 
-          <Link
-            to="/notifications"
-            className="relative flex items-center justify-center w-9 h-9 rounded-full border border-[#0E1E3D]/15 text-[#0E1E3D] hover:bg-[#0E1E3D]/5 hover:border-[#CB9A56] transition"
-            title={t('notifications')}
-          >
-            <IconBell className="w-4 h-4" />
-            {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-white text-[10px] font-extrabold">
-                {unreadCount > 9 ? '9+' : unreadCount}
-              </span>
-            )}
-          </Link>
+          <NotificationDropdown />
 
           <div className="relative" ref={profileRef}>
             <button
