@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { useLanguage } from '../context/LanguageContext'
+import { useTranslation } from 'react-i18next'
 import { supabase } from '../lib/supabase'
 import Logo from './Logo'
 import { IconUserCircle, IconCalendar, IconLogout } from './Icons'
@@ -26,7 +26,8 @@ function NavText({ to, children, active }) {
 }
 
 function LanguageSwitcher() {
-  const { lang, toggleLang } = useLanguage()
+  const { lang } = i18n
+  const toggleLang = () => i18n.changeLanguage(lang === 'ar' ? 'en' : 'ar')
 
   return (
     <button
@@ -51,7 +52,7 @@ function LanguageSwitcher() {
 function RegisterDropdown() {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
-  const { t } = useLanguage()
+  const { t } = useTranslation()
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -111,7 +112,7 @@ function RegisterDropdown() {
 function AccountMenu() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
-  const { t } = useLanguage()
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
 
@@ -201,7 +202,7 @@ function AccountMenu() {
 
 export function Navbar() {
   const { user, isAuthenticated } = useAuth()
-  const { t } = useLanguage()
+  const { t } = useTranslation()
   const location = useLocation()
   const [unreadCount, setUnreadCount] = useState(0)
 

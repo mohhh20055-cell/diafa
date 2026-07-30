@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
-import { LanguageProvider } from './context/LanguageContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -83,11 +82,9 @@ function AppLayout() {
 function App() {
   return (
     <AuthProvider>
-      <LanguageProvider>
-        <Router>
-          <AppLayout />
-        </Router>
-      </LanguageProvider>
+      <Router>
+        <AppLayout />
+      </Router>
     </AuthProvider>
   )
 }
