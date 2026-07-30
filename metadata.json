@@ -1,0 +1,6 @@
+{
+  "name": "Diyafa",
+  "description": "Réservez votre hôtel ou dortoir en Algérie",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

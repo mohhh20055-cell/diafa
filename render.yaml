@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: diyafa
+    runtime: node
+    plan: free
+    rootDirectory: .
+    buildCommand: npm install && npm run build
+    startCommand: node server.js
+    healthCheckPath: /
+    autoDeploy: true
