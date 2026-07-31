@@ -81,37 +81,35 @@ const Establishments = () => {
         </div>
 
         {/* عوامل التصفية - فقط الولاية والمدينة، تطبق تلقائياً، بدون زر */}
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
-          <div className="flex flex-col sm:flex-row sm:justify-end gap-4">
-            <div className="w-full sm:w-64">
-              <label className="block text-sm font-medium text-[#152A54] mb-2">الولاية</label>
-              <select
-                value={wilaya}
-                onChange={(e) => handleWilayaChange(e.target.value)}
-                className="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56]"
-              >
-                <option value="">جميع الولايات</option>
-                {WILAYAS.map((w, i) => (
-                  <option key={w} value={w}>{i + 1} - {w}</option>
-                ))}
-              </select>
-            </div>
-            <div className="w-full sm:w-64">
-              <label className="block text-sm font-medium text-[#152A54] mb-2">المدينة</label>
-              <select
-                value={ville}
-                onChange={(e) => handleVilleChange(e.target.value)}
-                disabled={!wilaya}
-                className="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
-              >
-                <option value="">
-                  {wilaya ? 'جميع المدن' : 'اختر ولاية أولاً'}
-                </option>
-                {villesDisponibles.map((v) => (
-                  <option key={v} value={v}>{v}</option>
-                ))}
-              </select>
-            </div>
+        <div className="flex flex-col sm:flex-row sm:justify-end gap-4 mb-8">
+          <div className="w-full sm:w-64">
+            <label className="block text-sm font-medium text-[#0E1E3D] mb-2">الولاية</label>
+            <select
+              value={wilaya}
+              onChange={(e) => handleWilayaChange(e.target.value)}
+              className="block w-full px-4 py-2 border border-[#0E1E3D]/30 rounded-lg text-[#0E1E3D] focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56]"
+            >
+              <option value="">جميع الولايات</option>
+              {WILAYAS.map((w, i) => (
+                <option key={w} value={w}>{i + 1} - {w}</option>
+              ))}
+            </select>
+          </div>
+          <div className="w-full sm:w-64">
+            <label className="block text-sm font-medium text-[#0E1E3D] mb-2">المدينة</label>
+            <select
+              value={ville}
+              onChange={(e) => handleVilleChange(e.target.value)}
+              disabled={!wilaya}
+              className="block w-full px-4 py-2 border border-[#0E1E3D]/30 rounded-lg text-[#0E1E3D] focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+            >
+              <option value="">
+                {wilaya ? 'جميع المدن' : 'اختر ولاية أولاً'}
+              </option>
+              {villesDisponibles.map((v) => (
+                <option key={v} value={v}>{v}</option>
+              ))}
+            </select>
           </div>
         </div>
 
