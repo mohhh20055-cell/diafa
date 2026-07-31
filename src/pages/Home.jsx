@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next'
 import {
   IconPin,
-  IconCalendar,
   IconHome,
   IconSearch,
   IconOffer,
@@ -11,7 +10,6 @@ import {
   IconBolt,
 } from "../components/Icons";
 import CustomSelect from "../components/CustomSelect";
-import DatePicker from "../components/DatePicker";
 import { WILAYAS } from "../constants/wilayas";
 import {
   listEstablishments,
@@ -349,8 +347,6 @@ export function Home() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [destination, setDestination] = useState("");
-  const [dateDebut, setDateDebut] = useState("");
-  const [dateFin, setDateFin] = useState("");
   const [type, setType] = useState("");
   const [heroIndex, setHeroIndex] = useState(0);
 
@@ -365,8 +361,6 @@ export function Home() {
     e.preventDefault();
     const params = new URLSearchParams();
     if (destination) params.set("wilaya", destination);
-    if (dateDebut) params.set("dateDebut", dateDebut);
-    if (dateFin) params.set("dateFin", dateFin);
     if (type) params.set("type", type);
     navigate(`/etablissements?${params.toString()}`);
   }
@@ -442,28 +436,6 @@ export function Home() {
                 onChange={setDestination}
                 placeholder={t('allWilayas')}
                 options={WILAYAS.map((w) => ({ value: w, label: w }))}
-              />
-            </div>
-            <div className="h-px w-full bg-neutral-100 md:h-10 md:w-px" />
-            <div className="flex-1">
-              <label className="mb-1.5 flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold uppercase tracking-wider text-slate-500">
-                <IconCalendar className="h-4 w-4 text-[#0E1E3D]" /> {t('arrival')}
-              </label>
-              <DatePicker
-                value={dateDebut}
-                onChange={setDateDebut}
-                minDate={new Date().toISOString().slice(0, 10)}
-              />
-            </div>
-            <div className="h-px w-full bg-neutral-100 md:h-10 md:w-px" />
-            <div className="flex-1">
-              <label className="mb-1.5 flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold uppercase tracking-wider text-slate-500">
-                <IconCalendar className="h-4 w-4 text-[#0E1E3D]" /> {t('departure')}
-              </label>
-              <DatePicker
-                value={dateFin}
-                onChange={setDateFin}
-                minDate={dateDebut || new Date().toISOString().slice(0, 10)}
               />
             </div>
             <div className="h-px w-full bg-neutral-100 md:h-10 md:w-px" />
