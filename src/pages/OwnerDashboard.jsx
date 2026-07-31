@@ -922,7 +922,7 @@ const RoomManagement = ({ establishments = [] }) => {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('pricePerNight')} ({t('dzd')}) *</label>
+              <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('pricePerNight')} ({t('da')}) *</label>
               <input
                 type="number"
                 value={formData.prixNuit}
@@ -1132,7 +1132,7 @@ const RoomManagement = ({ establishments = [] }) => {
                   <div className="space-y-1.5 text-xs pt-2 border-t border-neutral-100">
                     <div className="flex justify-between">
                       <span className="text-slate-500">{t('pricePerNight')}:</span>
-                      <span className="font-bold text-[#0E1E3D]">{(room.prixNuit || 0).toLocaleString(i18n.language === 'ar' ? 'ar-DZ' : 'en-US')} {t('dzd')}</span>
+                      <span className="font-bold text-[#0E1E3D]">{(room.prixNuit || 0).toLocaleString(i18n.language === 'ar' ? 'ar-DZ' : 'en-US')} {t('da')}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-500">{t('capacity')}:</span>
