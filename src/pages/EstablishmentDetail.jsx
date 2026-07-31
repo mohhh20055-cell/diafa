@@ -316,6 +316,7 @@ const EstablishmentDetail = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [selectedRoomId, setSelectedRoomId] = useState('')
+  const [lightboxImage, setLightboxImage] = useState(null)
   const bookingFormRef = useRef(null)
 
   const handleReserveRoom = (roomId) => {
@@ -486,12 +487,15 @@ const EstablishmentDetail = () => {
                     const displayPrice = !isNaN(roomPrice) && isFinite(roomPrice) ? Math.round(roomPrice).toLocaleString('ar-DZ') : '0'
                     return (
                       <div key={room.id} className="group rounded-2xl border border-neutral-200 overflow-hidden bg-white hover:border-[#CB9A56] hover:shadow-lg transition">
-                        <div className="relative aspect-square w-full bg-neutral-100">
+                        <div
+                          className={`relative aspect-[4/3] w-full bg-neutral-100 ${roomImg ? 'cursor-zoom-in' : ''}`}
+                          onClick={() => roomImg && setLightboxImage(roomImg)}
+                        >
                           {roomImg ? (
                             <img
                               src={roomImg}
                               alt={room.nomType}
-                              className="absolute inset-0 h-full w-full object-contain transition duration-500 group-hover:scale-105"
+                              className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                             />
                           ) : (
                             <div className="absolute inset-0 flex items-center justify-center text-neutral-300">
@@ -499,6 +503,13 @@ const EstablishmentDetail = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 7l9-4 9 4v11a1 1 0 01-1 1h-4v-6H8v6H4a1 1 0 01-1-1V7z" />
                               </svg>
                             </div>
+                          )}
+                          {roomImg && (
+                            <span className="absolute right-2 top-2 flex items-center justify-center rounded-full bg-white/90 p-1.5 shadow opacity-0 group-hover:opacity-100 transition">
+                              <svg className="w-4 h-4 text-[#152A54]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+                              </svg>
+                            </span>
                           )}
                           <span className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-bold text-[#152A54] shadow">
                             <svg className="w-3.5 h-3.5 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -613,6 +624,29 @@ const EstablishmentDetail = () => {
           </div>
         </div>
       </div>
+
+      {lightboxImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+          onClick={() => setLightboxImage(null)}
+        >
+          <button
+            onClick={() => setLightboxImage(null)}
+            className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition"
+            aria-label="إغلاق"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <img
+            src={lightboxImage}
+            alt="صورة الغرفة"
+            className="max-h-full max-w-full rounded-lg object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   )
 }
