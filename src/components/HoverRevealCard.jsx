@@ -75,19 +75,7 @@ const HoverRevealCard = ({
 
       {/* Hidden Reveal Content */}
       <div className="reveal-content">
-        {amenities.length > 0 && (
-          <div className="amenities">
-            {amenities.map((amenity, index) => (
-              <span key={index} className="amenity-tag">
-                {amenity}
-              </span>
-            ))}
-          </div>
-        )}
         <div className="price-row">
-          <div className="price">
-            {price} <span>{priceUnit}</span>
-          </div>
           <button className="book-btn" onClick={onBook}>
             {bookButtonText}
           </button>
