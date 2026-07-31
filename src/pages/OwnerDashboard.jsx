@@ -682,6 +682,7 @@ const RoomManagement = ({ establishments = [] }) => {
   const [newServiceInput, setNewServiceInput] = useState('')
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
+  const [lowResWarning, setLowResWarning] = useState(false)
 
   const validatedEsts = (establishments || []).length > 0 
     ? establishments 
@@ -718,6 +719,7 @@ const RoomManagement = ({ establishments = [] }) => {
     setNewServiceInput('')
     setError(null)
     setSuccess(null)
+    setLowResWarning(false)
   }
 
   const openEditRoom = (room) => {
@@ -737,6 +739,15 @@ const RoomManagement = ({ establishments = [] }) => {
     window.scrollTo({ top: 200, behavior: 'smooth' })
   }
 
+  const MIN_IMAGE_DIMENSION = 800
+
+  const getImageDimensions = (dataUrl) => new Promise((resolve) => {
+    const img = new Image()
+    img.onload = () => resolve({ width: img.naturalWidth, height: img.naturalHeight })
+    img.onerror = () => resolve({ width: 0, height: 0 })
+    img.src = dataUrl
+  })
+
   const handleRoomImageChange = async (e) => {
     const files = Array.from(e.target.files || [])
     if (files.length === 0) return
@@ -748,6 +759,11 @@ const RoomManagement = ({ establishments = [] }) => {
     })
     try {
       const previews = await Promise.all(files.map(f => readFile(f)))
+      const dimensions = await Promise.all(previews.map(getImageDimensions))
+      const hasLowRes = dimensions.some(
+        (d) => d.width > 0 && Math.min(d.width, d.height) < MIN_IMAGE_DIMENSION
+      )
+      if (hasLowRes) setLowResWarning(true)
       setFormData(prev => ({ ...prev, images: [...prev.images, ...previews] }))
     } catch (err) {
       console.error(err)
@@ -998,6 +1014,11 @@ const RoomManagement = ({ establishments = [] }) => {
               <span className="text-xs font-bold text-[#0E1E3D]">{t('clickToAddPhotos')}</span>
               <input type="file" accept="image/*" multiple onChange={handleRoomImageChange} className="hidden" />
             </label>
+            {lowResWarning && (
+              <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-2">
+                ⚠️ إحدى الصور بدقة منخفضة (أقل من {MIN_IMAGE_DIMENSION}px) وستظهر ضبابية عند التكبير. استخدم صورة أصلية بجودة أعلى للحصول على نتيجة أوضح.
+              </p>
+            )}
             {formData.images.length > 0 && (
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                 {formData.images.map((img, idx) => (
