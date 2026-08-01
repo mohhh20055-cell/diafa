@@ -14,12 +14,12 @@ function NavText({ to, children, active }) {
     <Link
       to={to}
       className={`group relative px-1 py-2 text-[15px] font-semibold transition-colors ${
-        active ? 'text-[#CB9A56]' : 'text-[#152A54] hover:text-[#CB9A56]'
+        active ? 'text-[#F97316]' : 'text-[#1A2951] hover:text-[#F97316]'
       }`}
     >
       {children}
       <span
-        className={`absolute left-0 -bottom-0.5 h-[2px] rounded-full bg-[#CB9A56] transition-all duration-300 ${
+        className={`absolute left-0 -bottom-0.5 h-[2px] rounded-full bg-[#F97316] transition-all duration-300 ${
           active ? 'w-full' : 'w-0 group-hover:w-full'
         }`}
       />
@@ -45,7 +45,7 @@ function RegisterDropdown() {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-1.5 rounded-full bg-[#CB9A56] px-5 py-2.5 text-sm font-bold text-[#152A54] hover:bg-[#E4C48A] transition shadow-sm"
+        className="flex items-center gap-1.5 rounded-full bg-[#F97316] px-5 py-2.5 text-sm font-bold text-[#1A2951] hover:bg-[#FB923C] transition shadow-sm"
       >
         <span>{t('register')}</span>
         <svg
@@ -62,9 +62,9 @@ function RegisterDropdown() {
           <Link
             to="/register?type=client"
             onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
+            className="flex items-center gap-2.5 px-4 py-3 text-sm font-semibold text-[#1A2951] hover:bg-[#F97316]/15 transition"
           >
-            <svg className="w-4 h-4 text-[#CB9A56]" viewBox="0 0 24 24" fill="none">
+            <svg className="w-4 h-4 text-[#F97316]" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.8" />
               <path d="M5 20c1.5-4 4.3-6 7-6s5.5 2 7 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
             </svg>
@@ -73,9 +73,9 @@ function RegisterDropdown() {
           <Link
             to="/register?type=etablissement"
             onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition border-t border-neutral-100"
+            className="flex items-center gap-2.5 px-4 py-3 text-sm font-semibold text-[#1A2951] hover:bg-[#F97316]/15 transition border-t border-neutral-100"
           >
-            <svg className="w-4 h-4 text-[#CB9A56]" viewBox="0 0 24 24" fill="none">
+            <svg className="w-4 h-4 text-[#F97316]" viewBox="0 0 24 24" fill="none">
               <rect x="5" y="4" width="14" height="16" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
               <path d="M9 8h1M14 8h1M9 12h1M14 12h1M9 16h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
             </svg>
@@ -118,9 +118,9 @@ function AccountMenu() {
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-label={t('myAccount')}
-        className="flex items-center gap-2 rounded-full bg-[#CB9A56] p-1.5 pr-3 text-xs font-bold text-[#152A54] hover:bg-[#E4C48A] transition shadow-sm"
+        className="flex items-center gap-2 rounded-full bg-[#F97316] p-1.5 pr-3 text-xs font-bold text-[#1A2951] hover:bg-[#FB923C] transition shadow-sm"
       >
-        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#152A54] text-xs font-bold text-[#CB9A56]">
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1A2951] text-xs font-bold text-[#F97316]">
           {initial}
         </span>
         <span className="hidden sm:inline-block max-w-[120px] truncate">{user?.prenom || t('myAccount')}</span>
@@ -129,11 +129,11 @@ function AccountMenu() {
       {open && (
         <div className="absolute right-0 top-full mt-2 w-72 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl z-50">
           <div className="flex items-center gap-3 border-b border-neutral-100 px-4 py-4 bg-neutral-50">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#152A54] text-base font-bold text-[#CB9A56]">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#1A2951] text-base font-bold text-[#F97316]">
               {initial}
             </div>
             <div className="min-w-0">
-              <p className="truncate font-bold text-[#152A54]">{fullName}</p>
+              <p className="truncate font-bold text-[#1A2951]">{fullName}</p>
               <p className="truncate text-xs text-slate-400">{user?.email || user?.telephone}</p>
             </div>
           </div>
@@ -143,9 +143,9 @@ function AccountMenu() {
               <Link
                 to={dashboardLink()}
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
+                className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#1A2951] hover:bg-[#F97316]/15 transition"
               >
-                <IconUserCircle className="h-4 w-4 text-[#CB9A56]" />
+                <IconUserCircle className="h-4 w-4 text-[#F97316]" />
                 <span>{t('mySpace')}</span>
               </Link>
             ) : (
@@ -153,33 +153,33 @@ function AccountMenu() {
                 <Link
                   to="/mes-reservations?tab=reservations"
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#1A2951] hover:bg-[#F97316]/15 transition"
                 >
-                  <IconCalendar className="h-4 w-4 text-[#CB9A56]" />
+                  <IconCalendar className="h-4 w-4 text-[#F97316]" />
                   <span>{t('myReservations')}</span>
                 </Link>
                 <Link
                   to="/mes-reservations?tab=notifications"
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#1A2951] hover:bg-[#F97316]/15 transition"
                 >
-                  <IconBell className="h-4 w-4 text-[#CB9A56]" />
+                  <IconBell className="h-4 w-4 text-[#F97316]" />
                   <span>{t('notificationsAndResponses')}</span>
                 </Link>
                 <Link
                   to="/mes-reservations?tab=profile"
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#1A2951] hover:bg-[#F97316]/15 transition"
                 >
-                  <IconUserCircle className="h-4 w-4 text-[#CB9A56]" />
+                  <IconUserCircle className="h-4 w-4 text-[#F97316]" />
                   <span>{t('myProfile')}</span>
                 </Link>
                 <Link
                   to="/mes-reservations?tab=contact"
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#152A54] hover:bg-[#CB9A56]/15 transition"
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#1A2951] hover:bg-[#F97316]/15 transition"
                 >
-                  <IconHeadset className="h-4 w-4 text-[#CB9A56]" />
+                  <IconHeadset className="h-4 w-4 text-[#F97316]" />
                   <span>{t('supportAndHelp')}</span>
                 </Link>
               </>
@@ -211,7 +211,7 @@ import { NotificationDropdown } from './NotificationDropdown'
 export function NavbarUtilityBar() {
   const { isAuthenticated } = useAuth()
   return (
-    <div className="flex items-center justify-end bg-[#FAF7F1] border-b border-[#CB9A56]/25 px-4 sm:px-6 py-2">
+    <div className="flex items-center justify-end bg-[#FAF7F1] border-b border-[#F97316]/25 px-4 sm:px-6 py-2">
       <div className="flex items-center gap-2 sm:gap-3">
         <LanguageSwitcher />
         {isAuthenticated && <NotificationDropdown />}
@@ -250,7 +250,7 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-[#FAF7F1] text-[#152A54] shadow-sm border-b border-[#CB9A56]/25">
+    <header className="sticky top-0 z-50 bg-[#FAF7F1] text-[#1A2951] shadow-sm border-b border-[#F97316]/25">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8 py-3">
         {/* Logo */}
         <Link to="/" className="flex shrink-0 items-center gap-2 hover:opacity-90 transition">
@@ -265,7 +265,7 @@ export function Navbar() {
             </NavText>
           ))}
 
-          <span className="h-5 w-px bg-[#152A54]/15" />
+          <span className="h-5 w-px bg-[#1A2951]/15" />
 
           {afterDivider.map((tab) => (
             <NavText key={tab.id} to={tab.path} active={isCurrentTab(tab.path)}>
@@ -292,7 +292,7 @@ export function Navbar() {
             <div className="flex items-center gap-2">
               <Link
                 to="/login"
-                className="rounded-full border border-[#152A54]/25 px-4 py-2 text-sm font-bold text-[#152A54] hover:bg-[#152A54]/5 hover:border-[#152A54] transition"
+                className="rounded-full border border-[#1A2951]/25 px-4 py-2 text-sm font-bold text-[#1A2951] hover:bg-[#1A2951]/5 hover:border-[#1A2951] transition"
               >
                 {t('login')}
               </Link>
@@ -303,14 +303,14 @@ export function Navbar() {
       </div>
 
       {/* Liens mobiles (repli sous le header sur petit écran) */}
-      <div className="lg:hidden border-t border-[#152A54]/10 bg-[#FAF7F1]">
+      <div className="lg:hidden border-t border-[#1A2951]/10 bg-[#FAF7F1]">
         <nav className="mx-auto flex max-w-7xl items-center gap-3 overflow-x-auto px-4 py-2 scrollbar-none sm:px-6">
           {[...mainLinks, ...afterDivider, ...(roleLink ? [roleLink] : [])].map((tab) => (
             <Link
               key={tab.id}
               to={tab.path}
               className={`whitespace-nowrap text-xs sm:text-sm font-semibold transition ${
-                isCurrentTab(tab.path) ? 'text-[#CB9A56]' : 'text-[#152A54] hover:text-[#CB9A56]'
+                isCurrentTab(tab.path) ? 'text-[#F97316]' : 'text-[#1A2951] hover:text-[#F97316]'
               }`}
             >
               {tab.label}
