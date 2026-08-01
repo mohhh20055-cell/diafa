@@ -69,7 +69,7 @@ const Notifications = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#CB9A56]"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#F97316]"></div>
       </div>
     )
   }
@@ -78,7 +78,7 @@ const Notifications = () => {
     <div className="min-h-screen bg-[#F8FAFC] pb-20">
       <div className="max-w-4xl mx-auto px-4 pt-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-[#152A54]">{t('notifications')}</h1>
+          <h1 className="text-2xl font-bold text-[#1A2951]">{t('notifications')}</h1>
           <p className="text-sm text-slate-500 mt-1">{t('manageNotificationsDesc')}</p>
         </div>
 
@@ -105,18 +105,18 @@ const Notifications = () => {
                 key={notification.id}
                 onClick={() => handleNotificationClick(notification)}
                 className={`group relative overflow-hidden bg-white rounded-2xl border transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md ${
-                  !notification.lu ? 'border-[#CB9A56]/30 bg-[#CB9A56]/5' : 'border-slate-100'
+                  !notification.lu ? 'border-[#F97316]/30 bg-[#F97316]/5' : 'border-slate-100'
                 }`}
               >
                 {!notification.lu && (
-                  <div className="absolute top-0 left-0 w-1.5 h-full bg-[#CB9A56]" />
+                  <div className="absolute top-0 left-0 w-1.5 h-full bg-[#F97316]" />
                 )}
                 
                 <div className="p-5 flex items-start gap-4">
                   {getNotificationIcon(notification.type)}
 
                   <div className="flex-1">
-                    <p className={`text-sm leading-relaxed mb-2 ${!notification.lu ? 'text-[#152A54] font-bold' : 'text-slate-600'}`}>
+                    <p className={`text-sm leading-relaxed mb-2 ${!notification.lu ? 'text-[#1A2951] font-bold' : 'text-slate-600'}`}>
                       {notification.message}
                     </p>
                     <div className="flex items-center gap-3">
@@ -127,7 +127,7 @@ const Notifications = () => {
                         {new Date(notification.createdAt).toLocaleString(i18n.language === 'ar' ? 'ar-DZ' : 'en-US')}
                       </span>
                       {!notification.lu && (
-                        <span className="text-[10px] bg-[#CB9A56] text-white px-2 py-0.5 rounded-full font-bold">
+                        <span className="text-[10px] bg-[#F97316] text-white px-2 py-0.5 rounded-full font-bold">
                           {t('new')}
                         </span>
                       )}
@@ -152,7 +152,7 @@ const Notifications = () => {
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
             <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden animate-in fade-in zoom-in duration-200">
               <div className="flex items-center justify-between p-6 border-b border-slate-100">
-                <h3 className="text-lg font-bold text-[#152A54]">{t('notificationDetails')}</h3>
+                <h3 className="text-lg font-bold text-[#1A2951]">{t('notificationDetails')}</h3>
                 <button
                   onClick={() => setSelectedNotification(null)}
                   className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 transition"
@@ -162,7 +162,7 @@ const Notifications = () => {
               </div>
               <div className="p-8">
                 <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 mb-6">
-                  <p className="text-[#152A54] leading-relaxed font-medium whitespace-pre-wrap text-sm">
+                  <p className="text-[#1A2951] leading-relaxed font-medium whitespace-pre-wrap text-sm">
                     {selectedNotification.message}
                   </p>
                 </div>
@@ -172,7 +172,7 @@ const Notifications = () => {
                   </span>
                   <button
                     onClick={() => setSelectedNotification(null)}
-                    className="px-6 py-2.5 bg-[#152A54] text-white text-xs font-bold rounded-xl hover:bg-[#CB9A56] hover:text-[#152A54] transition shadow-lg shadow-[#152A54]/10"
+                    className="px-6 py-2.5 bg-[#1A2951] text-white text-xs font-bold rounded-xl hover:bg-[#F97316] hover:text-[#1A2951] transition shadow-lg shadow-[#1A2951]/10"
                   >
                     {t('close')}
                   </button>
