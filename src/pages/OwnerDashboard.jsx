@@ -130,7 +130,7 @@ const OwnerDashboard = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FAF7F1]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0E1E3D]"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1A2951]"></div>
       </div>
     )
   }
@@ -147,25 +147,25 @@ const OwnerDashboard = () => {
   return (
     <div className="min-h-screen bg-[#FAF7F1] flex flex-col md:flex-row">
       {/* شريط التنقل العلوي للجوال */}
-      <div className="md:hidden bg-[#0E1E3D] text-white px-4 py-3 border-b border-[#CB9A56]/30 flex items-center justify-between sticky top-0 z-40">
+      <div className="md:hidden bg-[#1A2951] text-white px-4 py-3 border-b border-[#F97316]/30 flex items-center justify-between sticky top-0 z-40">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-            className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-[#E4C48A]"
+            className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-[#FB923C]"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
           <div>
-            <span className="text-[10px] uppercase tracking-wider text-[#CB9A56] font-bold">{t('partnerSpaceShort')}</span>
+            <span className="text-[10px] uppercase tracking-wider text-[#F97316] font-bold">{t('partnerSpaceShort')}</span>
             <h2 className="text-sm font-bold text-white leading-tight">{activeTabObj?.label}</h2>
           </div>
         </div>
 
         <Link
           to="/etablissements"
-          className="px-3 py-1.5 rounded-lg bg-[#CB9A56] text-[#0E1E3D] text-xs font-bold"
+          className="px-3 py-1.5 rounded-lg bg-[#F97316] text-[#1A2951] text-xs font-bold"
         >
           {t('viewSite')}
         </Link>
@@ -182,7 +182,7 @@ const OwnerDashboard = () => {
 
       {/* حاوية الشريط الجانبي */}
       <aside
-        className={`fixed md:sticky top-0 left-0 bottom-0 z-50 md:z-auto w-72 bg-[#0E1E3D] text-white flex flex-col justify-between border-r border-[#CB9A56]/20 transition-transform duration-300 ease-in-out shrink-0 h-screen ${
+        className={`fixed md:sticky top-0 left-0 bottom-0 z-50 md:z-auto w-72 bg-[#1A2951] text-white flex flex-col justify-between border-r border-[#F97316]/20 transition-transform duration-300 ease-in-out shrink-0 h-screen ${
           mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >
@@ -208,19 +208,19 @@ const OwnerDashboard = () => {
 
           {/* نبذة مختصرة عن المالك */}
           <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-[#CB9A56] text-[#0E1E3D] font-extrabold flex items-center justify-center text-xs shrink-0">
+            <div className="w-8 h-8 rounded-full bg-[#F97316] text-[#1A2951] font-extrabold flex items-center justify-center text-xs shrink-0">
               {(user?.prenom || user?.nom || 'م').charAt(0).toUpperCase()}
             </div>
             <div className="overflow-hidden">
               <p className="text-xs font-bold text-white truncate">{user?.prenom} {user?.nom}</p>
-              <p className="text-[10px] text-[#E4C48A] truncate">{establishments[0]?.nom || user?.email || user?.telephone}</p>
+              <p className="text-[10px] text-[#FB923C] truncate">{establishments[0]?.nom || user?.email || user?.telephone}</p>
             </div>
           </div>
         </div>
 
         {/* قائمة التبويبات في الشريط الجانبي */}
         <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto thin-scrollbar">
-          <p className="px-3 text-[10px] font-bold text-[#E4C48A] uppercase tracking-wider mb-2">
+          <p className="px-3 text-[10px] font-bold text-[#FB923C] uppercase tracking-wider mb-2">
             {t('quickLinks')}
           </p>
           {tabs.map((tab) => {
@@ -234,12 +234,12 @@ const OwnerDashboard = () => {
                 }}
                 className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-xs font-bold transition-all ${
                   isActive
-                    ? 'bg-[#CB9A56] text-[#0E1E3D] shadow-md'
+                    ? 'bg-[#F97316] text-[#1A2951] shadow-md'
                     : 'text-slate-300 hover:text-white hover:bg-white/10'
                 }`}
               >
                 <div className="flex items-center gap-3 truncate">
-                  <svg className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#0E1E3D]' : 'text-[#E4C48A]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#1A2951]' : 'text-[#FB923C]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
                   </svg>
                   <div className="text-left truncate">
@@ -250,10 +250,10 @@ const OwnerDashboard = () => {
                 {tab.count !== undefined && tab.count !== null && (
                   <span className={`px-2 py-0.5 text-[10px] font-extrabold rounded-full shrink-0 ${
                     isActive
-                      ? 'bg-[#0E1E3D] text-white'
+                      ? 'bg-[#1A2951] text-white'
                       : tab.id === 'reservations' && stats.enAttente > 0
                       ? 'bg-amber-500 text-slate-950 animate-pulse'
-                      : 'bg-white/10 text-[#E4C48A]'
+                      : 'bg-white/10 text-[#FB923C]'
                   }`}>
                     {tab.count}
                   </span>
@@ -268,10 +268,10 @@ const OwnerDashboard = () => {
       {/* منطقة المحتوى الرئيسية */}
       <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full overflow-y-auto">
         {/* رأس المحتوى الرئيسي */}
-        <div className="bg-[#0E1E3D] text-white rounded-2xl p-6 mb-8 border border-[#CB9A56]/30 shadow-md">
+        <div className="bg-[#1A2951] text-white rounded-2xl p-6 mb-8 border border-[#F97316]/30 shadow-md">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 text-[#E4C48A] text-xs font-semibold uppercase tracking-wider mb-1">
+              <div className="flex items-center gap-2 text-[#FB923C] text-xs font-semibold uppercase tracking-wider mb-1">
                 <span>{t('partnerSpaceShort')}</span>
               </div>
               <h1 className="text-xl sm:text-2xl font-bold font-display text-white">
@@ -294,7 +294,7 @@ const OwnerDashboard = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-white rounded-2xl shadow-xs border border-neutral-200 p-4">
             <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">{t('totalReservations')}</p>
-            <div className="text-2xl font-extrabold text-[#0E1E3D] mt-1 font-display">
+            <div className="text-2xl font-extrabold text-[#1A2951] mt-1 font-display">
               {stats.total}
             </div>
             <p className="text-[10px] text-slate-500 mt-1">{t('receivedUntilToday')}</p>
@@ -329,7 +329,7 @@ const OwnerDashboard = () => {
         <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6 sm:p-8">
           {activeTab === 'overview' && (
             <div>
-              <h3 className="text-lg font-bold text-[#0E1E3D] mb-2 font-display">{t('overview')}</h3>
+              <h3 className="text-lg font-bold text-[#1A2951] mb-2 font-display">{t('overview')}</h3>
               <p className="text-xs sm:text-sm text-slate-600 mb-6">
                 {t('welcomeBack')}. {t('followReservations')}
               </p>
@@ -358,7 +358,7 @@ const OwnerDashboard = () => {
                           {isApproved ? t('approvedAndWorking') : isRejected ? t('rejected') : t('pendingReview')}
                         </span>
                       </div>
-                      <h4 className="font-bold text-base sm:text-lg text-[#0E1E3D] mt-1">
+                      <h4 className="font-bold text-base sm:text-lg text-[#1A2951] mt-1">
                         {est0.nom}
                       </h4>
                       <p className="text-xs sm:text-sm text-slate-500 leading-relaxed mt-1">
@@ -367,7 +367,7 @@ const OwnerDashboard = () => {
                     </div>
                     <button
                       onClick={() => openEditEstablishment(est0)}
-                      className="shrink-0 px-4 py-2.5 rounded-xl bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-xs"
+                      className="shrink-0 px-4 py-2.5 rounded-xl bg-[#1A2951] hover:bg-[#F97316] hover:text-[#1A2951] text-white text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-xs"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -393,8 +393,8 @@ const OwnerDashboard = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-neutral-50/50">
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-3 flex items-center gap-2">
-                    <svg className="w-5 h-5 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <h4 className="text-sm font-bold text-[#1A2951] mb-3 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
                     </svg>
                     {t('myEstablishments')} ({establishments.length})
@@ -408,7 +408,7 @@ const OwnerDashboard = () => {
                       {establishments.map((e) => (
                         <li key={e.id} className="flex justify-between items-center text-xs bg-white p-3 rounded-xl border border-neutral-200">
                           <div>
-                            <p className="font-bold text-[#0E1E3D]">{e.nom}</p>
+                            <p className="font-bold text-[#1A2951]">{e.nom}</p>
                             <p className="text-slate-400">{e.ville}, {e.wilaya}</p>
                           </div>
                           <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
@@ -431,8 +431,8 @@ const OwnerDashboard = () => {
                 </div>
 
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-neutral-50/50">
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-3 flex items-center gap-2">
-                    <svg className="w-5 h-5 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <h4 className="text-sm font-bold text-[#1A2951] mb-3 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     {t('lastDemands')} ({reservations.length})
@@ -444,7 +444,7 @@ const OwnerDashboard = () => {
                       {reservations.slice(0, 3).map((r) => (
                         <li key={r.id} className="flex justify-between items-center text-xs bg-white p-3 rounded-xl border border-neutral-200">
                           <div>
-                            <p className="font-bold text-[#0E1E3D]">{r.client?.prenom} {r.client?.nom}</p>
+                            <p className="font-bold text-[#1A2951]">{r.client?.prenom} {r.client?.nom}</p>
                             <p className="text-slate-400">{t('period')}: {r.dateArrivee} {t('to')} {r.dateDepart}</p>
                           </div>
                           <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
@@ -464,7 +464,7 @@ const OwnerDashboard = () => {
 
           {activeTab === 'reservations' && (
             <div>
-              <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
+              <h3 className="text-lg font-bold text-[#1A2951] mb-4 font-display">
                 {t('manageReservations')}
               </h3>
               {reservations.length === 0 ? (
@@ -478,11 +478,11 @@ const OwnerDashboard = () => {
               ) : (
                 <div className="space-y-4">
                   {reservations.map((reservation) => (
-                    <div key={reservation.id} className="border border-neutral-200 rounded-2xl p-5 hover:border-[#CB9A56] transition bg-white shadow-xs">
+                    <div key={reservation.id} className="border border-neutral-200 rounded-2xl p-5 hover:border-[#F97316] transition bg-white shadow-xs">
                       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                         <div>
                           <div className="flex items-center gap-2">
-                            <h4 className="font-bold text-[#0E1E3D] text-base">
+                            <h4 className="font-bold text-[#1A2951] text-base">
                               {reservation.etablissement?.nom || t('yourEstablishment')}
                             </h4>
                           </div>
@@ -543,7 +543,7 @@ const OwnerDashboard = () => {
 
           {activeTab === 'establishments' && (
             <div>
-              <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
+              <h3 className="text-lg font-bold text-[#1A2951] mb-4 font-display">
                 {t('myEstablishments')}
               </h3>
               {establishments.length === 0 ? (
@@ -563,7 +563,7 @@ const OwnerDashboard = () => {
                           {estCover && (
                             <div className="h-36 w-full rounded-xl overflow-hidden mb-3.5 bg-neutral-100 relative">
                               <img src={estCover} alt={est.nom} className="w-full h-full object-cover" />
-                              <span className="absolute top-2 left-2 bg-[#0E1E3D]/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
+                              <span className="absolute top-2 left-2 bg-[#1A2951]/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
                                 {est.type === 'hotel' ? t('hotel') : est.type === 'mraqed' ? t('mraqed') : t('establishment')}
                               </span>
                               {Array.isArray(est.images) && est.images.length > 0 && (
@@ -576,7 +576,7 @@ const OwnerDashboard = () => {
 
                           <div className="flex justify-between items-start mb-2">
                             <div>
-                              <h4 className="font-bold text-[#0E1E3D] text-base">{est.nom}</h4>
+                              <h4 className="font-bold text-[#1A2951] text-base">{est.nom}</h4>
                               <p className="text-xs text-slate-500">{est.ville}, {est.wilaya}</p>
                             </div>
                             <span
@@ -616,7 +616,7 @@ const OwnerDashboard = () => {
                         <div className="flex items-center gap-2 pt-3 border-t border-neutral-100 mt-2">
                           <button
                             onClick={() => openEditEstablishment(est)}
-                            className="flex-1 px-3 py-2.5 rounded-xl bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                            className="flex-1 px-3 py-2.5 rounded-xl bg-[#1A2951] hover:bg-[#F97316] hover:text-[#1A2951] text-white text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -625,7 +625,7 @@ const OwnerDashboard = () => {
                           </button>
                           <Link
                             to={`/etablissements/${est.id}`}
-                            className="px-3.5 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-[#0E1E3D] text-xs font-bold transition"
+                            className="px-3.5 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-[#1A2951] text-xs font-bold transition"
                           >
                             {t('view')} ←
                           </Link>
@@ -831,7 +831,7 @@ const RoomManagement = ({ establishments = [] }) => {
   if (validatedEsts.length === 0) {
     return (
       <div>
-        <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
+        <h3 className="text-lg font-bold text-[#1A2951] mb-4 font-display">
           {t('roomsAndOffers')}
         </h3>
         <div className="text-center py-12 bg-amber-50 rounded-2xl border border-amber-200">
@@ -853,7 +853,7 @@ const RoomManagement = ({ establishments = [] }) => {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
+          <h3 className="text-lg font-bold text-[#1A2951] font-display">
             {t('roomsAndOffers')}
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">{t('manageRoomsDesc')}</p>
@@ -868,7 +868,7 @@ const RoomManagement = ({ establishments = [] }) => {
               setShowForm(true)
             }
           }}
-          className="self-start sm:self-auto inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-xs font-bold transition shadow-xs cursor-pointer"
+          className="self-start sm:self-auto inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#1A2951] hover:bg-[#F97316] hover:text-[#1A2951] text-white text-xs font-bold transition shadow-xs cursor-pointer"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -883,7 +883,7 @@ const RoomManagement = ({ establishments = [] }) => {
           <select
             value={selectedEstId}
             onChange={(e) => setSelectedEstId(e.target.value)}
-            className="block w-full sm:w-80 px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+            className="block w-full sm:w-80 px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#F97316] outline-none transition"
           >
             {validatedEsts.map((e) => (
               <option key={e.id} value={e.id}>{e.nom}</option>
@@ -895,7 +895,7 @@ const RoomManagement = ({ establishments = [] }) => {
       {showForm && (
         <form onSubmit={handleSaveRoom} className="mb-6 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 space-y-4">
           <div className="flex items-center justify-between pb-2 border-b border-neutral-200">
-            <h4 className="font-bold text-[#0E1E3D] text-sm">
+            <h4 className="font-bold text-[#1A2951] text-sm">
               {editingRoomId ? t('editRoom') : t('addRoom')}
             </h4>
             {editingRoomId && (
@@ -918,7 +918,7 @@ const RoomManagement = ({ establishments = [] }) => {
                 onChange={(e) => setFormData({ ...formData, nomType: e.target.value })}
                 required
                 placeholder={t('roomTypePlaceholder')}
-                className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#F97316] outline-none transition"
               />
             </div>
             <div>
@@ -930,7 +930,7 @@ const RoomManagement = ({ establishments = [] }) => {
                 required
                 min="0"
                 placeholder="مثال: 12000"
-                className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#F97316] outline-none transition"
               />
             </div>
           </div>
@@ -942,7 +942,7 @@ const RoomManagement = ({ establishments = [] }) => {
                 value={formData.capacite}
                 onChange={(e) => setFormData({ ...formData, capacite: e.target.value })}
                 min="1"
-                className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#F97316] outline-none transition"
               />
             </div>
             <div>
@@ -952,7 +952,7 @@ const RoomManagement = ({ establishments = [] }) => {
                 value={formData.nbDisponible}
                 onChange={(e) => setFormData({ ...formData, nbDisponible: e.target.value })}
                 min="0"
-                className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#F97316] outline-none transition"
               />
             </div>
           </div>
@@ -964,7 +964,7 @@ const RoomManagement = ({ establishments = [] }) => {
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               rows={3}
               placeholder={t('roomDescriptionPlaceholder')}
-              className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+              className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#F97316] outline-none transition"
             />
           </div>
 
@@ -976,13 +976,13 @@ const RoomManagement = ({ establishments = [] }) => {
                 value={newServiceInput}
                 onChange={(e) => setNewServiceInput(e.target.value)}
                 placeholder={t('roomServicesPlaceholder')}
-                className="block flex-1 px-3.5 py-2 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                className="block flex-1 px-3.5 py-2 bg-white border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#F97316] outline-none transition"
                 onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddService(); } }}
               />
               <button
                 type="button"
                 onClick={handleAddService}
-                className="px-4 py-2 bg-[#0E1E3D] text-white rounded-xl text-xs font-bold hover:bg-[#CB9A56] hover:text-[#0E1E3D] transition cursor-pointer"
+                className="px-4 py-2 bg-[#1A2951] text-white rounded-xl text-xs font-bold hover:bg-[#F97316] hover:text-[#1A2951] transition cursor-pointer"
               >
                 {t('add')}
               </button>
@@ -1007,11 +1007,11 @@ const RoomManagement = ({ establishments = [] }) => {
 
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1.5">{t('roomImages')}</label>
-            <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#CB9A56] bg-white transition text-center mb-2">
-              <svg className="w-6 h-6 text-[#CB9A56] mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#F97316] bg-white transition text-center mb-2">
+              <svg className="w-6 h-6 text-[#F97316] mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <span className="text-xs font-bold text-[#0E1E3D]">{t('clickToAddPhotos')}</span>
+              <span className="text-xs font-bold text-[#1A2951]">{t('clickToAddPhotos')}</span>
               <input type="file" accept="image/*" multiple onChange={handleRoomImageChange} className="hidden" />
             </label>
             {lowResWarning && (
@@ -1041,7 +1041,7 @@ const RoomManagement = ({ establishments = [] }) => {
           <div className="flex gap-2 pt-2">
             <button
               type="submit"
-              className="flex-1 bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white px-5 py-3 rounded-xl text-xs font-bold transition shadow-xs cursor-pointer"
+              className="flex-1 bg-[#1A2951] hover:bg-[#F97316] hover:text-[#1A2951] text-white px-5 py-3 rounded-xl text-xs font-bold transition shadow-xs cursor-pointer"
             >
               {editingRoomId ? t('updateRoom') : t('saveAndAddRoom')}
             </button>
@@ -1063,7 +1063,7 @@ const RoomManagement = ({ establishments = [] }) => {
 
       {loading ? (
         <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0E1E3D] mx-auto"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1A2951] mx-auto"></div>
         </div>
       ) : rooms.length === 0 ? (
         <div className="text-center py-12 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200">
@@ -1084,7 +1084,7 @@ const RoomManagement = ({ establishments = [] }) => {
                   <div className="absolute top-2 right-2 flex items-center gap-1.5">
                     <button
                       onClick={() => openEditRoom(room)}
-                      className="w-7 h-7 flex items-center justify-center bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white rounded-full text-xs font-bold shadow-md transition cursor-pointer"
+                      className="w-7 h-7 flex items-center justify-center bg-[#1A2951] hover:bg-[#F97316] hover:text-[#1A2951] text-white rounded-full text-xs font-bold shadow-md transition cursor-pointer"
                       title={t('editRoom')}
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1108,10 +1108,10 @@ const RoomManagement = ({ establishments = [] }) => {
                 <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                   <div>
                     <div className="flex items-start justify-between gap-2 mb-1">
-                      <h4 className="font-bold text-[#0E1E3D] text-sm">{room.nomType}</h4>
+                      <h4 className="font-bold text-[#1A2951] text-sm">{room.nomType}</h4>
                       <button
                         onClick={() => openEditRoom(room)}
-                        className="text-[11px] font-bold text-[#CB9A56] hover:underline shrink-0 cursor-pointer"
+                        className="text-[11px] font-bold text-[#F97316] hover:underline shrink-0 cursor-pointer"
                       >
                         {t('edit')}
                       </button>
@@ -1132,11 +1132,11 @@ const RoomManagement = ({ establishments = [] }) => {
                   <div className="space-y-1.5 text-xs pt-2 border-t border-neutral-100">
                     <div className="flex justify-between">
                       <span className="text-slate-500">{t('pricePerNight')}:</span>
-                      <span className="font-bold text-[#0E1E3D]">{(room.prixNuit || 0).toLocaleString(i18n.language === 'ar' ? 'ar-DZ' : 'en-US')} {t('da')}</span>
+                      <span className="font-bold text-[#1A2951]">{(room.prixNuit || 0).toLocaleString(i18n.language === 'ar' ? 'ar-DZ' : 'en-US')} {t('da')}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-500">{t('capacity')}:</span>
-                      <span className="font-bold text-[#0E1E3D]">{room.capacite} {t('person')}</span>
+                      <span className="font-bold text-[#1A2951]">{room.capacite} {t('person')}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-500">{t('available')}:</span>
@@ -1281,8 +1281,8 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
         </button>
 
         <div className="mb-6">
-          <span className="text-[11px] font-bold text-[#CB9A56] uppercase tracking-wider">{t('editEstablishment')}</span>
-          <h3 className="text-xl font-extrabold text-[#0E1E3D] font-display">
+          <span className="text-[11px] font-bold text-[#F97316] uppercase tracking-wider">{t('editEstablishment')}</span>
+          <h3 className="text-xl font-extrabold text-[#1A2951] font-display">
             {t('editEstablishmentDetails')}
           </h3>
           <p className="text-xs text-slate-500 mt-1">
@@ -1306,7 +1306,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
           {/* الاسم والنوع */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
+              <label className="block text-xs font-bold text-[#1A2951] mb-1.5">
                 {t('establishmentName')} *
               </label>
               <input
@@ -1314,19 +1314,19 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                 required
                 value={formData.nom}
                 onChange={(e) => setFormData({ ...formData, nom: e.target.value })}
-                className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#F97316] outline-none transition"
                 placeholder={t('establishmentNamePlaceholder')}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
+              <label className="block text-xs font-bold text-[#1A2951] mb-1.5">
                 {t('establishmentType')} *
               </label>
               <select
                 value={formData.type}
                 onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#F97316] outline-none transition"
               >
                 <option value="hotel">{t('hotel')}</option>
                 <option value="dortoir">{t('mraqed')}</option>
@@ -1340,13 +1340,13 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
           {/* الولاية، المدينة والعنوان */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
+              <label className="block text-xs font-bold text-[#1A2951] mb-1.5">
                 {t('wilaya')} *
               </label>
               <select
                 value={formData.wilaya}
                 onChange={(e) => setFormData({ ...formData, wilaya: e.target.value })}
-                className="w-full px-3 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                className="w-full px-3 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#F97316] outline-none transition"
               >
                 {WILAYAS.map((w, idx) => (
                   <option key={idx} value={w}>{w}</option>
@@ -1355,7 +1355,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
+              <label className="block text-xs font-bold text-[#1A2951] mb-1.5">
                 {t('ville')} *
               </label>
               <input
@@ -1363,20 +1363,20 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                 required
                 value={formData.ville}
                 onChange={(e) => setFormData({ ...formData, ville: e.target.value })}
-                className="w-full px-3 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                className="w-full px-3 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#F97316] outline-none transition"
                 placeholder={t('villePlaceholder')}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
+              <label className="block text-xs font-bold text-[#1A2951] mb-1.5">
                 {t('address')}
               </label>
               <input
                 type="text"
                 value={formData.adresse}
                 onChange={(e) => setFormData({ ...formData, adresse: e.target.value })}
-                className="w-full px-3 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                className="w-full px-3 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-[#F97316] outline-none transition"
                 placeholder={t('addressPlaceholder')}
               />
             </div>
@@ -1384,21 +1384,21 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
 
           {/* الوصف */}
           <div>
-            <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
+            <label className="block text-xs font-bold text-[#1A2951] mb-1.5">
               {t('establishmentDescription')}
             </label>
             <textarea
               rows={3}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-medium focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+              className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-medium focus:bg-white focus:ring-2 focus:ring-[#F97316] outline-none transition"
               placeholder={t('establishmentDescriptionPlaceholder')}
             />
           </div>
 
           {/* الخدمات والتجهيزات */}
           <div>
-            <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
+            <label className="block text-xs font-bold text-[#1A2951] mb-1.5">
               {t('servicesAndFacilities')}
             </label>
             <p className="text-[11px] text-slate-500 mb-2">
@@ -1416,7 +1416,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                     onClick={() => handleToggleService(srv)}
                     className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
                       selected
-                        ? 'bg-[#0E1E3D] text-white shadow-xs'
+                        ? 'bg-[#1A2951] text-white shadow-xs'
                         : 'bg-neutral-100 text-slate-700 hover:bg-neutral-200 border border-neutral-200'
                     }`}
                   >
@@ -1433,13 +1433,13 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                 value={newServiceInput}
                 onChange={(e) => setNewServiceInput(e.target.value)}
                 placeholder={t('addOtherServicePlaceholder')}
-                className="flex-1 px-3.5 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                className="flex-1 px-3.5 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:bg-white focus:ring-2 focus:ring-[#F97316] outline-none transition"
                 onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCustomService(); } }}
               />
               <button
                 type="button"
                 onClick={handleAddCustomService}
-                className="px-4 py-2 bg-[#CB9A56] text-[#0E1E3D] rounded-xl text-xs font-bold hover:bg-[#E4C48A] transition cursor-pointer"
+                className="px-4 py-2 bg-[#F97316] text-[#1A2951] rounded-xl text-xs font-bold hover:bg-[#FB923C] transition cursor-pointer"
               >
                 {t('add')}
               </button>
@@ -1469,15 +1469,15 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
 
           {/* الصور والصورة الرئيسية */}
           <div>
-            <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
+            <label className="block text-xs font-bold text-[#1A2951] mb-1.5">
               {t('establishmentImages')}
             </label>
 
-            <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#CB9A56] bg-neutral-50 hover:bg-white transition text-center mb-3">
-              <svg className="w-7 h-7 text-[#CB9A56] mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#F97316] bg-neutral-50 hover:bg-white transition text-center mb-3">
+              <svg className="w-7 h-7 text-[#F97316] mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <span className="text-xs font-bold text-[#0E1E3D]">{t('clickToImportPhotos')}</span>
+              <span className="text-xs font-bold text-[#1A2951]">{t('clickToImportPhotos')}</span>
               <span className="text-[10px] text-slate-400 mt-0.5">{t('supportedFormats')}</span>
               <input type="file" accept="image/*" multiple onChange={handleImageUpload} className="hidden" />
             </label>
@@ -1487,11 +1487,11 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                 {formData.images.map((img, idx) => {
                   const isVedette = formData.image_vedette === img
                   return (
-                    <div key={idx} className={`relative h-24 rounded-xl overflow-hidden border-2 group ${isVedette ? 'border-[#CB9A56] ring-2 ring-[#CB9A56]/30' : 'border-neutral-200'}`}>
+                    <div key={idx} className={`relative h-24 rounded-xl overflow-hidden border-2 group ${isVedette ? 'border-[#F97316] ring-2 ring-[#F97316]/30' : 'border-neutral-200'}`}>
                       <img src={img} alt={`صورة ${idx + 1}`} className="w-full h-full object-cover" />
                       
                       {isVedette && (
-                        <span className="absolute top-1 left-1 bg-[#CB9A56] text-[#0E1E3D] text-[9px] font-black px-1.5 py-0.5 rounded shadow-xs">
+                        <span className="absolute top-1 left-1 bg-[#F97316] text-[#1A2951] text-[9px] font-black px-1.5 py-0.5 rounded shadow-xs">
                           {t('main')}
                         </span>
                       )}
@@ -1500,7 +1500,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
                         <button
                           type="button"
                           onClick={() => setFormData({ ...formData, image_vedette: img })}
-                          className="absolute bottom-1 left-1 bg-black/70 hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-[9px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition cursor-pointer"
+                          className="absolute bottom-1 left-1 bg-black/70 hover:bg-[#F97316] hover:text-[#1A2951] text-white text-[9px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition cursor-pointer"
                         >
                           {t('setAsMain')}
                         </button>
@@ -1526,7 +1526,7 @@ const EditEstablishmentModal = ({ establishment, onClose, onSuccess }) => {
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white px-5 py-3 rounded-xl text-xs font-bold transition shadow-md cursor-pointer flex items-center justify-center gap-2"
+              className="flex-1 bg-[#1A2951] hover:bg-[#F97316] hover:text-[#1A2951] text-white px-5 py-3 rounded-xl text-xs font-bold transition shadow-md cursor-pointer flex items-center justify-center gap-2"
             >
               {loading ? (
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
