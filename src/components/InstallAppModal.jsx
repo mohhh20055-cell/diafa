@@ -9,29 +9,29 @@ export function InstallAppModal() {
   if (!showModal) return null
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm animate-fadeIn">
-      <div className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-[#FAF7F1] border border-[#CB9A56]/30 shadow-2xl">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-slate-900/70 backdrop-blur-sm animate-fadeIn">
+      <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl sm:rounded-3xl bg-[#FAF7F1] border border-[#CB9A56]/30 shadow-2xl scrollbar-none">
         {/* Header decoration */}
-        <div className="bg-gradient-to-r from-[#152A54] via-[#1c376c] to-[#152A54] p-6 text-white text-center relative">
+        <div className="bg-gradient-to-r from-[#152A54] via-[#1c376c] to-[#152A54] p-5 sm:p-6 text-white text-center relative">
           <button
             type="button"
             onClick={() => setShowModal(false)}
             aria-label={t('close')}
-            className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition"
+            className="absolute left-3 top-3 sm:left-4 sm:top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition"
           >
             ✕
           </button>
           
-          <div className="mx-auto mb-3 flex h-20 w-20 items-center justify-center rounded-2xl bg-white p-2 shadow-lg border-2 border-[#CB9A56]">
+          <div className="mx-auto mb-2.5 flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-white p-2 shadow-lg border-2 border-[#CB9A56]">
             <img src="/brand/diafa-icon.png" alt="Diafa App Icon" className="h-full w-full object-contain rounded-xl" />
           </div>
 
-          <h3 className="font-display text-xl font-bold text-white">{t('installAppTitle')}</h3>
-          <p className="mt-1 text-xs text-white/80 max-w-sm mx-auto">{t('installAppSubtitle')}</p>
+          <h3 className="font-display text-lg sm:text-xl font-bold text-white">{t('installAppTitle')}</h3>
+          <p className="mt-1 text-[11px] sm:text-xs text-white/80 max-w-sm mx-auto">{t('installAppSubtitle')}</p>
         </div>
 
         {/* Modal body */}
-        <div className="p-6 space-y-5 text-[#152A54]">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-5 text-[#152A54]">
           {/* Features list */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="flex flex-col items-center text-center p-3 rounded-2xl bg-white border border-[#CB9A56]/20 shadow-sm">

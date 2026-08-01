@@ -310,12 +310,13 @@ export function Navbar() {
 
       {/* Liens mobiles (repli sous le header sur petit écran) */}
       <div className="lg:hidden border-t border-[#152A54]/10 bg-[#FAF7F1]">
-        <nav className="mx-auto flex max-w-7xl items-center gap-4 overflow-x-auto px-4 py-2 scrollbar-none sm:px-6">
+        <nav className="mx-auto flex max-w-7xl items-center gap-3 overflow-x-auto px-4 py-2 scrollbar-none sm:px-6">
+          <InstallAppButton variant="utility" className="shrink-0" />
           {[...mainLinks, ...afterDivider, ...(roleLink ? [roleLink] : [])].map((tab) => (
             <Link
               key={tab.id}
               to={tab.path}
-              className={`whitespace-nowrap text-sm font-semibold transition ${
+              className={`whitespace-nowrap text-xs sm:text-sm font-semibold transition ${
                 isCurrentTab(tab.path) ? 'text-[#CB9A56]' : 'text-[#152A54] hover:text-[#CB9A56]'
               }`}
             >
