@@ -211,7 +211,7 @@ import { NotificationDropdown } from './NotificationDropdown'
 export function NavbarUtilityBar() {
   const { isAuthenticated } = useAuth()
   return (
-    <div className="flex items-center justify-end bg-[#FAF7F1] border-b border-[#F97316]/25 px-4 sm:px-6 py-2">
+    <div className="flex items-center justify-end bg-[#EEF2FA] border-b border-[#F97316]/25 px-4 sm:px-6 py-2">
       <div className="flex items-center gap-2 sm:gap-3">
         <LanguageSwitcher />
         {isAuthenticated && <NotificationDropdown />}
@@ -250,7 +250,7 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-[#FAF7F1] text-[#1A2951] shadow-sm border-b border-[#F97316]/25">
+    <header className="sticky top-0 z-50 bg-[#EEF2FA] text-[#1A2951] shadow-sm border-b border-[#F97316]/25">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8 py-3">
         {/* Logo */}
         <Link to="/" className="flex shrink-0 items-center gap-2 hover:opacity-90 transition">
@@ -303,7 +303,7 @@ export function Navbar() {
       </div>
 
       {/* Liens mobiles (repli sous le header sur petit écran) */}
-      <div className="lg:hidden border-t border-[#1A2951]/10 bg-[#FAF7F1]">
+      <div className="lg:hidden border-t border-[#1A2951]/10 bg-[#EEF2FA]">
         <nav className="mx-auto flex max-w-7xl items-center gap-3 overflow-x-auto px-4 py-2 scrollbar-none sm:px-6">
           {[...mainLinks, ...afterDivider, ...(roleLink ? [roleLink] : [])].map((tab) => (
             <Link
