@@ -1,0 +1,29 @@
+{
+  "name": "ضيافة — حجز الفنادق والمراقد في الجزائر",
+  "short_name": "ضيافة",
+  "description": "منصة ضيافة لحجز الفنادق، المراقد، وبيوت الضيافة في مختلف ولايات الجزائر بسهولة وأمان.",
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF7F1",
+  "theme_color": "#152A54",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/brand/diafa-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/brand/diafa-icon-hd.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["travel", "lifestyle", "business"]
+}

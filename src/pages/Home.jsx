@@ -10,6 +10,7 @@ import {
   IconBolt,
 } from "../components/Icons";
 import CustomSelect from "../components/CustomSelect";
+import AppDownloadSection from "../components/AppDownloadSection";
 import { WILAYAS } from "../constants/wilayas";
 import {
   listEstablishments,
@@ -500,6 +501,7 @@ export function Home() {
 
       <FeaturedEstablishments />
       <PourquoiSection />
+      <AppDownloadSection />
 
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="mb-8 text-center">

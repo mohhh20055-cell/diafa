@@ -1,6 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
+import { PwaInstallProvider } from './context/PwaInstallContext'
+import InstallAppModal from './components/InstallAppModal'
 import Navbar, { NavbarUtilityBar } from './components/Navbar'
 import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -84,11 +86,14 @@ function AppLayout() {
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <AppLayout />
-      </Router>
-    </AuthProvider>
+    <PwaInstallProvider>
+      <AuthProvider>
+        <Router>
+          <AppLayout />
+          <InstallAppModal />
+        </Router>
+      </AuthProvider>
+    </PwaInstallProvider>
   )
 }
 

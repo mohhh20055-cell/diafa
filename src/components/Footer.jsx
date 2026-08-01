@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import { useTranslation } from 'react-i18next'
+import { InstallAppButton } from "./InstallAppButton";
 import {
   IconPhone,
   IconMail,
@@ -151,6 +152,10 @@ export function Footer() {
               <IconBuilding className="h-4 w-4" />
               {t('addEstablishment')}
             </Link>
+
+            <div className="mb-3">
+              <InstallAppButton variant="hero" className="w-full text-xs py-2.5" />
+            </div>
             <Link to="/login" className="footer-link block hover:text-white">
               {t('login')}
             </Link>

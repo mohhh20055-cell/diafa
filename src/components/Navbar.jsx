@@ -7,6 +7,7 @@ import { supabase } from '../lib/supabase'
 import Logo from './Logo'
 import { IconUserCircle, IconCalendar, IconLogout, IconBell, IconHeadset } from './Icons'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { InstallAppButton } from './InstallAppButton'
 
 /* Texte de nav avec effet hover (soulignement animé + couleur or) */
 function NavText({ to, children, active }) {
@@ -211,10 +212,15 @@ import { NotificationDropdown } from './NotificationDropdown'
 export function NavbarUtilityBar() {
   const { isAuthenticated } = useAuth()
   return (
-    <div className="flex items-center justify-end gap-2 sm:gap-3 bg-[#FAF7F1] border-b border-[#CB9A56]/25 px-4 sm:px-6 py-2.5">
-      <LanguageSwitcher />
-      {isAuthenticated && <NotificationDropdown />}
-      {isAuthenticated && <AccountMenu />}
+    <div className="flex items-center justify-between bg-[#FAF7F1] border-b border-[#CB9A56]/25 px-4 sm:px-6 py-2">
+      <div className="flex items-center gap-2">
+        <InstallAppButton variant="utility" />
+      </div>
+      <div className="flex items-center gap-2 sm:gap-3">
+        <LanguageSwitcher />
+        {isAuthenticated && <NotificationDropdown />}
+        {isAuthenticated && <AccountMenu />}
+      </div>
     </div>
   )
 }
@@ -280,6 +286,8 @@ export function Navbar() {
 
         {/* Section droite */}
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <InstallAppButton variant="navbar" className="hidden sm:flex" />
+
           <LanguageSwitcher />
 
           {isAuthenticated && <NotificationDropdown />}
