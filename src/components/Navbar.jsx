@@ -7,7 +7,6 @@ import { supabase } from '../lib/supabase'
 import Logo from './Logo'
 import { IconUserCircle, IconCalendar, IconLogout, IconBell, IconHeadset } from './Icons'
 import { LanguageSwitcher } from './LanguageSwitcher'
-import { InstallAppButton } from './InstallAppButton'
 
 /* Texte de nav avec effet hover (soulignement animé + couleur or) */
 function NavText({ to, children, active }) {
@@ -212,10 +211,7 @@ import { NotificationDropdown } from './NotificationDropdown'
 export function NavbarUtilityBar() {
   const { isAuthenticated } = useAuth()
   return (
-    <div className="flex items-center justify-between bg-[#FAF7F1] border-b border-[#CB9A56]/25 px-4 sm:px-6 py-2">
-      <div className="flex items-center gap-2">
-        <InstallAppButton variant="utility" />
-      </div>
+    <div className="flex items-center justify-end bg-[#FAF7F1] border-b border-[#CB9A56]/25 px-4 sm:px-6 py-2">
       <div className="flex items-center gap-2 sm:gap-3">
         <LanguageSwitcher />
         {isAuthenticated && <NotificationDropdown />}
@@ -286,8 +282,6 @@ export function Navbar() {
 
         {/* Section droite */}
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-          <InstallAppButton variant="navbar" className="hidden sm:flex" />
-
           <LanguageSwitcher />
 
           {isAuthenticated && <NotificationDropdown />}
@@ -311,7 +305,6 @@ export function Navbar() {
       {/* Liens mobiles (repli sous le header sur petit écran) */}
       <div className="lg:hidden border-t border-[#152A54]/10 bg-[#FAF7F1]">
         <nav className="mx-auto flex max-w-7xl items-center gap-3 overflow-x-auto px-4 py-2 scrollbar-none sm:px-6">
-          <InstallAppButton variant="utility" className="shrink-0" />
           {[...mainLinks, ...afterDivider, ...(roleLink ? [roleLink] : [])].map((tab) => (
             <Link
               key={tab.id}
