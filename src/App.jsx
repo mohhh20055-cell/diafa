@@ -1,9 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
-import { PwaInstallProvider } from './context/PwaInstallContext'
-import InstallAppModal from './components/InstallAppModal'
-import MobileInstallBanner from './components/MobileInstallBanner'
 import Navbar, { NavbarUtilityBar } from './components/Navbar'
 import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -81,21 +78,17 @@ function AppLayout() {
         </Routes>
       </main>
       {!isDashboardRoute && <Footer />}
-      <MobileInstallBanner />
     </div>
   )
 }
 
 function App() {
   return (
-    <PwaInstallProvider>
-      <AuthProvider>
-        <Router>
-          <AppLayout />
-          <InstallAppModal />
-        </Router>
-      </AuthProvider>
-    </PwaInstallProvider>
+    <AuthProvider>
+      <Router>
+        <AppLayout />
+      </Router>
+    </AuthProvider>
   )
 }
 
