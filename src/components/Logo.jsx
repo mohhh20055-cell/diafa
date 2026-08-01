@@ -11,10 +11,10 @@ export function Logo({ className = "h-9", withText = true, dark = false }) {
       {withText && (
         <span
           className={`font-display text-2xl font-bold tracking-tight ${
-            dark ? "text-white" : "text-[#152A54]"
+            dark ? "text-white" : "text-[#1A2951]"
           }`}
         >
-          Diafa<span className="text-[#CB9A56]">.</span>
+          Diafa<span className="text-[#F97316]">.</span>
         </span>
       )}
     </div>
