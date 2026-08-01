@@ -28,28 +28,33 @@ const HERO_IMAGES = [
 
 const DESTINATIONS_PHARES = [
   {
-    nom: "مقام الشهيد",
-    wilaya: "الجزائر",
+    nomKey: "destMartyrsMemorial",
+    wilayaKey: "wilayaAlger",
+    wilayaFilter: "Alger",
     img: "https://commons.wikimedia.org/wiki/Special:FilePath/Martyrs_Memorial._Algiers,_Algeria.jpg?width=900",
   },
   {
-    nom: "حصن سانتا كروز",
-    wilaya: "وهران",
+    nomKey: "destSantaCruzFort",
+    wilayaKey: "wilayaOran",
+    wilayaFilter: "Oran",
     img: "https://commons.wikimedia.org/wiki/Special:FilePath/Fort_Santa_Cruz,_Oran_2013-2.jpg?width=900",
   },
   {
-    nom: "رأس كاربون",
-    wilaya: "بجاية",
+    nomKey: "destCapCarbon",
+    wilayaKey: "wilayaBejaia",
+    wilayaFilter: "Béjaïa",
     img: "https://commons.wikimedia.org/wiki/Special:FilePath/Cap_Carbon_(Béjaïa).jpg?width=900",
   },
   {
-    nom: "جسر سيدي مسيد",
-    wilaya: "قسنطينة",
+    nomKey: "destSidiMCidBridge",
+    wilayaKey: "wilayaConstantine",
+    wilayaFilter: "Constantine",
     img: "https://commons.wikimedia.org/wiki/Special:FilePath/Pont_de_Sidi_M'Cid_02.jpg?width=900",
   },
   {
-    nom: "منصورة",
-    wilaya: "تلمسان",
+    nomKey: "destMansourah",
+    wilayaKey: "wilayaTlemcen",
+    wilayaFilter: "Tlemcen",
     img: "https://commons.wikimedia.org/wiki/Special:FilePath/Mansourah_Tlemcen_city,_Algeria.jpg?width=900",
   },
 ];
@@ -101,7 +106,7 @@ function StarRating({ rating, count, size = "sm" }) {
 }
 
 function FeaturedCard({ establishment }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const cover =
     establishment.imageVedette ||
     (establishment.images || [])[0] ||
@@ -130,7 +135,7 @@ function FeaturedCard({ establishment }) {
           {price != null && !isNaN(price) && isFinite(price) && price > 0 && (
             <div className="absolute inset-x-0 bottom-0 bg-[#0E1E3D]/80 px-3 py-1.5 text-white">
               <span className="text-[11px] font-medium text-white/80">{t('startingFrom')}</span>
-              <span className="ml-1.5 text-sm font-bold">{Math.round(price).toLocaleString("ar-DZ")} دج</span>
+              <span className="ml-1.5 text-sm font-bold">{Math.round(price).toLocaleString(i18n.language === 'ar' ? 'ar-DZ' : 'en-US')} {t('da')}</span>
             </div>
           )}
         </div>
@@ -513,8 +518,8 @@ export function Home() {
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:grid-rows-2">
           {DESTINATIONS_PHARES.map((d, i) => (
             <button
-              key={d.nom}
-              onClick={() => navigate(`/etablissements?wilaya=${encodeURIComponent(d.wilaya)}`)}
+              key={d.nomKey}
+              onClick={() => navigate(`/etablissements?wilaya=${encodeURIComponent(d.wilayaFilter)}`)}
               className={`group relative overflow-hidden rounded-2xl text-left shadow-md transition hover:shadow-xl ${
                 i === 0
                   ? "col-span-2 row-span-2 aspect-square sm:aspect-auto min-h-[260px]"
@@ -523,13 +528,13 @@ export function Home() {
             >
               <img
                 src={d.img}
-                alt={d.nom}
+                alt={t(d.nomKey)}
                 loading="lazy"
                 className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0E1E3D]/85 via-[#0E1E3D]/20 to-transparent" />
               <span className="absolute bottom-4 left-5 font-display text-xl font-bold text-white tracking-wide">
-                {d.wilaya}
+                {t(d.wilayaKey)}
               </span>
             </button>
           ))}
