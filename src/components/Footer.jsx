@@ -24,8 +24,8 @@ export function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden bg-[#0E1E3D] pb-8 pt-14 text-sm text-white/60">
-      <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-[#CB9A56]/10 blur-3xl" />
+    <footer className="relative overflow-hidden bg-[#1A2951] pb-8 pt-14 text-sm text-white/60">
+      <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-[#F97316]/10 blur-3xl" />
       <style>{`
         @keyframes footerLogoFloat {
           0%, 100% { transform: translateY(0); }
@@ -35,7 +35,7 @@ export function Footer() {
         .footer-logo-float:hover { animation-play-state: paused; }
         .footer-link { position: relative; }
         .footer-link::before {
-          content: ""; position: absolute; left: 0; bottom: -0.3rem; height: 1.5px; width: 0; background-color: #CB9A56; transition: width 0.25s ease;
+          content: ""; position: absolute; left: 0; bottom: -0.3rem; height: 1.5px; width: 0; background-color: #F97316; transition: width 0.25s ease;
         }
         .footer-link:hover::before { width: 100%; }
 
@@ -89,20 +89,20 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a href="tel:+213798355735" className="group flex items-center gap-2.5 transition">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 text-[#CB9A56] transition group-hover:border-[#CB9A56] group-hover:bg-[#CB9A56] group-hover:text-[#0E1E3D]">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 text-[#F97316] transition group-hover:border-[#F97316] group-hover:bg-[#F97316] group-hover:text-[#1A2951]">
                     <IconPhone className="h-3.5 w-3.5" />
                   </span>
-                  <span className="transition group-hover:text-[#CB9A56] group-hover:underline">
+                  <span className="transition group-hover:text-[#F97316] group-hover:underline">
                     +213 798 355 735
                   </span>
                 </a>
               </li>
               <li>
                 <a href="mailto:contact@diyafa.dz" className="group flex items-center gap-2.5 transition">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 text-[#CB9A56] transition group-hover:border-[#CB9A56] group-hover:bg-[#CB9A56] group-hover:text-[#0E1E3D]">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 text-[#F97316] transition group-hover:border-[#F97316] group-hover:bg-[#F97316] group-hover:text-[#1A2951]">
                     <IconMail className="h-3.5 w-3.5" />
                   </span>
-                  <span className="transition group-hover:text-[#CB9A56] group-hover:underline">
+                  <span className="transition group-hover:text-[#F97316] group-hover:underline">
                     contact@diyafa.dz
                   </span>
                 </a>
@@ -115,7 +115,7 @@ export function Footer() {
             <ul className="space-y-2.5">
               {A_PROPOS_LINKS.map(({ label, to, icon: Icon }, idx) => (
                 <li key={idx} className="flex items-center gap-2">
-                  <Icon className="h-4 w-4 text-[#CB9A56]" />
+                  <Icon className="h-4 w-4 text-[#F97316]" />
                   <Link to={to} className="footer-link hover:text-white">
                     {label}
                   </Link>
@@ -131,7 +131,7 @@ export function Footer() {
             <ul className="space-y-2.5">
               {DESTINATIONS_POPULAIRES.map((ville) => (
                 <li key={ville} className="flex items-center gap-2">
-                  <IconPinFooter className="h-4 w-4 text-[#CB9A56]" />
+                  <IconPinFooter className="h-4 w-4 text-[#F97316]" />
                   <Link to={`/etablissements?ville=${encodeURIComponent(ville)}`} className="footer-link hover:text-white">
                     {ville}
                   </Link>
@@ -146,7 +146,7 @@ export function Footer() {
             </h3>
             <Link
               to="/register?type=etablissement"
-              className="mb-3 flex items-center justify-center gap-2 rounded-lg bg-[#CB9A56] px-4 py-2.5 text-sm font-bold text-[#0E1E3D] transition hover:opacity-90"
+              className="mb-3 flex items-center justify-center gap-2 rounded-lg bg-[#F97316] px-4 py-2.5 text-sm font-bold text-[#1A2951] transition hover:opacity-90"
             >
               <IconBuilding className="h-4 w-4" />
               {t('addEstablishment')}
@@ -156,13 +156,13 @@ export function Footer() {
               {t('login')}
             </Link>
             <div className="mt-5 flex gap-2">
-              <a href="#" aria-label="Facebook" className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 hover:border-[#CB9A56] hover:text-[#CB9A56]">
+              <a href="#" aria-label="Facebook" className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 hover:border-[#F97316] hover:text-[#F97316]">
                 <IconFacebook />
               </a>
-              <a href="#" aria-label="Instagram" className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 hover:border-[#CB9A56] hover:text-[#CB9A56]">
+              <a href="#" aria-label="Instagram" className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 hover:border-[#F97316] hover:text-[#F97316]">
                 <IconInstagram />
               </a>
-              <a href="#" aria-label="YouTube" className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 hover:border-[#CB9A56] hover:text-[#CB9A56]">
+              <a href="#" aria-label="YouTube" className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 hover:border-[#F97316] hover:text-[#F97316]">
                 <IconYoutube />
               </a>
             </div>
@@ -171,7 +171,7 @@ export function Footer() {
 
         <div className="suitcase-travel-track mb-3">
           <svg
-            className="suitcase-travel-icon h-6 w-6 text-[#CB9A56]"
+            className="suitcase-travel-icon h-6 w-6 text-[#F97316]"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
