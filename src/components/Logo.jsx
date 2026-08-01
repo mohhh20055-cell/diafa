@@ -2,21 +2,14 @@ import React from "react";
 
 export function Logo({ className = "h-9", withText = true, dark = false }) {
   return (
-    <div className={`flex items-center gap-2.5 ${className}`}>
-      <img
-        src="/brand/diafa-icon.png"
-        alt="Diafa"
-        className="h-full w-auto object-contain"
-      />
-      {withText && (
-        <span
-          className={`font-display text-2xl font-bold tracking-tight ${
-            dark ? "text-white" : "text-[#1A2951]"
-          }`}
-        >
-          Diafa<span className="text-[#F97316]">.</span>
-        </span>
-      )}
+    <div className={`flex items-center ${className}`}>
+      <span
+        className={`font-display text-2xl font-bold tracking-tight ${
+          dark ? "text-white" : "text-[#1A2951]"
+        }`}
+      >
+        Diafa<span className="text-[#F97316]">.</span>
+      </span>
     </div>
   );
 }
