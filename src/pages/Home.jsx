@@ -88,7 +88,7 @@ function StarRating({ rating, count, size = "sm" }) {
         {stars.map((s) => (
           <svg
             key={s}
-            className={`${starSize} ${s <= rounded ? "text-[#CB9A56]" : "text-neutral-300"}`}
+            className={`${starSize} ${s <= rounded ? "text-[#F97316]" : "text-neutral-300"}`}
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -120,7 +120,7 @@ function FeaturedCard({ establishment }) {
       className="group block w-80 shrink-0 snap-start overflow-hidden rounded-xl border border-neutral-200 bg-white transition hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between"
     >
       <div>
-        <div className="relative aspect-square w-full bg-gradient-to-br from-[#152A54] to-[#0E1E3D]">
+        <div className="relative aspect-square w-full bg-gradient-to-br from-[#1A2951] to-[#1A2951]">
           {cover && (
             <img
               src={toAssetUrl(cover)}
@@ -129,28 +129,28 @@ function FeaturedCard({ establishment }) {
               className="absolute inset-0 h-full w-full object-contain transition duration-500 group-hover:scale-105"
             />
           )}
-          <span className="absolute left-2 top-2 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#0E1E3D] shadow">
+          <span className="absolute left-2 top-2 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#1A2951] shadow">
             {typeLabel}
           </span>
           {price != null && !isNaN(price) && isFinite(price) && price > 0 && (
-            <div className="absolute inset-x-0 bottom-0 bg-[#0E1E3D]/80 px-3 py-1.5 text-white">
+            <div className="absolute inset-x-0 bottom-0 bg-[#1A2951]/80 px-3 py-1.5 text-white">
               <span className="text-[11px] font-medium text-white/80">{t('startingFrom')}</span>
               <span className="ml-1.5 text-sm font-bold">{Math.round(price).toLocaleString(i18n.language === 'ar' ? 'ar-DZ' : 'en-US')} {t('da')}</span>
             </div>
           )}
         </div>
         <div className="p-3">
-          <p className="truncate text-sm font-bold uppercase text-[#0E1E3D]">
+          <p className="truncate text-sm font-bold uppercase text-[#1A2951]">
             {establishment.nom}
           </p>
           <div className="mt-1 flex items-center justify-between gap-2">
             <p className="flex min-w-0 items-center gap-1 truncate text-xs text-slate-400">
-              <IconPin className="h-3.5 w-3.5 shrink-0 text-[#CB9A56]" />
+              <IconPin className="h-3.5 w-3.5 shrink-0 text-[#F97316]" />
               <span className="truncate">
                 {[establishment.ville, establishment.wilaya].filter(Boolean).join("، ")}
               </span>
             </p>
-            <span className="shrink-0 flex items-center gap-1 text-[11px] font-semibold text-[#CB9A56]">
+            <span className="shrink-0 flex items-center gap-1 text-[11px] font-semibold text-[#F97316]">
               {t('details')}
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
                 <path
@@ -225,7 +225,7 @@ function FeaturedEstablishments() {
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
       <div className="mb-8 text-center">
-        <h2 className="font-display text-2xl font-bold text-[#0E1E3D] sm:text-3xl">
+        <h2 className="font-display text-2xl font-bold text-[#1A2951] sm:text-3xl">
           {t('ourEstablishments')}
         </h2>
         <p className="mt-2 text-sm text-slate-500">
@@ -249,7 +249,7 @@ function FeaturedEstablishments() {
               type="button"
               onClick={() => scrollBy(-1)}
               aria-label={t('previous')}
-              className="absolute -left-4 top-1/3 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white text-slate-500 shadow-md hover:text-[#0E1E3D] sm:flex"
+              className="absolute -left-4 top-1/3 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white text-slate-500 shadow-md hover:text-[#1A2951] sm:flex"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path
@@ -273,7 +273,7 @@ function FeaturedEstablishments() {
               type="button"
               onClick={() => scrollBy(1)}
               aria-label={t('next')}
-              className="absolute -right-4 top-1/3 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white text-slate-500 shadow-md hover:text-[#0E1E3D] sm:flex"
+              className="absolute -right-4 top-1/3 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white text-slate-500 shadow-md hover:text-[#1A2951] sm:flex"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path
@@ -291,7 +291,7 @@ function FeaturedEstablishments() {
       <div className="mt-8 text-center">
         <Link
           to="/etablissements"
-          className="inline-block rounded-xl bg-[#CB9A56] px-7 py-3 text-sm font-semibold text-[#0E1E3D] transition hover:bg-[#E4C48A]"
+          className="inline-block rounded-xl bg-[#F97316] px-7 py-3 text-sm font-semibold text-[#1A2951] transition hover:bg-[#FB923C]"
         >
           {t('exploreEstablishments')}
         </Link>
@@ -321,21 +321,21 @@ function PourquoiSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-[#0E1E3D] via-[#152A54] to-[#0E1E3D] px-6 py-16">
-      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[#CB9A56]/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-[#CB9A56]/10 blur-3xl" />
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#1A2951] via-[#1A2951] to-[#1A2951] px-6 py-16">
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[#F97316]/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-[#F97316]/10 blur-3xl" />
 
       <div className="relative mx-auto max-w-5xl text-center">
         <h2 className="font-display text-2xl font-bold text-white sm:text-3xl">
           {t('discoverTitle')}
         </h2>
-        <p className="mx-auto mt-2 max-w-xl text-sm text-[#E4C48A] font-medium">
+        <p className="mx-auto mt-2 max-w-xl text-sm text-[#FB923C] font-medium">
           {t('discoverSub')}
         </p>
         <div className="mt-12 grid gap-x-10 gap-y-12 sm:grid-cols-3">
           {POURQUOI_ITEMS.map(({ Icon, title, desc }) => (
             <div key={title} className="flex flex-col items-center text-center">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-[#CB9A56] text-[#CB9A56]">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-[#F97316] text-[#F97316]">
                 <Icon />
               </div>
               <h3 className="mb-2 font-display text-base font-bold text-white">{title}</h3>
@@ -418,7 +418,7 @@ export function Home() {
           />
         ))}
         <div className="relative w-full max-w-4xl text-center">
-          <span className="mb-4 inline-block text-xs font-bold uppercase tracking-widest text-[#E4C48A]">
+          <span className="mb-4 inline-block text-xs font-bold uppercase tracking-widest text-[#FB923C]">
             {t('hotels')} &amp; {t('dortoirs')} &amp; {t('maisons')}
           </span>
           <h1 className="font-display text-4xl font-bold leading-tight text-white md:text-5xl">
@@ -434,7 +434,7 @@ export function Home() {
           >
             <div className="flex-1">
               <label className="mb-1.5 flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold uppercase tracking-wider text-slate-500">
-                <IconPin className="h-4 w-4 text-[#0E1E3D]" /> {t('wilaya')}
+                <IconPin className="h-4 w-4 text-[#1A2951]" /> {t('wilaya')}
               </label>
               <CustomSelect
                 value={destination}
@@ -446,7 +446,7 @@ export function Home() {
             <div className="h-px w-full bg-neutral-100 md:h-10 md:w-px" />
             <div className="flex-1">
               <label className="mb-1.5 flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold uppercase tracking-wider text-slate-500">
-                <IconHome className="h-4 w-4 text-[#0E1E3D]" /> {t('type')}
+                <IconHome className="h-4 w-4 text-[#1A2951]" /> {t('type')}
               </label>
               <CustomSelect
                 value={type}
@@ -461,7 +461,7 @@ export function Home() {
             </div>
             <button
               type="submit"
-              className="flex items-center justify-center gap-2 rounded-xl bg-[#CB9A56] px-8 py-4 text-base font-semibold text-[#0E1E3D] transition hover:bg-[#E4C48A]"
+              className="flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-8 py-4 text-base font-semibold text-[#1A2951] transition hover:bg-[#FB923C]"
             >
               <IconSearch className="h-4 w-4" /> {t('search')}
             </button>
@@ -474,7 +474,7 @@ export function Home() {
                 onClick={() => setHeroIndex(i)}
                 aria-label={`شريحة ${i + 1}`}
                 className={`h-1.5 rounded-full transition-all ${
-                  i === heroIndex ? "w-6 bg-[#CB9A56]" : "w-1.5 bg-white/40"
+                  i === heroIndex ? "w-6 bg-[#F97316]" : "w-1.5 bg-white/40"
                 }`}
               />
             ))}
@@ -483,7 +483,7 @@ export function Home() {
 
         <div className="hero-suitcase-track absolute bottom-6 left-1/2 w-screen -translate-x-1/2 pointer-events-none">
           <svg
-            className="hero-suitcase-icon h-14 w-14 text-[#CB9A56]"
+            className="hero-suitcase-icon h-14 w-14 text-[#F97316]"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -508,7 +508,7 @@ export function Home() {
 
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="mb-8 text-center">
-          <h2 className="font-display text-2xl font-bold text-[#0E1E3D] sm:text-3xl">
+          <h2 className="font-display text-2xl font-bold text-[#1A2951] sm:text-3xl">
             {t('wilaya')}
           </h2>
           <p className="mt-2 text-sm text-slate-500">
@@ -532,7 +532,7 @@ export function Home() {
                 loading="lazy"
                 className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0E1E3D]/85 via-[#0E1E3D]/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1A2951]/85 via-[#1A2951]/20 to-transparent" />
               <span className="absolute bottom-4 left-5 font-display text-xl font-bold text-white tracking-wide">
                 {t(d.wilayaKey)}
               </span>
