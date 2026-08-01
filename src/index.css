@@ -4,10 +4,12 @@
 
 @layer base {
   :root {
-    --navy: #152A54;
-    --navy-deep: #0E1E3D;
-    --gold: #CB9A56;
-    --gold-soft: #E4C48A;
+    --primary: #1A2951;
+    --accent: #F97316;
+    --navy: #1A2951;
+    --navy-deep: #1A2951;
+    --gold: #F97316;
+    --gold-soft: #FB923C;
     --cream: #FAF7F1;
   }
 
@@ -26,9 +28,9 @@
 }
 
 @layer components {
-  .thin-scrollbar { scrollbar-width: thin; scrollbar-color: #E4C48A transparent; }
+  .thin-scrollbar { scrollbar-width: thin; scrollbar-color: #FB923C transparent; }
   .thin-scrollbar::-webkit-scrollbar { width: 5px; }
-  .thin-scrollbar::-webkit-scrollbar-thumb { background-color: #E4C48A; border-radius: 999px; }
+  .thin-scrollbar::-webkit-scrollbar-thumb { background-color: #FB923C; border-radius: 999px; }
 
   /* Hover Reveal Card Styles */
   .hover-reveal-card {
