@@ -38,9 +38,9 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0E1E3D] relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-[#1A2951] relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
       {/* تأثير الخلفية المتوهج */}
-      <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[#CB9A56]/15 blur-3xl" />
+      <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[#F97316]/15 blur-3xl" />
 
       <div className="max-w-md w-full relative z-10">
         <div className="text-center mb-8">
@@ -50,7 +50,7 @@ const Login = () => {
           <h1 className="text-3xl font-bold text-white mb-2 font-display">
             {t('login')}
           </h1>
-          <p className="text-[#E4C48A] text-sm">
+          <p className="text-[#FB923C] text-sm">
             {t('loginSubtitle')}
           </p>
         </div>
@@ -70,7 +70,7 @@ const Login = () => {
             )}
 
             <div>
-              <label htmlFor="identifiant" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+              <label htmlFor="identifiant" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                 {t('email')} / {t('phone')}
               </label>
               <input
@@ -79,7 +79,7 @@ const Login = () => {
                 required
                 value={identifiant}
                 onChange={(e) => setIdentifiant(e.target.value)}
-                className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                 placeholder="مثال@بريد.com / 06XXXXXXXX"
                 disabled={isSubmitting}
               />
@@ -87,12 +87,12 @@ const Login = () => {
 
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label htmlFor="motDePasse" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D]">
+                <label htmlFor="motDePasse" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951]">
                   {t('password')}
                 </label>
                 <Link
                   to="/forgot-password"
-                  className="text-xs font-medium text-[#CB9A56] hover:text-[#0E1E3D] hover:underline transition-colors"
+                  className="text-xs font-medium text-[#F97316] hover:text-[#1A2951] hover:underline transition-colors"
                 >
                   {t('forgotPassword')}
                 </Link>
@@ -104,7 +104,7 @@ const Login = () => {
                   required
                   value={motDePasse}
                   onChange={(e) => setMotDePasse(e.target.value)}
-                  className="block w-full px-4 py-3 pr-10 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  className="block w-full px-4 py-3 pr-10 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                   placeholder="••••••••"
                   disabled={isSubmitting}
                 />
@@ -130,7 +130,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex justify-center py-3.5 px-4 rounded-xl shadow-md text-sm font-bold text-[#0E1E3D] bg-[#CB9A56] hover:bg-[#E4C48A] focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex justify-center py-3.5 px-4 rounded-xl shadow-md text-sm font-bold text-[#1A2951] bg-[#F97316] hover:bg-[#FB923C] focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <span className="flex items-center gap-2">
@@ -151,7 +151,7 @@ const Login = () => {
               {t('noAccount')}{' '}
               <Link
                 to="/register"
-                className="font-semibold text-[#CB9A56] hover:text-[#0E1E3D] hover:underline transition-colors"
+                className="font-semibold text-[#F97316] hover:text-[#1A2951] hover:underline transition-colors"
               >
                 {t('register')}
               </Link>
@@ -160,7 +160,7 @@ const Login = () => {
         </div>
 
         <div className="mt-6 text-center">
-          <Link to="/" className="text-xs font-medium text-[#E4C48A] hover:text-white transition-colors">
+          <Link to="/" className="text-xs font-medium text-[#FB923C] hover:text-white transition-colors">
             ← {t('exploreEstablishments')}
           </Link>
         </div>
