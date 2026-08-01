@@ -90,7 +90,7 @@ export function NotificationDropdown() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className="relative flex items-center justify-center w-9 h-9 rounded-full border border-[#152A54]/15 text-[#152A54] hover:bg-[#152A54]/5 hover:border-[#CB9A56] transition cursor-pointer"
+        className="relative flex items-center justify-center w-9 h-9 rounded-full border border-[#1A2951]/15 text-[#1A2951] hover:bg-[#1A2951]/5 hover:border-[#F97316] transition cursor-pointer"
         title={t('notifications')}
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,9 +106,9 @@ export function NotificationDropdown() {
       {open && (
         <div className="absolute right-0 top-full mt-2 w-80 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="flex items-center justify-between border-b border-neutral-100 px-4 py-3 bg-neutral-50">
-            <h3 className="text-sm font-bold text-[#152A54]">{t('notifications')}</h3>
+            <h3 className="text-sm font-bold text-[#1A2951]">{t('notifications')}</h3>
             {unreadCount > 0 && (
-              <span className="text-[10px] bg-[#CB9A56]/20 text-[#CB9A56] px-2 py-0.5 rounded-full font-bold">
+              <span className="text-[10px] bg-[#F97316]/20 text-[#F97316] px-2 py-0.5 rounded-full font-bold">
                 {unreadCount} {t('unread')}
               </span>
             )}
@@ -117,7 +117,7 @@ export function NotificationDropdown() {
           <div className="max-h-[400px] overflow-y-auto thin-scrollbar">
             {loading && notifications.length === 0 ? (
               <div className="p-8 text-center">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#CB9A56] mx-auto"></div>
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#F97316] mx-auto"></div>
               </div>
             ) : notifications.length === 0 ? (
               <div className="p-8 text-center text-slate-400">
@@ -132,12 +132,12 @@ export function NotificationDropdown() {
                   <div
                     key={n.id}
                     onClick={() => markAsRead(n)}
-                    className={`px-4 py-3 hover:bg-neutral-50 transition cursor-pointer ${!n.lu ? 'bg-[#CB9A56]/5' : ''}`}
+                    className={`px-4 py-3 hover:bg-neutral-50 transition cursor-pointer ${!n.lu ? 'bg-[#F97316]/5' : ''}`}
                   >
                     <div className="flex gap-3">
-                      <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${!n.lu ? 'bg-[#CB9A56]' : 'bg-transparent'}`} />
+                      <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${!n.lu ? 'bg-[#F97316]' : 'bg-transparent'}`} />
                       <div className="flex-1">
-                        <p className={`text-xs leading-relaxed ${!n.lu ? 'font-bold text-[#152A54]' : 'text-slate-600'}`}>
+                        <p className={`text-xs leading-relaxed ${!n.lu ? 'font-bold text-[#1A2951]' : 'text-slate-600'}`}>
                           {n.message}
                         </p>
                         <p className="text-[10px] text-slate-400 mt-1">
@@ -154,7 +154,7 @@ export function NotificationDropdown() {
           <Link
             to="/notifications"
             onClick={() => setOpen(false)}
-            className="block text-center py-2.5 text-[11px] font-bold text-[#CB9A56] hover:bg-[#CB9A56]/10 border-t border-neutral-100 transition"
+            className="block text-center py-2.5 text-[11px] font-bold text-[#F97316] hover:bg-[#F97316]/10 border-t border-neutral-100 transition"
           >
             {t('viewAll')}
           </Link>
