@@ -128,7 +128,7 @@ const Reservations = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FAF7F1]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0E1E3D]"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1A2951]"></div>
       </div>
     )
   }
@@ -144,10 +144,10 @@ const Reservations = () => {
     <div className="min-h-screen bg-[#FAF7F1]">
       <div className="max-w-6xl mx-auto w-full p-4 sm:p-6 lg:p-8">
         {/* رأس الصفحة */}
-        <div className="bg-[#0E1E3D] text-white rounded-2xl p-6 mb-6 border border-[#CB9A56]/30 shadow-md">
+        <div className="bg-[#1A2951] text-white rounded-2xl p-6 mb-6 border border-[#F97316]/30 shadow-md">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <span className="text-[#E4C48A] text-xs font-bold uppercase tracking-wider block mb-1">
+              <span className="text-[#FB923C] text-xs font-bold uppercase tracking-wider block mb-1">
                 {t('clientSpace')}
               </span>
               <h1 className="text-xl sm:text-2xl font-bold font-display text-white">
@@ -159,7 +159,7 @@ const Reservations = () => {
             </div>
             <Link
               to="/etablissements"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#CB9A56] hover:bg-[#E4C48A] text-[#0E1E3D] font-bold text-xs transition shadow-md self-start sm:self-auto"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#F97316] hover:bg-[#FB923C] text-[#1A2951] font-bold text-xs transition shadow-md self-start sm:self-auto"
             >
               <span>{t('bookNow')}</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,18 +179,18 @@ const Reservations = () => {
                 onClick={() => selectTab(tab.id)}
                 className={`flex items-center gap-2 whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                   isActive
-                    ? 'bg-[#0E1E3D] text-white border-[#0E1E3D] shadow-md'
-                    : 'bg-white text-slate-600 border-neutral-200 hover:border-[#CB9A56] hover:text-[#0E1E3D]'
+                    ? 'bg-[#1A2951] text-white border-[#1A2951] shadow-md'
+                    : 'bg-white text-slate-600 border-neutral-200 hover:border-[#F97316] hover:text-[#1A2951]'
                 }`}
               >
-                <svg className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#CB9A56]' : 'text-slate-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#F97316]' : 'text-slate-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
                 </svg>
                 <span>{tab.label}</span>
                 {tab.count !== undefined && tab.count !== null && (
                   <span className={`px-1.5 py-0.5 text-[10px] font-extrabold rounded-full shrink-0 ${
                     isActive
-                      ? 'bg-white/15 text-[#E4C48A]'
+                      ? 'bg-white/15 text-[#FB923C]'
                       : tab.id === 'notifications' && unreadNotifsCount > 0
                       ? 'bg-amber-500 text-slate-950'
                       : 'bg-neutral-100 text-slate-500'
@@ -214,10 +214,10 @@ const Reservations = () => {
           {activeTab === 'reservations' && (
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
+                <h3 className="text-lg font-bold text-[#1A2951] font-display">
                   {t('myReservations')}
                 </h3>
-                <span className="px-3 py-1 bg-neutral-100 text-[#0E1E3D] text-xs font-bold rounded-full">
+                <span className="px-3 py-1 bg-neutral-100 text-[#1A2951] text-xs font-bold rounded-full">
                   {t('total')}: {reservations.length}
                 </span>
               </div>
@@ -231,7 +231,7 @@ const Reservations = () => {
                   <p className="text-xs text-slate-400 mt-1 mb-4">{t('homeHeroSubtitle')}</p>
                   <Link
                     to="/etablissements"
-                    className="inline-block px-5 py-2.5 bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-xs font-bold rounded-xl transition"
+                    className="inline-block px-5 py-2.5 bg-[#1A2951] hover:bg-[#F97316] hover:text-[#1A2951] text-white text-xs font-bold rounded-xl transition"
                   >
                     {t('browseEstablishments')}
                   </Link>
@@ -239,10 +239,10 @@ const Reservations = () => {
               ) : (
                 <div className="space-y-4">
                   {reservations.map((reservation) => (
-                    <div key={reservation.id} className="border border-neutral-200 rounded-2xl p-5 hover:border-[#CB9A56] transition bg-white shadow-xs">
+                    <div key={reservation.id} className="border border-neutral-200 rounded-2xl p-5 hover:border-[#F97316] transition bg-white shadow-xs">
                       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                         <div>
-                          <h4 className="font-bold text-[#0E1E3D] text-base">
+                          <h4 className="font-bold text-[#1A2951] text-base">
                             {reservation.etablissement?.nom || t('establishment')}
                           </h4>
                           <p className="text-xs text-slate-500 mt-1">
@@ -251,7 +251,7 @@ const Reservations = () => {
                           <p className="text-xs text-slate-500 mt-0.5">
                             {t('period')}: <strong>{new Date(reservation.dateArrivee).toLocaleDateString()}</strong> {t('to')} <strong>{new Date(reservation.dateDepart).toLocaleDateString()}</strong>
                           </p>
-                          <p className="text-xs font-bold text-[#CB9A56] mt-1.5">
+                          <p className="text-xs font-bold text-[#F97316] mt-1.5">
                             {t('totalPrice')}: {parseFloat(reservation.prixTotal || 0).toLocaleString()} DZD
                           </p>
                         </div>
@@ -282,7 +282,7 @@ const Reservations = () => {
             <div>
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
+                  <h3 className="text-lg font-bold text-[#1A2951] font-display">
                     {t('notificationsAndResponses')}
                   </h3>
                   <p className="text-xs text-slate-500 mt-0.5">
@@ -319,7 +319,7 @@ const Reservations = () => {
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-start gap-3">
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5 ${
-                            !notif.lu ? 'bg-[#0E1E3D] text-[#E4C48A]' : 'bg-neutral-200 text-slate-600'
+                            !notif.lu ? 'bg-[#1A2951] text-[#FB923C]' : 'bg-neutral-200 text-slate-600'
                           }`}>
                             💬
                           </div>
@@ -347,7 +347,7 @@ const Reservations = () => {
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
                   <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 animate-in fade-in zoom-in duration-200">
                     <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
-                      <h3 className="text-lg font-bold text-[#0E1E3D] font-display">تفاصيل الإشعار</h3>
+                      <h3 className="text-lg font-bold text-[#1A2951] font-display">تفاصيل الإشعار</h3>
                       <button
                         onClick={() => setSelectedNotification(null)}
                         className="text-gray-400 hover:text-gray-600 p-1 cursor-pointer"
@@ -368,7 +368,7 @@ const Reservations = () => {
                     <div className="mt-6 flex justify-end">
                       <button
                         onClick={() => setSelectedNotification(null)}
-                        className="px-5 py-2 bg-[#0E1E3D] text-white text-sm font-bold rounded-xl hover:bg-[#CB9A56] hover:text-[#0E1E3D] transition cursor-pointer"
+                        className="px-5 py-2 bg-[#1A2951] text-white text-sm font-bold rounded-xl hover:bg-[#F97316] hover:text-[#1A2951] transition cursor-pointer"
                       >
                         {t('close') || 'إغلاق'}
                       </button>
@@ -381,17 +381,17 @@ const Reservations = () => {
 
           {activeTab === 'profile' && (
             <div>
-              <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
+              <h3 className="text-lg font-bold text-[#1A2951] mb-4 font-display">
                 {t('profile')}
               </h3>
 
               <div className="bg-neutral-50 rounded-2xl p-6 border border-neutral-200 space-y-4 max-w-lg">
                 <div className="flex items-center gap-4 border-b border-neutral-200 pb-4">
-                  <div className="w-14 h-14 rounded-2xl bg-[#0E1E3D] text-[#E4C48A] text-xl font-extrabold flex items-center justify-center shadow-sm">
+                  <div className="w-14 h-14 rounded-2xl bg-[#1A2951] text-[#FB923C] text-xl font-extrabold flex items-center justify-center shadow-sm">
                     {(user?.prenom || user?.nom || 'U').charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <h4 className="font-bold text-[#0E1E3D] text-base">{user?.prenom} {user?.nom}</h4>
+                    <h4 className="font-bold text-[#1A2951] text-base">{user?.prenom} {user?.nom}</h4>
                     <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-extrabold rounded-full uppercase">
                       {t('accountType')}: {user?.role === 'owner' ? t('owner') : t('client')}
                     </span>
@@ -401,15 +401,15 @@ const Reservations = () => {
                 <div className="space-y-3 text-xs text-slate-700">
                   <div className="flex justify-between py-1 border-b border-neutral-100">
                     <span className="text-slate-500">{t('emailAddress')}:</span>
-                    <span className="font-bold text-[#0E1E3D]">{user?.email || t('noResults')}</span>
+                    <span className="font-bold text-[#1A2951]">{user?.email || t('noResults')}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-neutral-100">
                     <span className="text-slate-500">{t('phoneNumber')}:</span>
-                    <span className="font-bold text-[#0E1E3D]">{user?.telephone || t('noResults')}</span>
+                    <span className="font-bold text-[#1A2951]">{user?.telephone || t('noResults')}</span>
                   </div>
                   <div className="flex justify-between py-1">
                     <span className="text-slate-500">{t('registeredSince')}:</span>
-                    <span className="font-bold text-[#0E1E3D]">
+                    <span className="font-bold text-[#1A2951]">
                       {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : t('loading')}
                     </span>
                   </div>
@@ -420,7 +420,7 @@ const Reservations = () => {
 
           {activeTab === 'contact' && (
             <div>
-              <h3 className="text-lg font-bold text-[#0E1E3D] mb-1 font-display">
+              <h3 className="text-lg font-bold text-[#1A2951] mb-1 font-display">
                 {t('supportMessage')}
               </h3>
               <p className="text-xs text-slate-500 mb-6">
@@ -442,7 +442,7 @@ const Reservations = () => {
                     onChange={(e) => setContactForm({ ...contactForm, sujet: e.target.value })}
                     required
                     placeholder={t('subject')}
-                    className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                    className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#F97316] outline-none transition"
                   />
                 </div>
 
@@ -454,14 +454,14 @@ const Reservations = () => {
                     onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
                     required
                     placeholder={t('message')}
-                    className="w-full p-3 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                    className="w-full p-3 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-[#F97316] outline-none transition"
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
                   disabled={contactSubmitting}
-                  className="px-6 py-2.5 bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-xs font-bold rounded-xl transition shadow-md disabled:opacity-50 cursor-pointer"
+                  className="px-6 py-2.5 bg-[#1A2951] hover:bg-[#F97316] hover:text-[#1A2951] text-white text-xs font-bold rounded-xl transition shadow-md disabled:opacity-50 cursor-pointer"
                 >
                   {contactSubmitting ? t('loading') : t('send')}
                 </button>
