@@ -43,7 +43,7 @@ const Contact = () => {
     <div className="min-h-screen bg-[#FAF7F1]">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-[#152A54] mb-4" style={{ fontFamily: 'Fraunces, serif' }}>
+          <h1 className="text-4xl font-bold text-[#1A2951] mb-4" style={{ fontFamily: 'Fraunces, serif' }}>
             {t('contactTitle')}
           </h1>
           <p className="text-gray-600">
@@ -67,7 +67,7 @@ const Contact = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="nom" className="block text-sm font-medium text-[#152A54] mb-2">
+                <label htmlFor="nom" className="block text-sm font-medium text-[#1A2951] mb-2">
                   {t('name')}
                 </label>
                 <input
@@ -77,12 +77,12 @@ const Contact = () => {
                   required
                   value={formData.nom}
                   onChange={handleChange}
-                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] transition-colors"
+                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] transition-colors"
                   disabled={isSubmitting}
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-[#152A54] mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-[#1A2951] mb-2">
                   {t('email')}
                 </label>
                 <input
@@ -92,14 +92,14 @@ const Contact = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] transition-colors"
+                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] transition-colors"
                   disabled={isSubmitting}
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="sujet" className="block text-sm font-medium text-[#152A54] mb-2">
+              <label htmlFor="sujet" className="block text-sm font-medium text-[#1A2951] mb-2">
                 {t('subject')}
               </label>
               <input
@@ -109,13 +109,13 @@ const Contact = () => {
                 required
                 value={formData.sujet}
                 onChange={handleChange}
-                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] transition-colors"
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] transition-colors"
                 disabled={isSubmitting}
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-[#152A54] mb-2">
+              <label htmlFor="message" className="block text-sm font-medium text-[#1A2951] mb-2">
                 {t('message')}
               </label>
               <textarea
@@ -125,7 +125,7 @@ const Contact = () => {
                 required
                 value={formData.message}
                 onChange={handleChange}
-                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] transition-colors resize-none"
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] transition-colors resize-none"
                 disabled={isSubmitting}
               />
             </div>
@@ -133,7 +133,7 @@ const Contact = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-[#152A54] hover:bg-[#CB9A56] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CB9A56] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-[#1A2951] hover:bg-[#F97316] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#F97316] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? t('loading') : t('sendMessage')}
             </button>
