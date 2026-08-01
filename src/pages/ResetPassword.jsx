@@ -54,9 +54,9 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0E1E3D] relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-[#1A2951] relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
       {/* تأثير الخلفية المتوهج */}
-      <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[#CB9A56]/15 blur-3xl" />
+      <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[#F97316]/15 blur-3xl" />
 
       <div className="max-w-md w-full relative z-10">
         <div className="text-center mb-8">
@@ -66,7 +66,7 @@ const ResetPassword = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2 font-display">
             كلمة مرور جديدة
           </h1>
-          <p className="text-[#E4C48A] text-sm">
+          <p className="text-[#FB923C] text-sm">
             قم بتعيين كلمة مرور جديدة لتأمين حسابك
           </p>
         </div>
@@ -79,7 +79,7 @@ const ResetPassword = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h2 className="text-lg font-bold text-[#0E1E3D]">
+              <h2 className="text-lg font-bold text-[#1A2951]">
                 تمت إعادة تعيين كلمة المرور!
               </h2>
               <p className="text-sm text-slate-600 bg-neutral-50 p-4 rounded-xl border border-neutral-200">
@@ -91,7 +91,7 @@ const ResetPassword = () => {
               <div className="pt-2">
                 <Link
                   to="/login"
-                  className="inline-block w-full py-3 px-4 rounded-xl font-bold text-[#0E1E3D] bg-[#CB9A56] hover:bg-[#E4C48A] transition text-sm"
+                  className="inline-block w-full py-3 px-4 rounded-xl font-bold text-[#1A2951] bg-[#F97316] hover:bg-[#FB923C] transition text-sm"
                 >
                   تسجيل الدخول الآن
                 </Link>
@@ -112,7 +112,7 @@ const ResetPassword = () => {
               )}
 
               <div>
-                <label htmlFor="emailInput" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+                <label htmlFor="emailInput" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                   البريد الإلكتروني للحساب
                 </label>
                 <input
@@ -121,14 +121,14 @@ const ResetPassword = () => {
                   required
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
-                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                   placeholder="بريدك@مثال.com"
                   disabled={isSubmitting}
                 />
               </div>
 
               <div>
-                <label htmlFor="newPassword" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+                <label htmlFor="newPassword" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                   كلمة المرور الجديدة
                 </label>
                 <div className="relative">
@@ -139,7 +139,7 @@ const ResetPassword = () => {
                     minLength={8}
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="block w-full px-4 py-3 pr-10 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                    className="block w-full px-4 py-3 pr-10 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                     placeholder="8 أحرف على الأقل"
                     disabled={isSubmitting}
                   />
@@ -163,7 +163,7 @@ const ResetPassword = () => {
               </div>
 
               <div>
-                <label htmlFor="confirmPassword" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+                <label htmlFor="confirmPassword" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                   تأكيد كلمة المرور
                 </label>
                 <input
@@ -173,7 +173,7 @@ const ResetPassword = () => {
                   minLength={8}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                   placeholder="أعد كتابة كلمة المرور"
                   disabled={isSubmitting}
                 />
@@ -182,7 +182,7 @@ const ResetPassword = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex justify-center py-3.5 px-4 rounded-xl shadow-md text-sm font-bold text-[#0E1E3D] bg-[#CB9A56] hover:bg-[#E4C48A] focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center py-3.5 px-4 rounded-xl shadow-md text-sm font-bold text-[#1A2951] bg-[#F97316] hover:bg-[#FB923C] focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
@@ -201,7 +201,7 @@ const ResetPassword = () => {
         </div>
 
         <div className="mt-6 text-center">
-          <Link to="/login" className="text-xs font-medium text-[#E4C48A] hover:text-white transition-colors">
+          <Link to="/login" className="text-xs font-medium text-[#FB923C] hover:text-white transition-colors">
             ← تسجيل الدخول
           </Link>
         </div>
