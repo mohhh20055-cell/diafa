@@ -44,7 +44,7 @@ import {
   Sparkles,
 } from 'lucide-react'
 
-const CHART_COLORS = ['#CB9A56', '#0E1E3D', '#E4C48A', '#60a5fa', '#34d399', '#f87171']
+const CHART_COLORS = ['#F97316', '#1A2951', '#FB923C', '#60a5fa', '#34d399', '#f87171']
 const OVERVIEW_PIE_COLORS = ['#34d399', '#f97316', '#8b5cf6']
 
 const VALID_TABS = ['overview', 'pending', 'establishments', 'create', 'reservations', 'messages', 'users', 'stats']
@@ -290,7 +290,7 @@ const AdminDashboard = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FAF7F1]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0E1E3D]"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1A2951]"></div>
       </div>
     )
   }
@@ -310,7 +310,7 @@ const AdminDashboard = () => {
     <>
     <div className="min-h-screen bg-[#FAF7F1] flex flex-col lg:flex-row">
       {/* ---------- الشريط الجانبي ---------- */}
-      <aside className="shrink-0 bg-[#0E1E3D] text-white border-b lg:border-b-0 lg:border-r border-[#CB9A56]/20 lg:w-64 lg:min-h-screen lg:sticky lg:top-0 lg:flex lg:flex-col">
+      <aside className="shrink-0 bg-[#1A2951] text-white border-b lg:border-b-0 lg:border-r border-[#F97316]/20 lg:w-64 lg:min-h-screen lg:sticky lg:top-0 lg:flex lg:flex-col">
         <div className="flex items-center gap-2 px-5 py-4 border-b border-white/10">
           <Logo className="h-8" withText={false} dark />
           <div className="min-w-0">
@@ -327,11 +327,11 @@ const AdminDashboard = () => {
                 to={`/admin/dashboard/${tab.id}`}
                 className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0 lg:shrink lg:w-full border ${
                   isActive
-                    ? 'bg-[#CB9A56]/15 text-[#E4C48A] border-[#CB9A56]/40'
+                    ? 'bg-[#F97316]/15 text-[#FB923C] border-[#F97316]/40'
                     : 'text-slate-300 hover:text-white hover:bg-white/5 border-transparent'
                 }`}
               >
-                <svg className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#CB9A56]' : 'text-slate-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#F97316]' : 'text-slate-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
                 </svg>
                 <span className="flex-1 text-left">{tab.label}</span>
@@ -348,7 +348,7 @@ const AdminDashboard = () => {
           <LanguageSwitcher />
           <Link
             to="/etablissements"
-            className="lg:hidden inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#CB9A56] hover:bg-[#E4C48A] text-[#0E1E3D] text-xs font-bold transition shadow-sm"
+            className="lg:hidden inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#F97316] hover:bg-[#FB923C] text-[#1A2951] text-xs font-bold transition shadow-sm"
           >
             {t('viewPlatform')}
           </Link>
@@ -359,13 +359,13 @@ const AdminDashboard = () => {
             <button
               type="button"
               onClick={() => setProfileOpen((o) => !o)}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#0E1E3D]/5 hover:bg-[#0E1E3D]/10 border border-[#0E1E3D]/15 text-[#0E1E3D] text-xs font-bold transition"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#1A2951]/5 hover:bg-[#1A2951]/10 border border-[#1A2951]/15 text-[#1A2951] text-xs font-bold transition"
             >
-              <div className="w-7 h-7 rounded-full bg-[#CB9A56] text-[#0E1E3D] font-extrabold flex items-center justify-center text-xs">
+              <div className="w-7 h-7 rounded-full bg-[#F97316] text-[#1A2951] font-extrabold flex items-center justify-center text-xs">
                 {user?.prenom?.[0] || 'A'}
               </div>
               <span className="hidden sm:inline">{t('adminProfile')}</span>
-              <svg className={`w-3.5 h-3.5 text-[#0E1E3D]/60 transition-transform ${profileOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`w-3.5 h-3.5 text-[#1A2951]/60 transition-transform ${profileOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
@@ -373,16 +373,16 @@ const AdminDashboard = () => {
             {profileOpen && (
               <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-neutral-200 py-2 text-slate-800 z-50">
                 <div className="px-4 py-3 border-b border-neutral-100 bg-neutral-50/60 rounded-t-2xl">
-                  <p className="text-xs font-bold text-[#0E1E3D]">{user?.prenom || t('adminProfile')} {user?.nom || ''}</p>
+                  <p className="text-xs font-bold text-[#1A2951]">{user?.prenom || t('adminProfile')} {user?.nom || ''}</p>
                   <p className="text-[11px] text-slate-500 truncate">{user?.email || t('adminProfile')}</p>
                 </div>
                 <div className="pt-1">
                   <button
                     type="button"
                     onClick={openEditProfile}
-                    className="w-full text-left px-4 py-2.5 text-xs font-bold text-[#0E1E3D] hover:bg-[#CB9A56]/15 transition flex items-center gap-2"
+                    className="w-full text-left px-4 py-2.5 text-xs font-bold text-[#1A2951] hover:bg-[#F97316]/15 transition flex items-center gap-2"
                   >
-                    <IconEdit className="w-4 h-4 text-[#CB9A56]" />
+                    <IconEdit className="w-4 h-4 text-[#F97316]" />
                     <span>{t('editMyInfo')}</span>
                   </button>
                 </div>
@@ -421,15 +421,15 @@ const AdminDashboard = () => {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-5">
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{t('usersManagement')}</p>
-              <div className="text-2xl sm:text-3xl font-extrabold text-[#0E1E3D] mt-1 font-display">
+              <div className="text-2xl sm:text-3xl font-extrabold text-[#1A2951] mt-1 font-display">
                 {stats.totalUsers || users.length}
               </div>
               <p className="text-[11px] text-slate-500 mt-1">{t('clientsAndOwnersDesc')}</p>
             </div>
 
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#0E1E3D]">{t('establishmentsManagement')}</p>
-              <div className="text-2xl sm:text-3xl font-extrabold text-[#0E1E3D] mt-1 font-display">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#1A2951]">{t('establishmentsManagement')}</p>
+              <div className="text-2xl sm:text-3xl font-extrabold text-[#1A2951] mt-1 font-display">
                 {stats.totalEstablishments || 0}
               </div>
               <p className="text-[11px] text-slate-500 mt-1">{t('registredOnPlatform')}</p>
@@ -459,7 +459,7 @@ const AdminDashboard = () => {
             <div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-white">
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">{t('top5WilayasEst')}</h4>
+                  <h4 className="text-sm font-bold text-[#1A2951] mb-4">{t('top5WilayasEst')}</h4>
                   <ResponsiveContainer width="100%" height={240}>
                     <BarChart
                       layout="vertical"
@@ -479,13 +479,13 @@ const AdminDashboard = () => {
                       <XAxis type="number" allowDecimals={false} tick={{ fontSize: 11, fill: '#64748b' }} />
                       <YAxis type="category" dataKey="name" width={90} tick={{ fontSize: 11, fill: '#64748b' }} />
                       <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #e5e5e5', fontSize: 12 }} />
-                      <Bar dataKey="value" name={t('establishments')} fill="#0E1E3D" radius={[0, 6, 6, 0]} />
+                      <Bar dataKey="value" name={t('establishments')} fill="#1A2951" radius={[0, 6, 6, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
 
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-white">
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">{t('estByTypePie')}</h4>
+                  <h4 className="text-sm font-bold text-[#1A2951] mb-4">{t('estByTypePie')}</h4>
                   <ResponsiveContainer width="100%" height={240}>
                     <PieChart>
                       <Pie
@@ -515,7 +515,7 @@ const AdminDashboard = () => {
 
           {activeTab === 'pending' && (
             <div>
-              <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
+              <h3 className="text-lg font-bold text-[#1A2951] mb-4 font-display">
                 {t('pendingEstablishments')}
               </h3>
               {pendingEstablishments.length === 0 ? (
@@ -552,9 +552,9 @@ const AdminDashboard = () => {
                         <div className="flex-1 p-5">
                           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                             <div>
-                              <h4 className="font-bold text-[#0E1E3D] text-lg">{est.nom}</h4>
+                              <h4 className="font-bold text-[#1A2951] text-lg">{est.nom}</h4>
                               <p className="text-xs text-slate-500 mt-1">
-                                <span className="inline-block bg-[#CB9A56]/15 text-[#0E1E3D] px-2 py-0.5 rounded-full font-bold uppercase mr-2">
+                                <span className="inline-block bg-[#F97316]/15 text-[#1A2951] px-2 py-0.5 rounded-full font-bold uppercase mr-2">
                                   {t(est.type)}
                                 </span>
                                 {est.ville}, {est.wilaya}
@@ -614,7 +614,7 @@ const AdminDashboard = () => {
                             </button>
                             <button
                               onClick={() => setSelectedEst(est)}
-                              className="bg-white hover:bg-neutral-50 text-[#0E1E3D] border border-neutral-200 px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-xs flex items-center gap-1.5"
+                              className="bg-white hover:bg-neutral-50 text-[#1A2951] border border-neutral-200 px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-xs flex items-center gap-1.5"
                             >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -636,14 +636,14 @@ const AdminDashboard = () => {
             <div>
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
                 <div>
-                  <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
+                  <h3 className="text-lg font-bold text-[#1A2951] font-display">
                     {t('establishmentsListTab', { defaultValue: isAr ? 'المؤسسات' : 'Établissements' })}
                   </h3>
                   <p className="text-xs text-slate-500 mt-0.5">
                     {t('establishmentsListDesc', { defaultValue: isAr ? 'كل المؤسسات المسجلة في المنصة' : 'Tous les établissements enregistrés sur la plateforme' })}
                   </p>
                 </div>
-                <span className="self-start sm:self-auto px-3 py-1 bg-[#CB9A56]/15 text-[#0E1E3D] text-xs font-bold rounded-full">
+                <span className="self-start sm:self-auto px-3 py-1 bg-[#F97316]/15 text-[#1A2951] text-xs font-bold rounded-full">
                   {validatedEstablishments.length} {isAr ? 'مؤسسة' : 'établissement(s)'}
                 </span>
               </div>
@@ -682,7 +682,7 @@ const AdminDashboard = () => {
                                     <img src={est.imageVedette || est.images[0]} alt={est.nom} className="w-full h-full object-cover" />
                                   )}
                                 </div>
-                                <span className="font-bold text-[#0E1E3D]">{est.nom}</span>
+                                <span className="font-bold text-[#1A2951]">{est.nom}</span>
                               </div>
                             </td>
                             <td className="px-4 py-3.5 text-slate-500 uppercase">{t(est.type)}</td>
@@ -743,7 +743,7 @@ const AdminDashboard = () => {
             <div>
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
                 <div>
-                  <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
+                  <h3 className="text-lg font-bold text-[#1A2951] font-display">
                     {t('contactMessages')}
                   </h3>
                   <p className="text-xs text-slate-500 mt-0.5">
@@ -766,11 +766,11 @@ const AdminDashboard = () => {
               ) : (
                 <div className="grid grid-cols-1 gap-4">
                   {contactMessages.map((msg) => (
-                    <div key={msg.id} className="border border-neutral-200 rounded-2xl p-5 bg-white hover:border-[#CB9A56]/40 transition shadow-xs">
+                    <div key={msg.id} className="border border-neutral-200 rounded-2xl p-5 bg-white hover:border-[#F97316]/40 transition shadow-xs">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-neutral-100 pb-3 mb-3">
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-bold text-[#0E1E3D] text-base">{msg.sujet || t('noSubject')}</span>
+                            <span className="font-bold text-[#1A2951] text-base">{msg.sujet || t('noSubject')}</span>
                             <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase bg-slate-100 text-slate-700">
                               {msg.type || t('contact')}
                             </span>
@@ -799,7 +799,7 @@ const AdminDashboard = () => {
                                 setReplyStatus(null)
                               }
                             }}
-                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white rounded-xl text-xs font-bold transition shadow-xs"
+                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#1A2951] hover:bg-[#F97316] hover:text-[#1A2951] text-white rounded-xl text-xs font-bold transition shadow-xs"
                           >
                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
@@ -836,7 +836,7 @@ const AdminDashboard = () => {
                       {/* نموذج الرد المضمن */}
                       {activeReplyId === msg.id && (
                         <div className="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-xl">
-                          <label className="block text-xs font-bold text-[#0E1E3D] mb-1.5">
+                          <label className="block text-xs font-bold text-[#1A2951] mb-1.5">
                             {t('replyOnMessage')}
                           </label>
                           <textarea
@@ -844,7 +844,7 @@ const AdminDashboard = () => {
                             value={replyText}
                             onChange={(e) => setReplyText(e.target.value)}
                             placeholder={t('replyPlaceholder')}
-                            className="w-full p-3 text-xs bg-white border border-neutral-300 rounded-xl focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+                            className="w-full p-3 text-xs bg-white border border-neutral-300 rounded-xl focus:ring-2 focus:ring-[#F97316] outline-none transition"
                           />
                           <div className="flex items-center justify-between gap-2 mt-2.5 flex-wrap">
                             <span className="text-[11px] text-slate-500">
@@ -865,7 +865,7 @@ const AdminDashboard = () => {
                                 type="button"
                                 disabled={replySending || !replyText.trim()}
                                 onClick={() => handleSendReply(msg)}
-                                className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#CB9A56] hover:bg-[#b08343] text-white rounded-lg text-xs font-bold transition shadow-xs disabled:opacity-50"
+                                className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#F97316] hover:bg-[#b08343] text-white rounded-lg text-xs font-bold transition shadow-xs disabled:opacity-50"
                               >
                                 {replySending ? (
                                   <span>{t('sending')}</span>
@@ -902,7 +902,7 @@ const AdminDashboard = () => {
 
           {activeTab === 'users' && (
             <div>
-              <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
+              <h3 className="text-lg font-bold text-[#1A2951] mb-4 font-display">
                 {t('usersManagement')}
               </h3>
               
@@ -924,7 +924,7 @@ const AdminDashboard = () => {
                     <tbody className="divide-y divide-neutral-100 text-xs">
                       {users.filter(u => u.role === 'client').map((u) => (
                         <tr key={u.id} className="hover:bg-neutral-50/80">
-                          <td className="px-4 py-3.5 font-bold text-[#0E1E3D]">{u.prenom} {u.nom}</td>
+                          <td className="px-4 py-3.5 font-bold text-[#1A2951]">{u.prenom} {u.nom}</td>
                           <td className="px-4 py-3.5 text-slate-500">{u.email || u.telephone}</td>
                           <td className="px-4 py-3.5">
                             <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${u.statut === 'actif' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
@@ -972,7 +972,7 @@ const AdminDashboard = () => {
                     <tbody className="divide-y divide-neutral-100 text-xs">
                       {users.filter(u => u.role === 'owner').map((u) => (
                         <tr key={u.id} className="hover:bg-neutral-50/80">
-                          <td className="px-4 py-3.5 font-bold text-[#0E1E3D]">{u.prenom} {u.nom}</td>
+                          <td className="px-4 py-3.5 font-bold text-[#1A2951]">{u.prenom} {u.nom}</td>
                           <td className="px-4 py-3.5 text-slate-500">{u.email || u.telephone}</td>
                           <td className="px-4 py-3.5">
                             <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${u.statut === 'actif' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
@@ -1006,7 +1006,7 @@ const AdminDashboard = () => {
 
           {activeTab === 'stats' && (
             <div>
-              <h3 className="text-lg font-bold text-[#0E1E3D] mb-4 font-display">
+              <h3 className="text-lg font-bold text-[#1A2951] mb-4 font-display">
                 {t('generalStats')}
               </h3>
               <p className="text-xs text-slate-600 mb-6">
@@ -1016,7 +1016,7 @@ const AdminDashboard = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                 <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-xl">
                   <p className="text-xs text-slate-500 font-semibold">{t('reservationsAcceptRate')}</p>
-                  <p className="text-xl font-extrabold text-[#0E1E3D] mt-1">
+                  <p className="text-xl font-extrabold text-[#1A2951] mt-1">
                     {stats?.totalReservations
                       ? `${Math.round((stats.acceptedReservations / stats.totalReservations) * 100)}%`
                       : '—'}
@@ -1027,7 +1027,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-xl">
                   <p className="text-xs text-slate-500 font-semibold">{t('newUsersLast7Days')}</p>
-                  <p className="text-xl font-extrabold text-[#0E1E3D] mt-1">
+                  <p className="text-xl font-extrabold text-[#1A2951] mt-1">
                     {users.filter((u) => u.createdAt && (Date.now() - new Date(u.createdAt).getTime()) <= 7 * 24 * 60 * 60 * 1000).length}
                   </p>
                   <p className="text-[11px] text-slate-400 mt-1">
@@ -1036,7 +1036,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-xl">
                   <p className="text-xs text-slate-500 font-semibold">{t('coveredWilayas')}</p>
-                  <p className="text-xl font-extrabold text-[#0E1E3D] mt-1">
+                  <p className="text-xl font-extrabold text-[#1A2951] mt-1">
                     {t('wilayasCount', { count: new Set(
                       validatedEstablishments
                         .filter((e) => e.statut_validation === 'valide')
@@ -1051,7 +1051,7 @@ const AdminDashboard = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* الحجوزات حسب الحالة */}
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-white">
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">{t('reservationsByStatus')}</h4>
+                  <h4 className="text-sm font-bold text-[#1A2951] mb-4">{t('reservationsByStatus')}</h4>
                   <ResponsiveContainer width="100%" height={260}>
                     <BarChart
                       data={[
@@ -1067,14 +1067,14 @@ const AdminDashboard = () => {
                       <Tooltip
                         contentStyle={{ borderRadius: 12, border: '1px solid #e5e5e5', fontSize: 12 }}
                       />
-                      <Bar dataKey="value" name={t('reservations')} fill="#CB9A56" radius={[6, 6, 0, 0]} />
+                      <Bar dataKey="value" name={t('reservations')} fill="#F97316" radius={[6, 6, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
 
                 {/* المؤسسات المصادق عليها مقابل في الانتظار */}
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-white">
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">{t('estValidatedVsPending')}</h4>
+                  <h4 className="text-sm font-bold text-[#1A2951] mb-4">{t('estValidatedVsPending')}</h4>
                   <ResponsiveContainer width="100%" height={260}>
                     <PieChart>
                       <Pie
@@ -1100,7 +1100,7 @@ const AdminDashboard = () => {
 
                 {/* توزيع المستخدمين */}
                 <div className="border border-neutral-200 rounded-2xl p-5 bg-white lg:col-span-2">
-                  <h4 className="text-sm font-bold text-[#0E1E3D] mb-4">{t('usersDistribution')}</h4>
+                  <h4 className="text-sm font-bold text-[#1A2951] mb-4">{t('usersDistribution')}</h4>
                   <ResponsiveContainer width="100%" height={240}>
                     <BarChart
                       layout="vertical"
@@ -1114,7 +1114,7 @@ const AdminDashboard = () => {
                       <XAxis type="number" allowDecimals={false} tick={{ fontSize: 11, fill: '#64748b' }} />
                       <YAxis type="category" dataKey="name" width={170} tick={{ fontSize: 11, fill: '#64748b' }} />
                       <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #e5e5e5', fontSize: 12 }} />
-                      <Bar dataKey="value" name={t('users')} fill="#0E1E3D" radius={[0, 6, 6, 0]} />
+                      <Bar dataKey="value" name={t('users')} fill="#1A2951" radius={[0, 6, 6, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -1130,7 +1130,7 @@ const AdminDashboard = () => {
       <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 px-4">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-neutral-200 overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-100 bg-neutral-50">
-            <h3 className="text-sm font-bold text-[#0E1E3D]">{t('editMyInfo')}</h3>
+            <h3 className="text-sm font-bold text-[#1A2951]">{t('editMyInfo')}</h3>
             <button
               type="button"
               onClick={() => setEditProfileOpen(false)}
@@ -1161,7 +1161,7 @@ const AdminDashboard = () => {
                   type="text"
                   value={editForm.prenom}
                   onChange={(e) => setEditForm({ ...editForm, prenom: e.target.value })}
-                  className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                  className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
                 />
               </div>
               <div>
@@ -1170,7 +1170,7 @@ const AdminDashboard = () => {
                   type="text"
                   value={editForm.nom}
                   onChange={(e) => setEditForm({ ...editForm, nom: e.target.value })}
-                  className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                  className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
                 />
               </div>
             </div>
@@ -1181,7 +1181,7 @@ const AdminDashboard = () => {
                 type="email"
                 value={editForm.email}
                 onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
-                className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
               />
             </div>
 
@@ -1191,7 +1191,7 @@ const AdminDashboard = () => {
                 type="text"
                 value={editForm.telephone}
                 onChange={(e) => setEditForm({ ...editForm, telephone: e.target.value })}
-                className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
               />
             </div>
 
@@ -1204,7 +1204,7 @@ const AdminDashboard = () => {
                 value={editForm.motDePasse}
                 onChange={(e) => setEditForm({ ...editForm, motDePasse: e.target.value })}
                 placeholder="••••••••"
-                className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
               />
             </div>
 
@@ -1219,7 +1219,7 @@ const AdminDashboard = () => {
               <button
                 type="submit"
                 disabled={editSaving}
-                className="flex-1 px-4 py-2.5 rounded-xl bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-sm font-bold transition disabled:opacity-50"
+                className="flex-1 px-4 py-2.5 rounded-xl bg-[#1A2951] hover:bg-[#F97316] hover:text-[#1A2951] text-white text-sm font-bold transition disabled:opacity-50"
               >
                 {editSaving ? t('saving') : t('save')}
               </button>
@@ -1264,14 +1264,14 @@ const AdminReservationsTab = ({ reservations, filter, setFilter }) => {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
         <div>
-          <h3 className="text-lg font-bold text-[#0E1E3D] font-display">
+          <h3 className="text-lg font-bold text-[#1A2951] font-display">
             {t('reservations')}
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
             {t('allPlatformReservations')}
           </p>
         </div>
-        <span className="self-start sm:self-auto px-3 py-1 bg-[#CB9A56]/15 text-[#0E1E3D] text-xs font-bold rounded-full">
+        <span className="self-start sm:self-auto px-3 py-1 bg-[#F97316]/15 text-[#1A2951] text-xs font-bold rounded-full">
           {t('totalReservationsCount', { count: reservations.length })}
         </span>
       </div>
@@ -1284,8 +1284,8 @@ const AdminReservationsTab = ({ reservations, filter, setFilter }) => {
             onClick={() => setFilter(f.id)}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold border transition ${
               filter === f.id
-                ? 'bg-[#0E1E3D] text-white border-[#0E1E3D]'
-                : 'bg-white text-slate-600 border-neutral-200 hover:border-[#CB9A56]/50'
+                ? 'bg-[#1A2951] text-white border-[#1A2951]'
+                : 'bg-white text-slate-600 border-neutral-200 hover:border-[#F97316]/50'
             }`}
           >
             {f.label}
@@ -1362,7 +1362,7 @@ const EstablishmentImagesModal = ({ establishment, onClose, onSelectFeatured }) 
       >
         <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-100 sticky top-0 bg-white z-10">
           <div>
-            <h4 className="font-bold text-[#0E1E3D] text-base">{establishment.nom}</h4>
+            <h4 className="font-bold text-[#1A2951] text-base">{establishment.nom}</h4>
             <p className="text-xs text-slate-500 mt-0.5">
               {t('chooseFeaturedImgDesc')}
             </p>
@@ -1393,11 +1393,11 @@ const EstablishmentImagesModal = ({ establishment, onClose, onSelectFeatured }) 
                       src={img}
                       alt={`${establishment.nom} ${i + 1}`}
                       className={`w-full h-32 sm:h-36 object-cover rounded-xl border-2 transition ${
-                        isFeatured ? 'border-[#CB9A56]' : 'border-transparent'
+                        isFeatured ? 'border-[#F97316]' : 'border-transparent'
                       }`}
                     />
                     {isFeatured && (
-                      <span className="absolute top-2 left-2 bg-[#CB9A56] text-[#0E1E3D] text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow">
+                      <span className="absolute top-2 left-2 bg-[#F97316] text-[#1A2951] text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow">
                         {t('currentFeatured')}
                       </span>
                     )}
@@ -1412,7 +1412,7 @@ const EstablishmentImagesModal = ({ establishment, onClose, onSelectFeatured }) 
                         onClick={() => onSelectFeatured(img)}
                         className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 rounded-xl transition"
                       >
-                        <span className="opacity-0 group-hover:opacity-100 transition bg-white text-[#0E1E3D] text-[11px] font-bold px-3 py-1.5 rounded-lg shadow">
+                        <span className="opacity-0 group-hover:opacity-100 transition bg-white text-[#1A2951] text-[11px] font-bold px-3 py-1.5 rounded-lg shadow">
                           {t('chooseAsFeatured')}
                         </span>
                       </button>
@@ -1460,11 +1460,11 @@ const StyledSelect = ({ className = '', children, ...props }) => (
   <div className="relative">
     <select
       {...props}
-      className={`appearance-none block w-full pl-3.5 pr-9 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm font-medium text-[#0E1E3D] focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition cursor-pointer hover:border-[#CB9A56]/40 ${className}`}
+      className={`appearance-none block w-full pl-3.5 pr-9 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm font-medium text-[#1A2951] focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition cursor-pointer hover:border-[#F97316]/40 ${className}`}
     >
       {children}
     </select>
-    <svg className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#CB9A56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
     </svg>
   </div>
@@ -1636,7 +1636,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
 
   return (
     <div>
-      <h3 className="text-lg font-bold text-[#0E1E3D] mb-2 font-display">
+      <h3 className="text-lg font-bold text-[#1A2951] mb-2 font-display">
         {t('addEstablishment')}
       </h3>
       <p className="text-xs text-slate-500 mb-6">
@@ -1664,8 +1664,8 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
               onClick={() => setOwnerMode('new')}
               className={`flex-1 px-3.5 py-2.5 rounded-xl text-xs font-bold border transition ${
                 ownerMode === 'new'
-                  ? 'bg-[#0E1E3D] text-white border-[#0E1E3D]'
-                  : 'bg-white text-slate-600 border-neutral-200 hover:border-[#CB9A56]/50'
+                  ? 'bg-[#1A2951] text-white border-[#1A2951]'
+                  : 'bg-white text-slate-600 border-neutral-200 hover:border-[#F97316]/50'
               }`}
             >
               {t('createNewOwnerOption')}
@@ -1675,8 +1675,8 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
               onClick={() => setOwnerMode('existing')}
               className={`flex-1 px-3.5 py-2.5 rounded-xl text-xs font-bold border transition ${
                 ownerMode === 'existing'
-                  ? 'bg-[#0E1E3D] text-white border-[#0E1E3D]'
-                  : 'bg-white text-slate-600 border-neutral-200 hover:border-[#CB9A56]/50'
+                  ? 'bg-[#1A2951] text-white border-[#1A2951]'
+                  : 'bg-white text-slate-600 border-neutral-200 hover:border-[#F97316]/50'
               }`}
             >
               {t('selectExistingOwnerOption')}
@@ -1693,7 +1693,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
                   onChange={handleOwnerChange}
                   required
                   placeholder={t('firstName')}
-                  className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                  className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
                 />
                 <input
                   name="nom"
@@ -1701,7 +1701,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
                   onChange={handleOwnerChange}
                   required
                   placeholder={t('lastName')}
-                  className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                  className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -1712,7 +1712,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
                   onChange={handleOwnerChange}
                   required
                   placeholder={t('email')}
-                  className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                  className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
                 />
                 <input
                   name="telephone"
@@ -1720,7 +1720,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
                   onChange={handleOwnerChange}
                   required
                   placeholder={t('phone')}
-                  className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                  className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
                 />
               </div>
               <input
@@ -1731,7 +1731,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
                 required
                 minLength={8}
                 placeholder={t('password')}
-                className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                className="block w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
               />
             </div>
           ) : (
@@ -1752,7 +1752,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
               value={formData.nom}
               onChange={handleChange}
               required
-              className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+              className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
               placeholder={t('hotelNameEx')}
             />
           </div>
@@ -1788,7 +1788,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
                 name="ville"
                 value={formData.ville}
                 onChange={handleChange}
-                className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+                className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
                 placeholder={t('cityEx')}
               />
             )}
@@ -1801,7 +1801,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
             name="adresse"
             value={formData.adresse}
             onChange={handleChange}
-            className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+            className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
             placeholder={t('addressEx')}
           />
         </div>
@@ -1813,7 +1813,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
             value={formData.description}
             onChange={handleChange}
             rows={3}
-            className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] outline-none transition"
+            className="block w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] outline-none transition"
             placeholder={t('estDescPlaceholder')}
           />
         </div>
@@ -1834,7 +1834,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
                   onClick={() => handleToggleService(srv)}
                   className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition ${
                     selected
-                      ? 'bg-[#0E1E3D] text-white shadow-xs'
+                      ? 'bg-[#1A2951] text-white shadow-xs'
                       : 'bg-neutral-100 text-slate-700 hover:bg-neutral-200 border border-neutral-200'
                   }`}
                 >
@@ -1852,13 +1852,13 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
               value={newServiceInput}
               onChange={(e) => setNewServiceInput(e.target.value)}
               placeholder={t('addOtherServicePlaceholder')}
-              className="flex-1 px-3.5 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:bg-white focus:ring-2 focus:ring-[#CB9A56] outline-none transition"
+              className="flex-1 px-3.5 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:bg-white focus:ring-2 focus:ring-[#F97316] outline-none transition"
               onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCustomService(); } }}
             />
             <button
               type="button"
               onClick={handleAddCustomService}
-              className="px-4 py-2 bg-[#CB9A56] text-[#0E1E3D] rounded-xl text-xs font-bold hover:bg-[#E4C48A] transition"
+              className="px-4 py-2 bg-[#F97316] text-[#1A2951] rounded-xl text-xs font-bold hover:bg-[#FB923C] transition"
             >
               {t('add')}
             </button>
@@ -1890,11 +1890,11 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
           )}
 
           {images.length < MAX_PHOTOS && (
-            <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#CB9A56] bg-neutral-50/70 hover:bg-neutral-50 transition text-center mb-3">
-              <svg className="w-6 h-6 text-[#CB9A56] mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#F97316] bg-neutral-50/70 hover:bg-neutral-50 transition text-center mb-3">
+              <svg className="w-6 h-6 text-[#F97316] mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <span className="text-xs font-bold text-[#0E1E3D]">{t('clickToImportPhotos')}</span>
+              <span className="text-xs font-bold text-[#1A2951]">{t('clickToImportPhotos')}</span>
               <span className="text-[10px] text-slate-400 mt-0.5">{t('supportedFormats')}</span>
               <input type="file" accept="image/*" multiple onChange={handlePhotoChange} className="hidden" />
             </label>
@@ -1905,11 +1905,11 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
               {images.map((img, idx) => {
                 const isVedette = imageVedette === img
                 return (
-                  <div key={idx} className={`relative h-24 rounded-xl overflow-hidden border-2 group ${isVedette ? 'border-[#CB9A56] ring-2 ring-[#CB9A56]/30' : 'border-neutral-200'}`}>
+                  <div key={idx} className={`relative h-24 rounded-xl overflow-hidden border-2 group ${isVedette ? 'border-[#F97316] ring-2 ring-[#F97316]/30' : 'border-neutral-200'}`}>
                     <img src={img} alt={`صورة ${idx + 1}`} className="w-full h-full object-cover" />
 
                     {isVedette && (
-                      <span className="absolute top-1 left-1 bg-[#CB9A56] text-[#0E1E3D] text-[9px] font-black px-1.5 py-0.5 rounded shadow-xs">
+                      <span className="absolute top-1 left-1 bg-[#F97316] text-[#1A2951] text-[9px] font-black px-1.5 py-0.5 rounded shadow-xs">
                         {t('main')}
                       </span>
                     )}
@@ -1918,7 +1918,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
                       <button
                         type="button"
                         onClick={() => setImageVedette(img)}
-                        className="absolute bottom-1 left-1 bg-black/70 hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white text-[9px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition"
+                        className="absolute bottom-1 left-1 bg-black/70 hover:bg-[#F97316] hover:text-[#1A2951] text-white text-[9px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition"
                       >
                         {t('setAsMain')}
                       </button>
@@ -1942,7 +1942,7 @@ const CreateEstablishmentForm = ({ owners, onSuccess }) => {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full sm:w-auto bg-[#0E1E3D] hover:bg-[#CB9A56] hover:text-[#0E1E3D] text-white px-6 py-3 rounded-xl text-sm font-bold transition shadow-md disabled:opacity-50"
+          className="w-full sm:w-auto bg-[#1A2951] hover:bg-[#F97316] hover:text-[#1A2951] text-white px-6 py-3 rounded-xl text-sm font-bold transition shadow-md disabled:opacity-50"
         >
           {submitting ? t('adding') : t('createAndValidateEstNow')}
         </button>
