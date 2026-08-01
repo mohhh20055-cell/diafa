@@ -214,9 +214,9 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0E1E3D] relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-[#1A2951] relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
       {/* تأثير الخلفية المتوهج */}
-      <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[#CB9A56]/15 blur-3xl" />
+      <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[#F97316]/15 blur-3xl" />
 
       <div className="max-w-xl w-full relative z-10">
         <div className="text-center mb-8">
@@ -226,7 +226,7 @@ const Register = () => {
           <h1 className="text-3xl font-bold text-white mb-2 font-display">
             التسجيل
           </h1>
-          <p className="text-[#E4C48A] text-sm">
+          <p className="text-[#FB923C] text-sm">
             انضم إلى ضيافة واكتشف أفضل أماكن الإقامة في الجزائر
           </p>
         </div>
@@ -255,7 +255,7 @@ const Register = () => {
                 </div>
                 <Link
                   to="/login"
-                  className="mt-2 inline-block text-center rounded-xl bg-[#0E1E3D] text-white py-2.5 px-4 text-xs font-bold hover:bg-[#CB9A56] hover:text-[#0E1E3D] transition"
+                  className="mt-2 inline-block text-center rounded-xl bg-[#1A2951] text-white py-2.5 px-4 text-xs font-bold hover:bg-[#F97316] hover:text-[#1A2951] transition"
                 >
                   تسجيل الدخول الآن →
                 </Link>
@@ -265,7 +265,7 @@ const Register = () => {
             {accountRole === 'owner' && (
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="nomEtablissement" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+                  <label htmlFor="nomEtablissement" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                     اسم المؤسسة
                   </label>
                   <input
@@ -276,14 +276,14 @@ const Register = () => {
                     value={formData.nomEtablissement}
                     onChange={handleChange}
                     placeholder="مثال: فندق الأوراسي، إقامة الساورة..."
-                    className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                    className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                     disabled={isSubmitting}
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="typeEtablissement" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+                    <label htmlFor="typeEtablissement" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                       نوع المؤسسة
                     </label>
                     <select
@@ -291,7 +291,7 @@ const Register = () => {
                       name="typeEtablissement"
                       value={formData.typeEtablissement}
                       onChange={handleChange}
-                      className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                      className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                       disabled={isSubmitting}
                     >
                       <option value="hotel">فندق</option>
@@ -300,7 +300,7 @@ const Register = () => {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="wilaya" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+                    <label htmlFor="wilaya" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                       الولاية
                     </label>
                     <select
@@ -308,7 +308,7 @@ const Register = () => {
                       name="wilaya"
                       value={formData.wilaya}
                       onChange={handleChange}
-                      className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                      className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                       disabled={isSubmitting}
                     >
                       {WILAYAS.map((w, i) => (
@@ -319,7 +319,7 @@ const Register = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="ville" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+                  <label htmlFor="ville" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                     المدينة
                   </label>
                   <input
@@ -330,13 +330,13 @@ const Register = () => {
                     value={formData.ville}
                     onChange={handleChange}
                     placeholder="مثال: الجزائر، وهران، قسنطينة..."
-                    className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                    className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                     disabled={isSubmitting}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                     صور المؤسسة (الحد الأقصى {MAX_PHOTOS}، {MAX_SIZE_MB} ميغابايت لكل صورة)
                   </label>
 
@@ -350,11 +350,11 @@ const Register = () => {
                   )}
 
                   {photos.length < MAX_PHOTOS && (
-                    <label className="flex flex-col items-center justify-center p-5 border-2 border-dashed border-neutral-300 rounded-2xl cursor-pointer hover:border-[#CB9A56] bg-neutral-50/70 hover:bg-neutral-50 transition-all text-center group mb-3">
-                      <svg className="w-8 h-8 text-[#CB9A56] mb-2 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <label className="flex flex-col items-center justify-center p-5 border-2 border-dashed border-neutral-300 rounded-2xl cursor-pointer hover:border-[#F97316] bg-neutral-50/70 hover:bg-neutral-50 transition-all text-center group mb-3">
+                      <svg className="w-8 h-8 text-[#F97316] mb-2 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
-                      <span className="text-xs font-bold text-[#0E1E3D]">
+                      <span className="text-xs font-bold text-[#1A2951]">
                         انقر لاختيار أو سحب صورك هنا
                       </span>
                       <span className="text-[11px] text-slate-500 mt-1">
@@ -404,7 +404,7 @@ const Register = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="nom" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+                <label htmlFor="nom" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                   الاسم العائلي
                 </label>
                 <input
@@ -414,12 +414,12 @@ const Register = () => {
                   required
                   value={formData.nom}
                   onChange={handleChange}
-                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                   disabled={isSubmitting}
                 />
               </div>
               <div>
-                <label htmlFor="prenom" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+                <label htmlFor="prenom" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                   الاسم الأول
                 </label>
                 <input
@@ -429,7 +429,7 @@ const Register = () => {
                   required
                   value={formData.prenom}
                   onChange={handleChange}
-                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                   disabled={isSubmitting}
                 />
               </div>
@@ -437,7 +437,7 @@ const Register = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+                <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                   البريد الإلكتروني
                 </label>
                 <input
@@ -447,14 +447,14 @@ const Register = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                   placeholder="بريدك@مثال.com"
                   disabled={isSubmitting}
                 />
               </div>
 
               <div>
-                <label htmlFor="telephone" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+                <label htmlFor="telephone" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                   رقم الهاتف
                 </label>
                 <input
@@ -464,7 +464,7 @@ const Register = () => {
                   required
                   value={formData.telephone}
                   onChange={handleChange}
-                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                   placeholder="06XXXXXXXX"
                   disabled={isSubmitting}
                 />
@@ -472,7 +472,7 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="motDePasse" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+              <label htmlFor="motDePasse" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                 كلمة المرور
               </label>
               <div className="relative">
@@ -483,7 +483,7 @@ const Register = () => {
                   required
                   value={formData.motDePasse}
                   onChange={handleChange}
-                  className="block w-full px-4 py-3 pr-10 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                  className="block w-full px-4 py-3 pr-10 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                   placeholder="••••••••"
                   disabled={isSubmitting}
                 />
@@ -508,7 +508,7 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="confirmMotDePasse" className="block text-xs font-semibold uppercase tracking-wider text-[#0E1E3D] mb-2">
+              <label htmlFor="confirmMotDePasse" className="block text-xs font-semibold uppercase tracking-wider text-[#1A2951] mb-2">
                 تأكيد كلمة المرور
               </label>
               <input
@@ -518,7 +518,7 @@ const Register = () => {
                 required
                 value={formData.confirmMotDePasse}
                 onChange={handleChange}
-                className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] text-sm transition-all outline-none"
+                className="block w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] text-sm transition-all outline-none"
                 placeholder="••••••••"
                 disabled={isSubmitting}
               />
@@ -527,7 +527,7 @@ const Register = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex justify-center py-3.5 px-4 rounded-xl shadow-md text-sm font-bold text-[#0E1E3D] bg-[#CB9A56] hover:bg-[#E4C48A] focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex justify-center py-3.5 px-4 rounded-xl shadow-md text-sm font-bold text-[#1A2951] bg-[#F97316] hover:bg-[#FB923C] focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <span className="flex items-center gap-2">
@@ -546,7 +546,7 @@ const Register = () => {
           <div className="mt-8 pt-6 border-t border-neutral-100 text-center">
             <p className="text-xs text-slate-500">
               لديك حساب بالفعل؟{' '}
-              <Link to="/login" className="font-bold text-[#CB9A56] hover:text-[#0E1E3D] transition-colors">
+              <Link to="/login" className="font-bold text-[#F97316] hover:text-[#1A2951] transition-colors">
                 تسجيل الدخول
               </Link>
             </p>
@@ -554,7 +554,7 @@ const Register = () => {
         </div>
 
         <div className="mt-6 text-center">
-          <Link to="/" className="text-xs font-medium text-[#E4C48A] hover:text-white transition-colors">
+          <Link to="/" className="text-xs font-medium text-[#FB923C] hover:text-white transition-colors">
             ← العودة إلى الصفحة الرئيسية
           </Link>
         </div>
