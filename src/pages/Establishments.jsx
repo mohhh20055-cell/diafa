@@ -72,7 +72,7 @@ const Establishments = () => {
     <div className="min-h-screen bg-[#FAF7F1]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-[#152A54] mb-4" style={{ fontFamily: 'Fraunces, serif' }}>
+          <h1 className="text-4xl font-bold text-[#1A2951] mb-4" style={{ fontFamily: 'Fraunces, serif' }}>
             مؤسساتنا
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
@@ -83,11 +83,11 @@ const Establishments = () => {
         {/* عوامل التصفية - فقط الولاية والمدينة، تطبق تلقائياً، بدون زر */}
         <div className="flex flex-col sm:flex-row sm:justify-end gap-4 mb-8">
           <div className="w-full sm:w-64">
-            <label className="block text-sm font-medium text-[#0E1E3D] mb-2">الولاية</label>
+            <label className="block text-sm font-medium text-[#1A2951] mb-2">الولاية</label>
             <select
               value={wilaya}
               onChange={(e) => handleWilayaChange(e.target.value)}
-              className="block w-full px-4 py-2 border border-[#0E1E3D]/30 rounded-lg text-[#0E1E3D] focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56]"
+              className="block w-full px-4 py-2 border border-[#1A2951]/30 rounded-lg text-[#1A2951] focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316]"
             >
               <option value="">جميع الولايات</option>
               {WILAYAS.map((w, i) => (
@@ -96,12 +96,12 @@ const Establishments = () => {
             </select>
           </div>
           <div className="w-full sm:w-64">
-            <label className="block text-sm font-medium text-[#0E1E3D] mb-2">المدينة</label>
+            <label className="block text-sm font-medium text-[#1A2951] mb-2">المدينة</label>
             <select
               value={ville}
               onChange={(e) => handleVilleChange(e.target.value)}
               disabled={!wilaya}
-              className="block w-full px-4 py-2 border border-[#0E1E3D]/30 rounded-lg text-[#0E1E3D] focus:ring-2 focus:ring-[#CB9A56] focus:border-[#CB9A56] disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+              className="block w-full px-4 py-2 border border-[#1A2951]/30 rounded-lg text-[#1A2951] focus:ring-2 focus:ring-[#F97316] focus:border-[#F97316] disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
             >
               <option value="">
                 {wilaya ? 'جميع المدن' : 'اختر ولاية أولاً'}
@@ -115,12 +115,12 @@ const Establishments = () => {
 
         {loading ? (
           <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#152A54]"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1A2951]"></div>
           </div>
         ) : error ? (
           <div className="text-center py-20">
             <p className="text-red-600 mb-4">{error}</p>
-            <button onClick={() => loadEstablishments()} className="text-[#CB9A56] hover:underline">
+            <button onClick={() => loadEstablishments()} className="text-[#F97316] hover:underline">
               إعادة المحاولة
             </button>
           </div>
